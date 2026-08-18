@@ -1,0 +1,119 @@
+/* ============================================================
+   Tipografia — LT Superior (self-hosted, assets/font/)
+   ============================================================ */
+@font-face{
+  font-family:'LTSuperior';font-weight:400;font-style:normal;font-display:swap;
+  src:url('../assets/font/LTSuperior-Regular.otf') format('opentype');
+}
+@font-face{
+  font-family:'LTSuperior';font-weight:500;font-style:normal;font-display:swap;
+  src:url('../assets/font/LTSuperior-Medium.otf') format('opentype');
+}
+@font-face{
+  font-family:'LTSuperior';font-weight:600;font-style:normal;font-display:swap;
+  src:url('../assets/font/LTSuperior-SemiBold.otf') format('opentype');
+}
+@font-face{
+  font-family:'LTSuperior';font-weight:700;font-style:normal;font-display:swap;
+  src:url('../assets/font/LTSuperior-Bold.otf') format('opentype');
+}
+@font-face{
+  font-family:'LTSuperior';font-weight:800;font-style:normal;font-display:swap;
+  src:url('../assets/font/LTSuperior-ExtraBold.otf') format('opentype');
+}
+
+/* ============================================================
+   Design system — CADe UFPel (migrado do Figma)
+   ============================================================ */
+:root{
+  /* Cores da marca */
+  --navy:#0b0b6d;          /* texto/sobre-claro + primária */
+  --branco:#f6f6f6;        /* superfície */
+  --ciano:#00dbee;
+  --verde:#8cde51;
+  --amarelo:#ffd500;
+  --azul:#36a4f2;
+  --rosa:#ff006d;
+  --vermelho:#f6042e;
+  --preto:#111111;
+
+  /* Fundos de área */
+  --bg-cade:#f2f3f9;
+  --bg-calouros:#e9fcfe;
+  --bg-dicas:#fffbe8;
+  --bg-forms:#f3fced;
+
+  /* Derivados */
+  --linha:rgba(11,11,109,.12);
+  --navy-75:rgba(11,11,109,.75);
+  --navy-70:rgba(11,11,109,.7);
+  --navy-55:rgba(11,11,109,.55);
+  --navy-50:rgba(11,11,109,.5);
+  --navy-35:rgba(11,11,109,.35);
+  --verde-hover:#79cf3c;
+  --navy-hover:#16168f;
+
+  /* Ritmo */
+  --gut:clamp(20px,6.6vw,96px);
+  --sec-y:clamp(48px,7vw,96px);
+  --r-card:20px;
+  --r-painel:18px;
+  --r-pill:100px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:'LTSuperior',system-ui,sans-serif;
+  font-variation-settings:"wdth" 100;
+  color:var(--navy);
+  background:var(--bg-cade);
+  overflow-x:clip; /* clip, não hidden: hidden cria contexto de rolagem e mata o position:sticky da nav */
+}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+
+:where(a,button,summary,input,select,textarea,[tabindex]):focus-visible{
+  outline:3px solid var(--navy);
+  outline-offset:2px;
+  border-radius:6px;
+}
+.sobre-navy :where(a,button):focus-visible{outline-color:var(--ciano)}
+
+/* ---------- Tipografia ---------- */
+.eyebrow{font-size:13px;font-weight:600;line-height:1.4;letter-spacing:1.04px}
+.h-sec{font-size:clamp(32px,4.6vw,52px);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+.lead{font-size:clamp(16px,1.6vw,19px);font-weight:400;line-height:1.6}
+
+/* ---------- Estrutura ---------- */
+/* âncoras não podem parar embaixo da nav fixa */
+.area,section[id],[id^="form-"]{scroll-margin-top:88px}
+
+.area{position:relative}
+.faixa{height:8px;width:100%}
+.wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--gut)}
+.sec{padding-block:var(--sec-y);position:relative}
+.sec-head{display:flex;flex-direction:column;gap:12px}
+
+/* mascotes decorativos no canto superior direito da seção */
+.mascote-canto{position:absolute;top:clamp(16px,4vw,48px);right:var(--gut);width:clamp(104px,13vw,176px);height:auto;pointer-events:none}
+
+/* ---------- Botões ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:20px 32px;border-radius:var(--r-pill);border:2px solid transparent;
+  font-size:16px;font-weight:700;line-height:1.4;text-decoration:none;
+  cursor:pointer;min-height:44px;
+  transition:background-color .18s ease,border-color .18s ease,transform .18s ease;
+}
+.btn svg{width:20px;height:20px;flex:none}
+.btn--primary{background:var(--verde);border-color:var(--verde);color:var(--navy)}
+.btn--primary:hover{background:var(--verde-hover);border-color:var(--verde-hover)}
+.btn--navy{background:var(--navy);border-color:var(--navy);color:var(--branco)}
+.btn--navy:hover{background:var(--navy-hover);border-color:var(--navy-hover)}
+.btn--ghost{background:var(--branco);border-color:var(--navy);color:var(--navy)}
+.btn--ghost:hover{background:#e2e4f2}
+.btn--bloco{width:100%}

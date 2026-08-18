@@ -1,0 +1,37 @@
+# CADe UFPel
+
+> Centro Acadêmico de Design da UFPel — página única com o que é o CADe, agenda de eventos, guia do calouro, oportunidades, links úteis e canal direto com a gestão. Site em pt-BR.
+
+## O que é o CADe
+- [Sobre o CADe](https://cade.diegoruas.com.br/#o-cade): Centro Acadêmico feito por alunos do Design da UFPel.
+- [Histórico e galeria](https://cade.diegoruas.com.br/#historico)
+- [Lojinha](https://cade.diegoruas.com.br/#lojinha): adesivos, camisetas e moletons.
+
+## Agenda de eventos (set/out 2026)
+- [Agenda](https://cade.diegoruas.com.br/#agenda)
+- Sábado, 12 de setembro — Semana Acadêmica de Design (palestras, oficinas e mostra de trabalhos · Centro de Artes)
+- Segunda-feira, 28 de setembro — Roda de conversa: mercado & portfólio (com egressos do curso · Ateliê 2)
+- Sábado, 10 de outubro — Feira de trocas de materiais (traga o que não usa, leve o que precisa · Hall)
+- Sábado, 24 de outubro — Assembleia geral do CADe (prestação de contas e pauta aberta · Sala 305)
+
+## Guia do calouro
+- [Guia do calouro](https://cade.diegoruas.com.br/#guia-calouro): o que esperar do curso, matrícula, materiais e onde cada coisa acontece.
+
+## Oportunidades
+- [Editais, bolsas e estágios](https://cade.diegoruas.com.br/#oportunidades)
+- Monitoria de Desenho I (BOLSA) — inscrições até 20/09, 12h semanais.
+- Design gráfico — agência local (ESTÁGIO) — a partir do 5º semestre.
+- Extensão: identidade para ONGs (EDITAL) — bolsa, equipe de 4 alunos.
+
+## Perguntas frequentes
+- [FAQ](https://cade.diegoruas.com.br/#faq): o que é o CADe, como participar, dúvidas de calouro, notas e reclamações.
+
+## Links úteis
+- [Atalhos](https://cade.diegoruas.com.br/#links): acesso rápido aos links que os alunos sempre procuram.
+
+## Fale com a gente
+- [Formulários](https://cade.diegoruas.com.br/#form-falar): participar da gestão ou falar com o CADe.
+
+## Dados
+- Organização: Centro Acadêmico de Design da UFPel
+- Idioma: pt-BR

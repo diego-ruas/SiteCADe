@@ -1,0 +1,16 @@
+/* ============================================================
+   02 Hero
+   ============================================================ */
+.hero{background:var(--navy);color:var(--branco);overflow:hidden}
+.hero-grid{
+  display:flex;align-items:center;gap:clamp(24px,4vw,56px);
+  padding-block:var(--sec-y);
+}
+.hero-txt{display:flex;flex-direction:column;gap:24px;align-items:flex-start;min-width:0;flex:1 1 auto}
+.hero h1{
+  font-size:clamp(38px,5.7vw,82px);font-weight:800;line-height:1.02;letter-spacing:-.03em;
+  max-width:15ch;
+}
+.hero p{font-size:clamp(16px,1.7vw,20px);line-height:1.55;max-width:64ch}
+.hero-mascote{width:clamp(180px,26vw,370px);height:auto;flex:none}
+.divisor{height:1px;background:rgba(11,11,109,.25)}
