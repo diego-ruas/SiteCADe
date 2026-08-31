@@ -14,13 +14,12 @@
 @media (max-width:900px){
   .hero-grid{flex-direction:column;align-items:flex-start}
   .hero-mascote{width:clamp(88px,20vw,120px);order:-1;margin:0 auto 4px}
-  .galeria{grid-template-columns:repeat(2,minmax(0,1fr))}
   .oportunidades{grid-template-columns:minmax(0,1fr)}
   .links{grid-template-columns:repeat(2,minmax(0,1fr))}
   .forms{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:720px){
-  .nav-inner{flex-wrap:wrap;row-gap:12px}
+  .nav-inner{display:flex;justify-content:space-between;flex-wrap:wrap;row-gap:12px}
   .nav-toggle{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
     min-height:44px;padding:10px 18px;border-radius:var(--r-pill);
@@ -39,7 +38,7 @@
   .agenda-head .btn{width:100%}
   .op-head .btn{width:100%}
   /* ritmo vertical: telas pequenas pedem seções mais curtas */
-  :root{--gut:24px;--sec-y:56px}
+  :root{--gut:24px;--sec-y:40px}
   .area,section[id],[id^="form-"]{scroll-margin-top:72px}
 
   .btn{padding:16px 24px}
@@ -55,16 +54,17 @@
   /* Faixa de fotos: peças menores e giro um pouco mais rápido (duração no JS) */
   .fotos-track{gap:10px}
   .gestao-foto{width:124px;height:124px;border-radius:14px}
-  .gestao-foto img{width:36px;height:36px}
+  /* sem mouse não existe hover: nome fica sempre visível em vez de escondido pra sempre */
+  .gestao-nome{font-size:12px;padding:8px 10px 6px;opacity:1;transform:none;background:linear-gradient(0deg,rgba(11,11,109,.78),rgba(11,11,109,0) 70%)}
 
-  /* Galeria segue uniforme em 2 colunas, com blocos mais baixos */
-  .galeria{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .gal-col{gap:12px}
-  .gal-foto{padding:12px;font-size:11px;min-height:150px}
+  /* Galeria: carrossel encolhe padding/fonte/linhas, largura do cartão já é fluida (min(300px,72vw)) */
+  .galeria{gap:12px;grid-template-rows:repeat(2,130px)}
+  .gal-foto{padding:12px;font-size:11px}
+  .gal-seta{width:44px;height:44px}
 
   .produtos{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .produto{padding:12px;gap:10px}
-  .produto img{height:140px}
+  .produto-img img{height:140px}
   .produto b{font-size:17px}
 
   .guia-cards{grid-template-columns:minmax(0,1fr)}
@@ -91,9 +91,8 @@
 @media (max-width:400px){
   :root{--gut:18px}
   .produtos{grid-template-columns:minmax(0,1fr)}
-  .produto img{height:180px}
-  .galeria{grid-template-columns:minmax(0,1fr)}
-  .gal-foto{min-height:132px}
+  .produto-img img{height:180px}
+  .galeria{grid-template-rows:repeat(2,110px)}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

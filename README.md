@@ -10,6 +10,10 @@ Página única do Centro Acadêmico de Design da UFPel, migrada de um design Fig
 - **CSS dividido em `css/`:** 8 arquivos carregados via `<link>` no `<head>`, na ordem de cascata.
 - **Tipografia:** LT Superior, self-hosted em `assets/font/`.
 - **Ícones:** SVGs Lucide inline, animados por CSS (`@keyframes`) + IIFE de replay — sem lib de animação.
+- **`api/enviar.js`:** função serverless da Vercel (Node, sem dependências — chama a REST API do Resend direto com `fetch`) que recebe os dois formulários do site e envia por e-mail. Exige as env vars abaixo configuradas no painel da Vercel (Project → Settings → Environment Variables):
+  - `RESEND_API_KEY` (obrigatória) — chave secreta do Resend, nunca commitar.
+  - `RESEND_TO` (opcional) — e-mail de destino. Padrão: `cadesignufpel@gmail.com`.
+  - `RESEND_FROM` (opcional) — remetente. Padrão: `CADe UFPel <onboarding@resend.dev>` (sandbox do Resend); trocar para um endereço em domínio verificado assim que possível.
 
 ## Arquivos de estilo
 
