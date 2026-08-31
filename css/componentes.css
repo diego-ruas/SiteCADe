@@ -31,6 +31,11 @@
 }
 .gestao-foto:hover .gestao-nome,
 .gestao-foto:focus-within .gestao-nome{opacity:1;transform:translateY(0)}
+/* sem mouse não existe hover: nome fica sempre visível em vez de escondido pra sempre,
+   independente do tamanho da tela (tablets também são touch) */
+@media (hover:none){
+  .gestao-nome{opacity:1;transform:none;background:linear-gradient(0deg,rgba(11,11,109,.78),rgba(11,11,109,0) 70%)}
+}
 
 /* ============================================================
    Popup de oportunidade

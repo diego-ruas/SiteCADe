@@ -54,8 +54,7 @@
   /* Faixa de fotos: peças menores e giro um pouco mais rápido (duração no JS) */
   .fotos-track{gap:10px}
   .gestao-foto{width:124px;height:124px;border-radius:14px}
-  /* sem mouse não existe hover: nome fica sempre visível em vez de escondido pra sempre */
-  .gestao-nome{font-size:12px;padding:8px 10px 6px;opacity:1;transform:none;background:linear-gradient(0deg,rgba(11,11,109,.78),rgba(11,11,109,0) 70%)}
+  .gestao-nome{font-size:12px;padding:8px 10px 6px}
 
   /* Galeria: carrossel encolhe padding/fonte/linhas, largura do cartão já é fluida (min(300px,72vw)) */
   .galeria{gap:12px;grid-template-rows:repeat(2,130px)}
