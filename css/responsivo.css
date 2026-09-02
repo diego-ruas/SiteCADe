@@ -51,8 +51,8 @@
   .dia{height:44px;border-radius:8px}
   .rotulo{padding-block:2px}
 
-  /* Faixa de fotos: peças menores e giro um pouco mais rápido (duração no JS) */
-  .fotos-track{gap:10px}
+  /* Faixa de fotos: peças menores e giro um pouco mais rápido */
+  .fotos-track{gap:10px;animation-duration:32s}
   .gestao-foto{width:124px;height:124px;border-radius:14px}
   .gestao-nome{font-size:12px;padding:8px 10px 6px}
 
