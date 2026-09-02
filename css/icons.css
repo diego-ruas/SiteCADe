@@ -51,6 +51,15 @@
 .la-user.la-on .la-ur-cabeca{animation:la-user-cabeca .4s ease-out}
 .la-user.la-on .la-ur-corpo{animation:la-user-corpo .4s ease-out .2s}
 
+/* github: corpo desenha o traço + cauda balança (wag) */
+.la-gh .la-gh-corpo,
+.la-gh .la-gh-cauda{stroke-dasharray:1;stroke-dashoffset:0}
+.la-gh .la-gh-cauda{transform-origin:100% 100%}
+@keyframes la-gh-corpo{0%{stroke-dashoffset:1;transform:scale(.9)}100%{stroke-dashoffset:0;transform:scale(1)}}
+@keyframes la-gh-cauda{0%{stroke-dashoffset:1;transform:rotate(0deg)}40%{stroke-dashoffset:0;transform:rotate(0deg)}55%{transform:rotate(-15deg)}70%{transform:rotate(15deg)}82%{transform:rotate(-10deg)}92%{transform:rotate(10deg)}100%{transform:rotate(0deg)}}
+.la-gh.la-on .la-gh-corpo{animation:la-gh-corpo .4s ease-out}
+.la-gh.la-on .la-gh-cauda{animation:la-gh-cauda .9s ease-in-out}
+
 @media (prefers-reduced-motion: reduce){
   .lucide-icon[data-la], .lucide-icon[data-la] *{animation:none!important}
   .la-plus{transition:none}
