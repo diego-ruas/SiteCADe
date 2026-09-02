@@ -5,7 +5,7 @@
 //   RESEND_API_KEY  (obrigatória) — chave secreta do Resend, nunca commitar.
 //   RESEND_TO       (opcional) — e-mail de destino. Padrão: cadesignufpel@gmail.com
 //   RESEND_FROM     (opcional) — remetente. Padrão: CADe UFPel <onboarding@resend.dev>
-//                    (troque para um endereço @cade.diegoruas.com.br assim que o domínio
+//                    (troque para um endereço @cadeufpel.com assim que o domínio
 //                    estiver verificado no Resend — melhora entregabilidade e evita spam).
 
 const PADRAO_PARA = 'cadesignufpel@gmail.com';

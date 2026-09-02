@@ -1,0 +1,235 @@
+<title>Operação Site CADe</title>
+<style>
+:root{
+  --paper:#f5f3ec;
+  --ink:#191830;
+  --muted:#6b6a7a;
+  --line:#ddd8cc;
+  --navy:#0b0b6d;
+  --navy-soft:#e7e6f5;
+  --coral:#ff5a36;
+  --coral-soft:#ffe4dc;
+  --ok:#2f7a4f;
+  --ok-soft:#e1f0e5;
+  --card:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141322;
+    --ink:#efece2;
+    --muted:#a5a1b8;
+    --line:#33324a;
+    --navy:#9fa3ff;
+    --navy-soft:#232145;
+    --coral:#ff8a68;
+    --coral-soft:#3a2420;
+    --ok:#7fd39c;
+    --ok-soft:#1c3327;
+    --card:#1c1b30;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141322;
+  --ink:#efece2;
+  --muted:#a5a1b8;
+  --line:#33324a;
+  --navy:#9fa3ff;
+  --navy-soft:#232145;
+  --coral:#ff8a68;
+  --coral-soft:#3a2420;
+  --ok:#7fd39c;
+  --ok-soft:#1c3327;
+  --card:#1c1b30;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  line-height:1.5;
+  padding:0;
+}
+.wrap{max-width:920px;margin:0 auto;padding:56px 28px 96px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--navy);
+  display:flex;gap:10px;align-items:center;
+}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--coral);border-radius:50%;flex:none}
+h1{
+  font-family:'Fraunces',Georgia,serif;
+  font-weight:600;
+  font-size:clamp(32px,5vw,46px);
+  letter-spacing:-.01em;
+  margin:10px 0 14px;
+  text-wrap:balance;
+}
+.dek{max-width:65ch;color:var(--muted);font-size:16px;margin:0 0 40px}
+.dek strong{color:var(--ink)}
+h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:22px;
+  font-weight:600;
+  margin:0 0 4px;
+}
+.section{margin-top:52px}
+.section-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--line);
+  padding-bottom:10px;margin-bottom:18px;
+}
+.section-num{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:13px}
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:720px){.tracks{grid-template-columns:1fr}}
+.track{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+.track h3{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--navy);margin:0 0 14px;
+}
+.item{padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:none;padding-top:0}
+.item-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.item-title{font-weight:600;font-size:14.5px}
+.tag{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.04em;
+  padding:2px 7px;border-radius:5px;white-space:nowrap;flex:none;
+}
+.tag.crit{background:var(--coral-soft);color:var(--coral)}
+.tag.easy{background:var(--ok-soft);color:var(--ok)}
+.item-desc{color:var(--muted);font-size:13.5px;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{
+  text-align:left;font-family:'IBM Plex Mono',monospace;font-size:11px;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  padding:8px 10px;border-bottom:1px solid var(--line);
+}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.tbl-wrap table{min-width:560px}
+.week{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:600}
+.copy-list{display:grid;gap:14px;margin-top:4px}
+.copy-card{
+  background:var(--navy-soft);border-radius:10px;padding:16px 18px;
+  border-left:3px solid var(--navy);
+}
+.copy-card p{margin:0 0 8px;font-size:14.5px}
+.copy-cta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--navy)}
+.channels{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  background:var(--card);border:1px solid var(--line);
+  padding:6px 12px;border-radius:999px;
+}
+.chip b{color:var(--navy)}
+.risk{
+  margin-top:14px;background:var(--coral-soft);border-radius:10px;
+  padding:14px 18px;font-size:13.5px;color:var(--ink);
+}
+.risk b{color:var(--coral)}
+footer{
+  margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="wrap">
+  <div class="eyebrow">cade.diegoruas.com.br — plano de operação</div>
+  <h1>Site &amp; divulgação, sem verba</h1>
+  <p class="dek">Duas trilhas rodando junto: <strong>trilha técnica</strong> (7 correções no repo, do mais lazy pro menos) e <strong>trilha de divulgação</strong> (canal orgânico + calendário de 4 semanas). Nenhuma exige build, dependência nova ou orçamento — só edição direta do que já existe.</p>
+
+  <div class="section">
+    <div class="section-head"><h2>Trilha técnica</h2><span class="section-num">auditoria do repo</span></div>
+    <div class="tracks">
+      <div class="track">
+        <h3>Esforço mínimo</h3>
+        <div class="item">
+          <div class="item-top"><span class="item-title">Canonical em index.html e galeria.html</span><span class="tag crit">crítico</span></div>
+          <div class="item-desc">cleanUrls no vercel.json faz /galeria.html e /galeria responderem 200 os dois — sem &lt;link rel="canonical"&gt; isso é conteúdo duplicado pro Google.</div>
+        </div>
+        <div class="item">
+          <div class="item-top"><span class="item-title">galeria.html no sitemap.xml</span><span class="tag easy">1 linha</span></div>
+          <div class="item-desc">só a home está listada; a galeria é página real, linkada no nav — está fora do índice à toa.</div>
+        </div>
+        <div class="item">
+          <div class="item-top"><span class="item-title">alt real nas fotos da galeria</span><span class="tag easy">1 linha</span></div>
+          <div class="item-desc">JS força alt="" em toda foto; o nome da categoria (f.pasta) já existe em memória — só atribuir a img.alt.</div>
+        </div>
+        <div class="item">
+          <div class="item-top"><span class="item-title">preconnect p/ googleapis.com e drive.google.com</span><span class="tag easy">2 tags</span></div>
+          <div class="item-desc">agenda e galeria buscam dados desses hosts no load — preconnect paga o DNS/TLS antes da request precisar dele.</div>
+        </div>
+      </div>
+      <div class="track">
+        <h3>Vale o esforço</h3>
+        <div class="item">
+          <div class="item-top"><span class="item-title">OG/Twitter tags na galeria.html</span></div>
+          <div class="item-desc">index.html já tem o bloco completo — copiar e trocar url/title/description. Sem isso, link da galeria compartilhado no Instagram vem sem preview.</div>
+        </div>
+        <div class="item">
+          <div class="item-top"><span class="item-title">Fontes .otf → .woff2</span></div>
+          <div class="item-desc">5 pesos da LT Superior em .otf; conversão local (sem build tool) reduz 30-50% do peso de fonte no critical path.</div>
+        </div>
+        <div class="item">
+          <div class="item-top"><span class="item-title">produto-*.jpg → .webp</span></div>
+          <div class="item-desc">fotos de membro já são .webp; as 3 fotos de produto (camiseta/moletom/adesivos) ficaram de fora.</div>
+        </div>
+      </div>
+    </div>
+    <div class="risk"><b>Risco de manutenção —</b> o JSON-LD tem 4 eventos com data fixa de 2026. Sem CMS/build, nada avisa quando um evento passa e o schema segue anunciando data velha como "agendado". Sem código pra isso agora — só um lembrete de processo: revisar o @graph a cada início de semestre.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>Trilha de divulgação</h2><span class="section-num">orgânico, 4 semanas</span></div>
+    <p class="dek" style="margin-bottom:14px">Posicionamento: o CADe é onde quem quer saber o que rola (agenda), quem chegou agora (guia do calouro) e quem quer se meter em algo (oportunidades) encontra tudo num lugar só — feito por alunos, sem burocracia institucional.</p>
+    <div class="channels">
+      <span class="chip"><b>1.</b> Instagram — todo post linka o site</span>
+      <span class="chip"><b>2.</b> WhatsApp de turma — link nas boas-vindas</span>
+      <span class="chip"><b>3.</b> Mural físico — QR code fixo</span>
+      <span class="chip"><b>4.</b> Professores — 30s em aula, 1x/semestre</span>
+    </div>
+    <div class="tbl-wrap" style="margin-top:22px">
+      <table>
+        <thead><tr><th>Semana</th><th>Post 1</th><th>Post 2</th><th>Story</th></tr></thead>
+        <tbody>
+          <tr><td class="week">01</td><td>Carrossel "o que é o CADe" → #o-cade</td><td>Print da agenda → #agenda</td><td>Enquete "já viu o site?"</td></tr>
+          <tr><td class="week">02</td><td>Oportunidade real → #oportunidades</td><td>Bastidor de evento (galeria) → historico</td><td>Contagem p/ próximo evento</td></tr>
+          <tr><td class="week">03</td><td>Guia do calouro em 3 pontos → #guia-calouro</td><td>Canal de reclamação anônima → #form-falar</td><td>Caixinha de pergunta</td></tr>
+          <tr><td class="week">04</td><td>Convite p/ participar → #form-participar</td><td>Recap do mês → #agenda</td><td>Repost de quem marcou</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dek" style="margin-top:14px;font-size:13.5px">Sem novidade real numa semana = pula o post. Feed vazio é menos dano que conteúdo genérico.</p>
+
+    <h3 style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin:32px 0 12px">Copy pronta</h3>
+    <div class="copy-list">
+      <div class="copy-card"><p>"Terça tem oficina, quinta tem palestra e você ia descobrir sábado de manhã se a gente não avisasse."</p><span class="copy-cta">Ver agenda → #agenda</span></div>
+      <div class="copy-card"><p>"Tem edital de estágio aberto agora e o prazo não espera. Olha se é pra você."</p><span class="copy-cta">Ver oportunidades → #oportunidades</span></div>
+      <div class="copy-card"><p>"Ninguém te deu um mapa quando você entrou. A gente fez um."</p><span class="copy-cta">Abrir guia do calouro → #guia-calouro</span></div>
+      <div class="copy-card"><p>"O CADe é feito por quem aparece. Se você tem 1h por semana e uma ideia, tem lugar pra você aqui."</p><span class="copy-cta">Quero participar → #form-participar</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>Medição</h2><span class="section-num">sem ferramenta paga</span></div>
+    <div class="channels">
+      <span class="chip">Vercel Analytics, se já ativo</span>
+      <span class="chip">UTM manual só no link da bio (?utm_source=instagram)</span>
+      <span class="chip">Contagem de submissões nos 2 formulários</span>
+    </div>
+    <p class="dek" style="margin-top:14px">Sucesso = tendência mês a mês, não número absoluto — a base é pequena, não comparar com métrica de empresa.</p>
+  </div>
+
+  <footer>
+    <span>7 correções técnicas · 4 semanas de conteúdo · zero dependência nova</span>
+    <span class="mono">set/2026</span>
+  </footer>
+</div>

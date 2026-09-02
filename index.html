@@ -7,16 +7,19 @@
 <title>CADe - UFPel</title>
 <meta name="description" content="Centro Acadêmico de Design da UFPel: agenda de eventos, guia do calouro, oportunidades, links importantes e canal direto com a gestão.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://cade.diegoruas.com.br/">
+<meta property="og:url" content="https://cadeufpel.com/">
 <meta property="og:site_name" content="CADe UFPel">
 <meta property="og:title" content="CADe - UFPel">
 <meta property="og:description" content="Centro Acadêmico de Design da UFPel: agenda de eventos, guia do calouro, oportunidades, links importantes e canal direto com a gestão.">
-<meta property="og:image" content="https://cade.diegoruas.com.br/assets/og-image.png">
+<meta property="og:image" content="https://cadeufpel.com/assets/og-image.png">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="CADe - UFPel">
 <meta name="twitter:description" content="Centro Acadêmico de Design da UFPel: agenda de eventos, guia do calouro, oportunidades, links importantes e canal direto com a gestão.">
-<meta name="twitter:image" content="https://cade.diegoruas.com.br/assets/og-image.png">
+<meta name="twitter:image" content="https://cadeufpel.com/assets/og-image.png">
+<link rel="canonical" href="https://cadeufpel.com/">
+<link rel="preconnect" href="https://www.googleapis.com">
+<link rel="preconnect" href="https://drive.google.com">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="css/base.css">
@@ -34,15 +37,15 @@
     {
       "@type": "WebSite",
       "name": "CADe UFPel",
-      "url": "https://cade.diegoruas.com.br/",
+      "url": "https://cadeufpel.com/",
       "inLanguage": "pt-BR",
       "description": "Centro Acadêmico de Design da UFPel: agenda de eventos, guia do calouro, oportunidades, links importantes e canal direto com a gestão."
     },
     {
       "@type": "Organization",
       "name": "Centro Acadêmico de Design da UFPel",
-      "url": "https://cade.diegoruas.com.br/",
-      "logo": "https://cade.diegoruas.com.br/assets/logo-cade.svg",
+      "url": "https://cadeufpel.com/",
+      "logo": "https://cadeufpel.com/assets/logo-cade.svg",
       "description": "Centro Acadêmico de Design da UFPel, uma organização feita 100% de alunos do design."
     },
     {
@@ -795,7 +798,7 @@
         btn.className = 'gal-foto';
         btn.type = 'button';
         var img = document.createElement('img');
-        img.alt = ''; img.loading = 'lazy';
+        img.alt = titulo(f.pasta); img.loading = 'lazy';
         img.onerror = function(){ btn.remove(); }; // miniatura falhou: some o card em vez de ficar em branco
         img.src = 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1600';
         var span = document.createElement('span');

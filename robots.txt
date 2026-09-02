@@ -33,4 +33,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://cade.diegoruas.com.br/sitemap.xml
+Sitemap: https://cadeufpel.com/sitemap.xml

@@ -1,5 +1,13 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "cade.diegoruas.com.br" }],
+      "destination": "https://cadeufpel.com/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/font/(.*)",

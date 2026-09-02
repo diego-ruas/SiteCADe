@@ -2,7 +2,7 @@
 
 Página única do Centro Acadêmico de Design da UFPel, migrada de um design Figma. HTML, CSS e JS sem build, framework ou CDN.
 
-**Acesse:** https://cade.diegoruas.com.br
+**Acesse:** https://cadeufpel.com
 
 ## Stack
 
