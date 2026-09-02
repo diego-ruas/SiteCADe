@@ -4,12 +4,11 @@
 // Variáveis de ambiente (configurar no painel da Vercel > Project > Settings > Environment Variables):
 //   RESEND_API_KEY  (obrigatória) — chave secreta do Resend, nunca commitar.
 //   RESEND_TO       (opcional) — e-mail de destino. Padrão: cadesignufpel@gmail.com
-//   RESEND_FROM     (opcional) — remetente. Padrão: CADe UFPel <onboarding@resend.dev>
-//                    (troque para um endereço @cadeufpel.com assim que o domínio
-//                    estiver verificado no Resend — melhora entregabilidade e evita spam).
+//   RESEND_FROM     (opcional) — remetente. Padrão: CADe UFPel <naoresponda@cadeufpel.com>
+//                    (requer domínio cadeufpel.com verificado no Resend).
 
 const PADRAO_PARA = 'cadesignufpel@gmail.com';
-const PADRAO_DE = 'CADe UFPel <onboarding@resend.dev>';
+const PADRAO_DE = 'CADe UFPel <naoresponda@cadeufpel.com>';
 
 function escapeHtml(str) {
   return String(str || '')
