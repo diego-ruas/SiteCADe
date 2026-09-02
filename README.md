@@ -29,10 +29,27 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 | Analytics | Vercel Analytics (`/_vercel/insights/script.js`), sem cookies |
 | Backend | `api/enviar.js` — função serverless da Vercel (Node puro, `fetch` direto na REST API do Resend) para os formulários de contato |
 
+## Estrutura de pastas
+
+```
+api/enviar.js        função serverless (formulários)
+assets/
+  font/               LT Superior self-hosted (.woff2)
+  FotosMembros/        fotos da gestão atual (usadas em #o-cade)
+  logo-*.svg, mascote-*.svg, favicon.svg, apple-touch-icon.png, og-image.png
+  produto-*.webp      fotos da lojinha
+  guia-foto.webp      foto do guia do calouro
+css/*.css             ver "Arquivos de estilo"
+index.html            página principal
+galeria.html          /galeria
+llms.txt, robots.txt, sitemap.xml, vercel.json
+```
+
 ## Páginas
 
 - `index.html` — página principal (hero, agenda, quem somos, histórico, lojinha, guia do calouro, oportunidades, FAQ, formulários).
 - `galeria.html` — `/galeria`, fotos de eventos e gestões anteriores.
+- `llms.txt`, `robots.txt`, `sitemap.xml` — SEO/indexação.
 
 ## Arquivos de estilo
 
@@ -48,14 +65,16 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 
 ## Estrutura da home
 
-Quatro `div.area` com fundo próprio, cada uma com uma `.faixa` colorida no topo:
+Quatro `div.area` com fundo próprio, cada uma com uma `.faixa` colorida no topo. Numeração das seções conforme os comentários em `css/*.css`:
 
 | Área | id | Seções |
 |---|---|---|
-| CADe | `#area-cade` | hero, 01 agenda, 02 quem somos, 03 histórico, lojinha |
-| Calouros | `#area-calouros` | 04 guia do calouro (foto à esquerda + 4 cards) |
-| Dicas | `#area-dicas` | 05 oportunidades, 06 FAQ, 07 atalhos |
-| Formulários | `#area-formularios` | 08 fale com a gente (dois forms) |
+| CADe | `#area-cade` | 01 nav, 02 hero, 03 agenda, 04 quem somos (`#o-cade`, com fotos da gestão), 05 histórico/galeria, lojinha |
+| Calouros | `#area-calouros` | 06 guia do calouro (`#guia-calouro`, foto à esquerda + 4 cards) |
+| Dicas | `#area-dicas` | 07 oportunidades (`#oportunidades`), 08 FAQ (`#faq`), 09 links (`#links`) |
+| Formulários | `#area-formularios` | 10 fale com a gente (`#participe`, dois forms) |
+
+11 (`css/secoes.css`) é o footer, fora das `.area`.
 
 A nav marca a área ativa via `aria-current="page"`, calculada por listener de scroll.
 
