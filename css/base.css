@@ -3,23 +3,23 @@
    ============================================================ */
 @font-face{
   font-family:'LTSuperior';font-weight:400;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-Regular.otf') format('opentype');
+  src:url('../assets/font/LTSuperior-Regular.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:500;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-Medium.otf') format('opentype');
+  src:url('../assets/font/LTSuperior-Medium.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:600;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-SemiBold.otf') format('opentype');
+  src:url('../assets/font/LTSuperior-SemiBold.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:700;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-Bold.otf') format('opentype');
+  src:url('../assets/font/LTSuperior-Bold.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:800;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-ExtraBold.otf') format('opentype');
+  src:url('../assets/font/LTSuperior-ExtraBold.woff2') format('woff2');
 }
 
 /* ============================================================

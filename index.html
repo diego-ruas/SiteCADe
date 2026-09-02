@@ -20,6 +20,8 @@
 <link rel="canonical" href="https://cadeufpel.com/">
 <link rel="preconnect" href="https://www.googleapis.com">
 <link rel="preconnect" href="https://drive.google.com">
+<link rel="preload" href="assets/font/LTSuperior-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/font/LTSuperior-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="css/base.css">
@@ -795,6 +797,8 @@
 (function(){
   var GALERIA_DRIVE = { apiKey: 'AIzaSyBQFtjDLeycAFOaXkk_OUudK_a-MmczIQw', pastaMae: '1WkPaKrRCu0atXk0Wd5_D8AVe2cyHEBFm' };
   var QTD = 10;
+  var CACHE_KEY = 'cade-galeria-cache-v1';
+  var CACHE_TTL = 3600000; // 1h: evita repetir a varredura de pastas do Drive a cada visita/reload
   var API = 'https://www.googleapis.com/drive/v3/files';
   var track = document.getElementById('galeria');
   if (!track) return;
@@ -808,16 +812,28 @@
     return nome.replace(/[-_]+/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
   }
 
-  listar("'" + GALERIA_DRIVE.pastaMae + "' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false", 'id,name')
-    .then(function(subpastas){
-      return Promise.all(subpastas.map(function(pasta){
-        return listar("'" + pasta.id + "' in parents and mimeType contains 'image/' and trashed=false", 'id')
-          .then(function(fotos){ return fotos.map(function(f){ return { id: f.id, pasta: pasta.name }; }); })
-          .catch(function(){ return []; });
-      }));
-    })
-    .then(function(porPasta){
-      var todas = porPasta.flat();
+  function listarTodas(){
+    try {
+      var cache = JSON.parse(localStorage.getItem(CACHE_KEY));
+      if (cache && Date.now() - cache.ts < CACHE_TTL) return Promise.resolve(cache.todas);
+    } catch (e) {}
+    return listar("'" + GALERIA_DRIVE.pastaMae + "' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false", 'id,name')
+      .then(function(subpastas){
+        return Promise.all(subpastas.map(function(pasta){
+          return listar("'" + pasta.id + "' in parents and mimeType contains 'image/' and trashed=false", 'id')
+            .then(function(fotos){ return fotos.map(function(f){ return { id: f.id, pasta: pasta.name }; }); })
+            .catch(function(){ return []; });
+        }));
+      })
+      .then(function(porPasta){
+        var todas = porPasta.flat();
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), todas: todas })); } catch (e) {}
+        return todas;
+      });
+  }
+
+  listarTodas()
+    .then(function(todas){
       for (var i = todas.length - 1; i > 0; i--){ // embaralha (Fisher-Yates)
         var j = Math.floor(Math.random() * (i + 1));
         var tmp = todas[i]; todas[i] = todas[j]; todas[j] = tmp;
