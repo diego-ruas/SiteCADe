@@ -94,9 +94,9 @@
    ============================================================ */
 .guia-corpo{display:grid;grid-template-columns:451px minmax(0,1fr);gap:40px;align-items:stretch;margin-top:40px}
 .guia-foto{
-  background:var(--ciano);border-radius:16px;min-height:360px;
+  background:var(--ciano) center/cover no-repeat;border-radius:16px;min-height:360px;
   display:flex;align-items:flex-end;padding:16px;
-  font-size:12px;font-weight:600;
+  font-size:12px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6);
 }
 .guia-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .card{
