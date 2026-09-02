@@ -298,10 +298,10 @@
           <b>O que é Cobalto? <svg class="lucide-icon la-aur" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-la="1"><path d="M7 7H17"/><path d="M17 7V17"/><path d="M7 17 17 7"/></svg></b>
           <p>Onde ver horários, salas, matrículas, credenciais e material das aulas.</p>
         </a>
-        <article class="card" data-od-id="card-materiais">
+        <button class="card" type="button" aria-haspopup="dialog" id="card-materiais" data-od-id="card-materiais">
           <b>Materiais do curso!</b>
           <p>Dicas de matérias essenciais para o 1º semestre.</p>
-        </article>
+        </button>
         <a class="card" href="https://wp.ufpel.edu.br/ca/" target="_blank" rel="noopener" data-od-id="card-onde">
           <b>Se localiza aí! <svg class="lucide-icon la-aur" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-la="1"><path d="M7 7H17"/><path d="M17 7V17"/><path d="M7 17 17 7"/></svg></b>
           <p>Mapa interativo do CA, RUs, biblioteca e paradas de ônibus.</p>
@@ -588,6 +588,19 @@
   </div>
 </div>
 
+<!-- ===================== Popup — Materiais do curso ===================== -->
+<div class="modal" id="modal-materiais" data-od-id="modal-materiais" role="dialog" aria-modal="true" aria-labelledby="modal-materiais-titulo" hidden>
+  <div class="modal-cartao">
+    <button class="modal-fechar" id="modal-materiais-fechar" type="button" aria-label="Fechar popup">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <h3 class="modal-titulo" id="modal-materiais-titulo">Materiais do curso</h3>
+    <p class="modal-texto" id="modal-materiais-lista">Carregando pastas…</p>
+  </div>
+</div>
+
 <!-- ===================== Popup — Lightbox da galeria ===================== -->
 <div class="modal modal--lightbox" id="modal-galeria" data-od-id="modal-galeria" role="dialog" aria-modal="true" aria-labelledby="lightbox-legenda" hidden>
   <button class="modal-fechar" id="modal-galeria-fechar" type="button" aria-label="Fechar">
@@ -854,6 +867,93 @@
       track.dispatchEvent(new Event('scroll')); // reavalia as setas: no load elas ficam disabled (track ainda vazio)
     })
     .catch(function(){ /* Drive indisponível: carrossel fica vazio */ });
+})();
+
+/* ---------- Popup Materiais do curso: lista as pastas do Drive ---------- */
+(function(){
+  var PASTA_ID = '1JlLYXRz1rVqa5Vx8RP0hXSbNFArrZnb';
+  var API_KEY = 'AIzaSyBQFtjDLeycAFOaXkk_OUudK_a-MmczIQw'; // mesma key usada na galeria
+  var btn = document.getElementById('card-materiais');
+  var modal = document.getElementById('modal-materiais');
+  var lista = document.getElementById('modal-materiais-lista');
+  var fechar = document.getElementById('modal-materiais-fechar');
+  if (!btn || !modal || !lista || !fechar) return;
+  var carregado = false;
+
+  function abrir(){
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    fechar.focus();
+    if (carregado) return;
+    carregado = true;
+    function listar(q){
+      var url = 'https://www.googleapis.com/drive/v3/files?q=' + encodeURIComponent(q) + '&fields=' + encodeURIComponent('files(id,name)') + '&key=' + API_KEY;
+      return fetch(url).then(function(r){ return r.json(); }).then(function(j){ return j.files || []; });
+    }
+    listar("'" + PASTA_ID + "' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false")
+      .then(function(pastas){
+        if (!pastas.length){ lista.textContent = 'Nenhuma pasta encontrada.'; return; }
+        return Promise.all(pastas.map(function(p){
+          return listar("'" + p.id + "' in parents and trashed=false").then(function(arquivos){ return { pasta: p, qtd: arquivos.length }; });
+        })).then(function(resultado){
+          lista.innerHTML = '';
+          var ul = document.createElement('ul');
+          ul.style.textAlign = 'left';
+          resultado.forEach(function(r){
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.href = 'https://drive.google.com/drive/folders/' + r.pasta.id;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = r.pasta.name + ' (' + r.qtd + (r.qtd === 1 ? ' arquivo' : ' arquivos') + ')';
+            li.appendChild(a);
+            ul.appendChild(li);
+          });
+          lista.appendChild(ul);
+        });
+      }).catch(function(){ lista.textContent = 'Não foi possível carregar as pastas agora.'; });
+  }
+
+  function fecharModal(){
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    btn.focus();
+  }
+
+  btn.addEventListener('click', abrir);
+  fechar.addEventListener('click', fecharModal);
+  modal.addEventListener('click', function(e){ if (e.target === modal) fecharModal(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) fecharModal(); });
+})();
+
+/* ---------- mailto: no desktop, se não abrir cliente de e-mail, copia o endereço ---------- */
+(function(){
+  var DESKTOP = matchMedia('(pointer: fine) and (hover: hover)').matches;
+  if (!DESKTOP) return; // em celular o SO quase sempre resolve o mailto, deixa o padrão
+
+  function toast(texto){
+    var t = document.createElement('div');
+    t.className = 'toast-mailto';
+    t.textContent = texto;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 2500);
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="mailto:"]');
+    if (!a) return;
+    e.preventDefault();
+    var email = decodeURIComponent(a.href.replace(/^mailto:/, '').split('?')[0]);
+    var blurred = false;
+    function onBlur(){ blurred = true; }
+    window.addEventListener('blur', onBlur, { once: true });
+    location.href = a.href;
+    setTimeout(function(){
+      window.removeEventListener('blur', onBlur);
+      if (blurred) return; // abriu um app de e-mail: nada a fazer
+      navigator.clipboard.writeText(email).then(function(){ toast(email + ' copiado'); }).catch(function(){});
+    }, 400);
+  });
 })();
 
 /* ---------- Lightbox da galeria: abre a foto clicada, zoom por clique ---------- */

@@ -102,10 +102,10 @@
 .card{
   background:#fff;border:1px solid var(--linha);border-radius:var(--r-card);
   padding:24px;display:flex;flex-direction:column;gap:12px;
-  text-decoration:none;color:var(--navy);
+  text-decoration:none;color:var(--navy);text-align:left;width:100%;cursor:pointer;
   transition:border-color .18s ease,transform .18s ease;
 }
-a.card:hover{border-color:var(--navy);transform:translateY(-2px)}
+a.card:hover,button.card:hover{border-color:var(--navy);transform:translateY(-2px)}
 .card b{font-size:21px;font-weight:700;line-height:1.2;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .card b svg{width:20px;height:20px;flex:none}
 .card p{font-size:15px;line-height:1.55}
