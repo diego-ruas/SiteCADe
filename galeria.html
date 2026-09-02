@@ -66,6 +66,7 @@
       <h1 class="h-sec">Quem já fomos e o que já fizemos.</h1>
       <p class="lead">Fotos de eventos, festas, gestões anteriores e as pessoas que passaram por aqui. Participe da comunidade para encontrar uma foto sua aqui. :)</p>
       <p class="form-nota">As fotos vêm direto do nosso Google Drive — de vez em quando alguma miniatura falha em carregar e o card some sozinho.</p>
+      <a class="nav-cta" href="https://drive.google.com/drive/folders/1WkPaKrRCu0atXk0Wd5_D8AVe2cyHEBFm?usp=sharing" target="_blank" rel="noopener">Acessar Drive completo</a>
     </div>
 
     <div id="galeria-categorias"><p class="lead" id="galeria-carregando">Carregando categorias…</p></div>
@@ -188,7 +189,7 @@
   }
 
   function titulo(slug){
-    return slug.replace(/[-_]+/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    return slug.replace(/[-_]+/g, ' ').replace(/(^|\s)\S/g, function(c){ return c.toUpperCase(); });
   }
 
   listar("'" + GALERIA_DRIVE.pastaMae + "' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false", 'id,name')
