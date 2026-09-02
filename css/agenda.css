@@ -33,7 +33,7 @@ button.dia:hover{background:rgba(11,11,109,.09);color:var(--navy)}
   background:var(--branco);border:1px solid var(--linha);border-radius:var(--r-painel);
   padding:24px;display:flex;flex-direction:column;gap:8px;
 }
-.detalhe-rot{font-size:11px;font-weight:600;color:var(--navy-55)}
+.detalhe-rot{font-size:11px;font-weight:600;color:var(--navy-70)}
 .detalhe-data{font-size:13px;font-weight:600;color:var(--navy-75)}
 .detalhe-titulo{font-size:clamp(22px,2.4vw,28px);font-weight:800}
 .detalhe-desc{font-size:15px;line-height:1.4;color:rgba(11,11,109,.8)}

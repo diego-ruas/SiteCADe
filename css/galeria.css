@@ -1,0 +1,14 @@
+/* ============================================================
+   Página — Galeria completa (categorias com grid de fotos)
+   ============================================================ */
+.galeria-cat{margin-top:56px}
+.galeria-cat:first-child{margin-top:40px}
+.galeria-cat h3{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:16px}
+.galeria-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));grid-auto-rows:180px;gap:16px}
+.gal-vazio{
+  grid-column:1/-1;border:1.5px dashed var(--navy-35);border-radius:var(--r-card);
+  padding:32px 24px;text-align:center;font-size:15px;line-height:1.5;color:var(--navy-70);
+}
+.galeria-grid .gal-foto{position:relative;overflow:hidden}
+.galeria-grid .gal-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gal-ver-mais{margin-top:16px}

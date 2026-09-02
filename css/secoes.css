@@ -27,6 +27,13 @@
   transition:transform .18s ease;
 }
 .gal-foto:hover{transform:translateY(-4px)}
+/* cards do carrossel são sempre foto real (vindas do Drive): legenda em branco sobre o degradê */
+.galeria .gal-foto{position:relative;overflow:hidden}
+.galeria .gal-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.galeria .gal-foto img~span{
+  position:relative;z-index:1;color:var(--branco);width:calc(100% + 32px);margin:-16px;padding:16px;
+  background:linear-gradient(0deg,rgba(11,11,109,.85),transparent 70%);
+}
 .gal-seta{
   position:absolute;top:50%;translate:0 -50%;z-index:2;
   width:44px;height:44px;border-radius:50%;flex:none;
@@ -45,7 +52,7 @@
 .loja-badge{
   display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
   margin-top:4px;padding:8px 16px;border-radius:var(--r-pill);
-  background:var(--rosa);color:var(--branco);text-decoration:none;
+  background:#d9005d;color:var(--branco);text-decoration:none; /* --rosa puro só dá 3.55:1 com branco */
   font-size:13px;font-weight:700;transition:background-color .18s ease,transform .18s ease;
 }
 .loja-badge:hover{background:var(--navy);transform:translateY(-2px)}
