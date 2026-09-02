@@ -16,7 +16,6 @@
   font-size:18px;font-weight:500;color:var(--navy);text-decoration:none;
   padding:8px 2px;border-bottom:2px solid transparent;
 }
-.nav-link:hover{border-bottom-color:var(--navy)}
 .nav-link[aria-current="page"]{font-weight:600}
 /* o ponto vive no link ativo, então acompanha a seção em que você está */
 .nav-link[aria-current="page"]::before{
@@ -29,6 +28,10 @@
   font-size:18px;font-weight:500;color:var(--navy);text-decoration:none;min-height:44px;
   transition:background-color .18s ease;
 }
-.nav-cta:hover{background:#e2e4f2}
 .nav-cta svg{width:16px;height:16px}
 .nav-toggle{display:none}
+
+@media (hover:hover){
+  .nav-link:hover{border-bottom-color:var(--navy)}
+  .nav-cta:hover{background:#e2e4f2}
+}

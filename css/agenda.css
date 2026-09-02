@@ -15,7 +15,6 @@
   display:flex;align-items:center;justify-content:center;cursor:pointer;
   font-size:16px;font-weight:700;line-height:1;color:var(--navy-75);
 }
-.mes-nav:hover{background:rgba(11,11,109,.09);color:var(--navy)}
 .dia--hoje{outline:2px solid var(--navy);outline-offset:2px}
 .semana{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .rotulo{font-size:11px;font-weight:600;color:var(--navy-50);text-align:center;padding-block:4px}
@@ -27,13 +26,9 @@
 }
 .dia--vazio{visibility:hidden}
 button.dia{cursor:pointer}
-button.dia:hover{background:rgba(11,11,109,.09);color:var(--navy)}
 .dia--amarelo{background:var(--amarelo);color:var(--navy);font-weight:700}
 .dia--ciano{background:var(--ciano);color:var(--navy);font-weight:700}
 .dia--azul{background:var(--azul);color:var(--navy);font-weight:700}
-.dia--amarelo:hover{background:#e6c000}
-.dia--ciano:hover{background:#00bed0}
-.dia--azul:hover{background:#1c8dd9}
 .dia[aria-pressed="true"]{border-color:var(--navy)}
 
 .painel{display:flex;flex-direction:column;gap:16px;min-width:0}
@@ -57,7 +52,6 @@ button.dia:hover{background:rgba(11,11,109,.09);color:var(--navy)}
   padding:20px 24px;cursor:pointer;
   transition:border-color .18s ease,transform .18s ease;
 }
-.evt:hover{border-color:var(--navy);transform:translateY(-2px)}
 .evt-data{
   display:flex;flex-direction:column;align-items:center;flex:none;
   padding:12px 16px;border-radius:12px;min-width:64px;
@@ -72,3 +66,12 @@ button.dia:hover{background:rgba(11,11,109,.09);color:var(--navy)}
 .evt-titulo{font-size:clamp(17px,1.8vw,20px);font-weight:700;line-height:1.4}
 .evt-desc{font-size:15px;line-height:1.4}
 .evt-seta{width:25px;height:25px;flex:none}
+
+@media (hover:hover){
+  .mes-nav:hover{background:rgba(11,11,109,.09);color:var(--navy)}
+  button.dia:hover{background:rgba(11,11,109,.09);color:var(--navy)}
+  .dia--amarelo:hover{background:#e6c000}
+  .dia--ciano:hover{background:#00bed0}
+  .dia--azul:hover{background:#1c8dd9}
+  .evt:hover{border-color:var(--navy);transform:translateY(-2px)}
+}

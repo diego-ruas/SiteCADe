@@ -111,9 +111,12 @@ ul{margin:0;padding:0;list-style:none}
 }
 .btn svg{width:20px;height:20px;flex:none}
 .btn--primary{background:var(--verde);border-color:var(--verde);color:var(--navy)}
-.btn--primary:hover{background:var(--verde-hover);border-color:var(--verde-hover)}
 .btn--navy{background:var(--navy);border-color:var(--navy);color:var(--branco)}
-.btn--navy:hover{background:var(--navy-hover);border-color:var(--navy-hover)}
 .btn--ghost{background:var(--branco);border-color:var(--navy);color:var(--navy)}
-.btn--ghost:hover{background:#e2e4f2}
 .btn--bloco{width:100%}
+
+@media (hover:hover){
+  .btn--primary:hover{background:var(--verde-hover);border-color:var(--verde-hover)}
+  .btn--navy:hover{background:var(--navy-hover);border-color:var(--navy-hover)}
+  .btn--ghost:hover{background:#e2e4f2}
+}

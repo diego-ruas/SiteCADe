@@ -38,10 +38,12 @@
 
 /* plus: gira 180° no hover (spring) */
 .la-plus{transform:rotate(0deg);transition:transform .5s cubic-bezier(.2,.9,.2,1.15);transform-origin:center}
-.btn--ghost:hover .la-plus,
 .btn--ghost:focus-visible .la-plus,
-.faq summary:hover .la-plus,
 .faq summary:focus-visible .la-plus{transform:rotate(180deg)}
+@media (hover:hover){
+  .btn--ghost:hover .la-plus,
+  .faq summary:hover .la-plus{transform:rotate(180deg)}
+}
 
 /* user: desenha o traço */
 .la-user .la-ur-cabeca,
