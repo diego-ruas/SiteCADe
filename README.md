@@ -1,19 +1,26 @@
-# CADe UFPel — landing page
+# CADe UFPel
 
-Página única do Centro Acadêmico de Design da UFPel, migrada de um design Figma. HTML, CSS e JS sem build, framework ou CDN.
+Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, CSS e JS puros — sem build, framework ou CDN de JS.
 
-**Acesse:** https://cadeufpel.com
+**Ao vivo:** [cadeufpel.com](https://cadeufpel.com)
+
+---
 
 ## Stack
 
-- **`index.html`:** HTML e JS (no fim do `<body>`, em IIFEs separadas), sem dependências.
-- **CSS dividido em `css/`:** 8 arquivos carregados via `<link>` no `<head>`, na ordem de cascata.
-- **Tipografia:** LT Superior, self-hosted em `assets/font/`.
-- **Ícones:** SVGs Lucide inline, animados por CSS (`@keyframes`) + IIFE de replay — sem lib de animação.
-- **`api/enviar.js`:** função serverless da Vercel (Node, sem dependências — chama a REST API do Resend direto com `fetch`) que recebe os dois formulários do site e envia por e-mail. Exige as env vars abaixo configuradas no painel da Vercel (Project → Settings → Environment Variables):
-  - `RESEND_API_KEY` (obrigatória) — chave secreta do Resend, nunca commitar.
-  - `RESEND_TO` (opcional) — e-mail de destino. Padrão: `cadesignufpel@gmail.com`.
-  - `RESEND_FROM` (opcional) — remetente. Padrão: `CADe UFPel <onboarding@resend.dev>` (sandbox do Resend); trocar para um endereço em domínio verificado assim que possível.
+| Camada | Escolha |
+|---|---|
+| HTML/JS | `index.html` e `galeria.html`, cada um com seu JS no fim do `<body>` (IIFEs separadas, uma por feature) |
+| CSS | dividido em `css/*.css`, carregado via `<link>` no `<head>`, na ordem da cascata |
+| Tipografia | LT Superior, self-hosted em `assets/font/` (`.woff2`) |
+| Ícones | SVGs Lucide inline, animados por CSS `@keyframes` + IIFE de replay |
+| Analytics | Vercel Analytics (`/_vercel/insights/script.js`), sem cookies |
+| Backend | `api/enviar.js` — função serverless da Vercel (Node puro, `fetch` direto na REST API do Resend) para os formulários de contato |
+
+## Páginas
+
+- `index.html` — página principal (hero, agenda, quem somos, histórico, lojinha, guia do calouro, oportunidades, FAQ, formulários).
+- `galeria.html` — `/galeria`, fotos de eventos e gestões anteriores.
 
 ## Arquivos de estilo
 
@@ -22,11 +29,12 @@ Página única do Centro Acadêmico de Design da UFPel, migrada de um design Fig
 | `css/base.css` | `@font-face`, tokens `:root`, reset, tipografia, estrutura, botões, focus-visible |
 | `css/nav.css` · `css/hero.css` · `css/agenda.css` | seções 01, 02 e 03 |
 | `css/secoes.css` | 04 quem somos, 05 histórico/galeria, lojinha, 06 guia, 07 oportunidades, 08 FAQ, 09 links, 10 formulários, 11 footer |
+| `css/galeria.css` | layout de `galeria.html` |
 | `css/componentes.css` | faixa de fotos, popup de oportunidade, botão voltar ao topo |
 | `css/icons.css` | ícones lucide-animated |
 | `css/responsivo.css` | todas as `@media` (1180, 900, 720, 400, reduced-motion) |
 
-## Estrutura
+## Estrutura da home
 
 Quatro `div.area` com fundo próprio, cada uma com uma `.faixa` colorida no topo:
 
@@ -39,24 +47,33 @@ Quatro `div.area` com fundo próprio, cada uma com uma `.faixa` colorida no topo
 
 A nav marca a área ativa via `aria-current="page"`, calculada por listener de scroll.
 
-## Rodando local
+## Formulário de contato
 
-Sirva `index.html` estaticamente — por exemplo:
+`api/enviar.js` recebe os dois formulários do site e envia por e-mail via Resend. Env vars (Vercel → Project → Settings → Environment Variables):
+
+| Variável | Obrigatória | Padrão |
+|---|---|---|
+| `RESEND_API_KEY` | sim | — (nunca commitar) |
+| `RESEND_TO` | não | `cadesignufpel@gmail.com` |
+| `RESEND_FROM` | não | `CADe UFPel <onboarding@resend.dev>` (sandbox — trocar para domínio verificado) |
+
+## Rodando local
 
 ```sh
 npx serve
 ```
 
-Abra o endereço indicado no navegador. O arquivo também abre direto no navegador, mas servir via HTTP evita qualquer comportamento estranho de `file://`.
+Abra o endereço indicado. `index.html` também abre direto no navegador, mas servir via HTTP evita comportamento estranho de `file://` (e é preciso para testar `api/enviar.js` via `vercel dev`).
 
 ## Deploy
 
-Hospedado na **Vercel**. O `vercel.json` define:
+Hospedado na **Vercel**, deploy automático a cada push em `main`. `vercel.json` define:
 
 - `cleanUrls` — URLs sem `.html`.
+- Redirect 301 de `cade.diegoruas.com.br` para `cadeufpel.com`.
 - `Cache-Control` imutável (`max-age=31536000, immutable`) para as fontes em `assets/font/`.
 - `X-Content-Type-Options: nosniff` em todas as respostas.
 
 ## Contribuindo
 
-Antes de alterar, leia o [`AGENTS.md`](AGENTS.md) — ele define as convenções do projeto: tokens em `:root`, ids `data-od-id`, breakpoints (1180px, 900px, 720px, 400px) e as regras de hover/focus-visible. A copy oficial vem do Figma e não deve ser inventada.
+Antes de alterar, leia o [`AGENTS.md`](AGENTS.md) — convenções do projeto: tokens em `:root`, ids `data-od-id`, breakpoints (1180px, 900px, 720px, 400px), regras de ícones e de hover/focus-visible. A copy oficial vem do Figma e não deve ser inventada.
