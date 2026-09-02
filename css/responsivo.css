@@ -33,6 +33,7 @@
   .nav-link{width:100%;min-height:44px;border-bottom:1px solid var(--linha)}
   .nav-link--mobile{display:flex;font-weight:700;border-bottom:0}
   .nav-cta{display:none}
+  .nav-cta.galeria-drive-cta{display:inline-flex}
   .agenda-head{align-items:flex-start}
   .agenda-head .btn{width:100%}
   .op-head .btn{width:100%}
