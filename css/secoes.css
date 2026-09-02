@@ -247,3 +247,4 @@ a.card:hover,button.card:hover{border-color:var(--navy);transform:translateY(-2p
 .footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;line-height:1.4}
 .footer-bottom a{color:inherit;text-decoration-color:var(--amarelo)}
 .footer-bottom a:hover{color:var(--amarelo)}
+.footer-github{display:inline-flex;align-items:center;gap:6px;text-decoration:none}
