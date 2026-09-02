@@ -15,6 +15,13 @@ function limparEnv(valor, padrao) {
   return String(valor || padrao).trim().replace(/^["']|["']$/g, '');
 }
 
+const RE_FROM = /^([^<>]+<)?[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+>?$/;
+// aceita variável só se estiver no formato email@x.com ou Nome <email@x.com>; senão usa o padrão
+function limparFrom(valor) {
+  const v = limparEnv(valor, PADRAO_DE);
+  return RE_FROM.test(v) ? v : PADRAO_DE;
+}
+
 function escapeHtml(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -95,7 +102,7 @@ module.exports = async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: limparEnv(process.env.RESEND_FROM, PADRAO_DE),
+        from: limparFrom(process.env.RESEND_FROM),
         to: [limparEnv(process.env.RESEND_TO, PADRAO_PARA)],
         subject: assunto,
         html
