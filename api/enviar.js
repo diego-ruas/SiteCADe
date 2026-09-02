@@ -10,6 +10,11 @@
 const PADRAO_PARA = 'cadesignufpel@gmail.com';
 const PADRAO_DE = 'CADe UFPel <naoresponda@cadeufpel.com>';
 
+// remove aspas/espaço que sobram ao colar valores no painel da Vercel (erro comum)
+function limparEnv(valor, padrao) {
+  return String(valor || padrao).trim().replace(/^["']|["']$/g, '');
+}
+
 function escapeHtml(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -30,7 +35,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = limparEnv(process.env.RESEND_API_KEY, '');
   if (!apiKey) {
     console.error('[api/enviar] RESEND_API_KEY não configurada');
     res.status(500).json({ ok: false, erro: 'Envio de e-mail não configurado no servidor' });
@@ -90,8 +95,8 @@ module.exports = async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: process.env.RESEND_FROM || PADRAO_DE,
-        to: [process.env.RESEND_TO || PADRAO_PARA],
+        from: limparEnv(process.env.RESEND_FROM, PADRAO_DE),
+        to: [limparEnv(process.env.RESEND_TO, PADRAO_PARA)],
         subject: assunto,
         html
       })
