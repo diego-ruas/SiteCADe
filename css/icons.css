@@ -51,6 +51,12 @@
 .la-user.la-on .la-ur-cabeca{animation:la-user-cabeca .4s ease-out}
 .la-user.la-on .la-ur-corpo{animation:la-user-corpo .4s ease-out .2s}
 
+/* chevron-left/right: nudge de 2px na direção do movimento */
+@keyframes la-cl{0%,100%{transform:translateX(0)}50%{transform:translateX(-2px)}}
+@keyframes la-cr{0%,100%{transform:translateX(0)}50%{transform:translateX(2px)}}
+.la-cl.la-on{animation:la-cl .5s ease-in-out}
+.la-cr.la-on{animation:la-cr .5s ease-in-out}
+
 /* github: corpo desenha o traço + cauda balança (wag) */
 .la-gh .la-gh-corpo,
 .la-gh .la-gh-cauda{stroke-dasharray:1;stroke-dashoffset:0}
