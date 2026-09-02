@@ -216,7 +216,7 @@
             function addFoto(f){
               var img = document.createElement('img');
               img.src = 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1600';
-              img.alt = titulo(f.pasta); img.loading = 'lazy';
+              img.alt = titulo(pasta.name); img.loading = 'lazy';
               var btn = document.createElement('button');
               btn.className = 'gal-foto';
               btn.type = 'button';
