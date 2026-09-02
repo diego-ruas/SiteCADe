@@ -685,7 +685,13 @@
     marcar(i);
   }
 
-  window.addEventListener('scroll', ativa, { passive: true });
+  var agendada = false;
+  function noScroll(){
+    if (agendada) return;
+    agendada = true;
+    window.requestAnimationFrame(function(){ agendada = false; ativa(); });
+  }
+  window.addEventListener('scroll', noScroll, { passive: true });
   window.addEventListener('resize', ativa);
   ativa();
 })();
@@ -741,7 +747,13 @@
   btn.addEventListener('click', function(){
     window.scrollTo(0, 0);   /* suave via html{scroll-behavior:smooth} */
   });
-  window.addEventListener('scroll', atualiza, { passive: true });
+  var agendado = false;
+  function noScroll(){
+    if (agendado) return;
+    agendado = true;
+    window.requestAnimationFrame(function(){ agendado = false; atualiza(); });
+  }
+  window.addEventListener('scroll', noScroll, { passive: true });
   window.addEventListener('resize', atualiza);
   atualiza();
 })();
@@ -896,58 +908,27 @@
   });
 })();
 
-/* ---------- Faixa de fotos: loop por rAF, pausa fora da viewport / hover / aba oculta ---------- */
+/* ---------- Faixa de fotos: animação CSS (compositor), JS só liga/pausa ---------- */
 (function(){
   var track = document.getElementById('gestao-track');
   if (!track) return;
   var scroller = track.parentNode;
 
   var reduz = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var curto = window.matchMedia('(max-width:720px)');   /* peças menores + giro mais rápido */
+  var parado = false, desligado = reduz.matches;
 
-  var setWidth = 0, speed = 0, pos = 0, last = 0, rafId = 0;
-  var running = false, parado = false, desligado = reduz.matches;
-
-  function medir(){
-    setWidth = track.scrollWidth / 2;              /* uma cópia da trilha */
-    speed = setWidth / (curto.matches ? 32000 : 40000);
-    pos = pos % setWidth;
+  function aplica(){
+    track.style.animationPlayState = (!desligado && !parado) ? 'running' : 'paused';
   }
 
-  function liga(){
-    if (desligado || running) return;
-    running = true;
-    last = performance.now();
-    rafId = window.requestAnimationFrame(tick);
-  }
-  function desliga(){
-    if (!running) return;
-    running = false;
-    window.cancelAnimationFrame(rafId);
-  }
-
-  function tick(now){
-    if (!running) return;
-    var dt = now - last;
-    last = now;
-    if (!parado && setWidth > 0){
-      pos += dt * speed;
-      if (pos >= setWidth) pos = pos % setWidth;   /* volta sem emenda */
-      track.style.transform = 'translate3d(' + (-pos).toFixed(2) + 'px,0,0)';
-    }
-    rafId = window.requestAnimationFrame(tick);
-  }
-
-  function retoma(){ parado = false; liga(); }
-  function pausa(){ parado = true; }
+  function retoma(){ parado = false; aplica(); }
+  function pausa(){ parado = true; aplica(); }
 
   /* não anima fora da viewport */
   if ('IntersectionObserver' in window){
     new IntersectionObserver(function(entries){
       entries.forEach(function(e){ e.isIntersecting ? retoma() : pausa(); });
     }, { threshold: 0 }).observe(scroller);
-  } else {
-    liga();
   }
 
   /* foco pausa */
@@ -959,24 +940,10 @@
     document.hidden ? pausa() : retoma();
   });
 
-  /* recalcula tamanho/duração em resize e no breakpoint */
-  function reajusta(){ medir(); if (!parado && !desligado) liga(); }
-  window.addEventListener('resize', reajusta);
-  curto.addListener(reajusta);
+  /* reduced-motion: desliga (duração já cai pro CSS global de .01ms, isto só evita o "running" residual) */
+  reduz.addListener(function(e){ desligado = e.matches; aplica(); });
 
-  /* reduced-motion: desliga o loop e deixa o carrossel de arrastar agir */
-  reduz.addListener(function(e){
-    desligado = e.matches;
-    if (desligado){
-      desliga(); pos = 0;
-      track.style.transform = 'translate3d(0,0,0)';
-    } else {
-      medir(); liga();
-    }
-  });
-
-  medir();
-  if (!desligado) liga();
+  aplica();
 })();
 
 /* ---------- Agenda: calendário + lista de eventos, sincronizada com o Google Calendar ---------- */
