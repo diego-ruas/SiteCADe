@@ -22,6 +22,13 @@ function limparFrom(valor) {
   return RE_FROM.test(v) ? v : PADRAO_DE;
 }
 
+// e-mail puro ASCII (Resend rejeita "to" com caracteres não-ASCII, ex: aspas curvas coladas do painel da Vercel)
+const RE_TO = /^[\x21-\x7E]+@[\x21-\x7E]+\.[\x21-\x7E]+$/;
+function limparTo(valor) {
+  const v = limparEnv(valor, PADRAO_PARA);
+  return RE_TO.test(v) ? v : PADRAO_PARA;
+}
+
 function escapeHtml(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -103,7 +110,7 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         from: limparFrom(process.env.RESEND_FROM),
-        to: [limparEnv(process.env.RESEND_TO, PADRAO_PARA)],
+        to: [limparTo(process.env.RESEND_TO)],
         subject: assunto,
         html
       })
