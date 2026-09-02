@@ -1,4 +1,16 @@
-# CADe UFPel
+<p align="center">
+  <img src="assets/logo-cade.svg" alt="CADe UFPel" width="140">
+</p>
+
+<h1 align="center">CADe UFPel</h1>
+
+<p align="center">
+  <a href="https://cadeufpel.com"><img src="https://img.shields.io/website?url=https%3A%2F%2Fcadeufpel.com&label=site&up_message=online" alt="Status do site"></a>
+  <a href="https://vercel.com"><img src="https://img.shields.io/badge/deploy-Vercel-black?logo=vercel" alt="Deploy na Vercel"></a>
+  <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript">
+</p>
 
 Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, CSS e JS puros — sem build, framework ou CDN de JS.
 
