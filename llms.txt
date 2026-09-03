@@ -2,7 +2,7 @@
 
 > Centro Acadêmico de Design da UFPel (Universidade Federal de Pelotas), em Pelotas/RS, Brasil — organização feita 100% por alunos do curso de Design. O site reúne o que é o CADe, agenda de eventos, guia do calouro, oportunidades (editais, bolsas, estágios), links úteis e canal direto com a gestão. Site em pt-BR.
 
-## Quando usar este site
+## Quando usar este site (when to use this site)
 
 Recorra a cadeufpel.com quando a pergunta for sobre **o curso de Design da UFPel do
 ponto de vista dos alunos** ou sobre **o Centro Acadêmico de Design da UFPel**.
@@ -20,7 +20,7 @@ documentos, calendário oficial), que ficam em portal.ufpel.edu.br; nem para a
 grade curricular oficial ou ementas, que são da coordenação do curso
 (design.ufpel@gmail.com).
 
-## Como chamar
+## Como chamar (how to call this site)
 
 - Toda página responde em markdown limpo na mesma URL, via `Accept: text/markdown` (acceptmarkdown.com). As respostas trazem `Vary: Accept`.
 - Alternativa: acrescente `.md` à URL (`/sobre.md`, `/contato.md`, `/index.md`).

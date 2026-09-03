@@ -229,6 +229,57 @@ teste('paginas novas tem canonical no apex e JSON-LD valido', () => {
   });
 });
 
+// Percorre o JSON-LD e devolve todo no com @type Organization (inclusive aninhado
+// em @graph, mainEntity ou publisher).
+function organizacoes(json) {
+  const achadas = [];
+  (function anda(n) {
+    if (Array.isArray(n)) return n.forEach(anda);
+    if (!n || typeof n !== 'object') return;
+    if (n['@type'] === 'Organization') achadas.push(n);
+    Object.keys(n).forEach((k) => anda(n[k]));
+  })(json);
+  return achadas;
+}
+
+teste('toda Organization no JSON-LD tem contactPoint e address', () => {
+  // O audit le a Organization de cada pagina isoladamente: faltar um dos dois
+  // derruba a verificacao de legitimidade mesmo que outra pagina traga o campo.
+  ['index.html', 'sobre.html', 'contato.html', 'privacidade.html'].forEach((f) => {
+    const ld = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(ler(f));
+    const orgs = organizacoes(JSON.parse(ld[1]));
+    assert.ok(orgs.length, f + ' sem Organization no JSON-LD');
+
+    // Referencias por @id ({"@id": "..."}) so apontam para o no completo do @graph.
+    orgs.filter((o) => Object.keys(o).length > 2).forEach((org) => {
+      assert.ok(org.contactPoint, f + ': Organization "' + org.name + '" sem contactPoint');
+      const cp = [].concat(org.contactPoint)[0];
+      assert.ok(cp.contactType, f + ': contactPoint sem contactType');
+      assert.ok(cp.email || cp.telephone, f + ': contactPoint sem email nem telefone');
+
+      assert.ok(org.address, f + ': Organization "' + org.name + '" sem address');
+      assert.strictEqual(org.address['@type'], 'PostalAddress', f + ': address nao e PostalAddress');
+      assert.ok(org.address.addressLocality && org.address.addressCountry, f + ': address incompleto');
+    });
+  });
+});
+
+teste('paginas negociaveis anunciam o .md e o llms.txt no head', () => {
+  // Sem o rel=help o llms.txt so existia num comentario do robots.txt, que
+  // nenhum parser de HTML le.
+  ['index.html', 'sobre.html', 'contato.html', 'privacidade.html', 'galeria.html'].forEach((f) => {
+    const s = ler(f);
+    assert.ok(/<link rel="alternate" type="text\/markdown"/.test(s), f + ' sem alternate markdown');
+    assert.ok(/<link rel="help"[^>]+llms\.txt/.test(s), f + ' sem rel=help para llms.txt');
+  });
+});
+
+teste('a home traz o nome de marca exato no title', () => {
+  // "CADe - UFPel" (com hifen) nao casa com a busca pela marca "CADe UFPel".
+  const t = /<title>([^<]+)<\/title>/.exec(ler('index.html'))[1];
+  assert.ok(/CADe UFPel/.test(t), 'title da home sem a marca exata: ' + t);
+});
+
 teste('so usa codepoints de icone presentes no subset da fonte', () => {
   // AGENTS.md: o subset traz so os codepoints em uso; glifo novo vira retangulo vazio.
   const existentes = new Set();
@@ -251,6 +302,8 @@ teste('llms.txt tem secao de quando usar', () => {
   const t = ler('llms.txt');
   assert.ok(/##\s*Quando usar/i.test(t), 'llms.txt sem "Quando usar"');
   assert.ok(/##\s*Como chamar/i.test(t), 'llms.txt sem "Como chamar"');
+  // Os headings sao pt-BR; o marcador em ingles e o que detector de "when to use" acha.
+  assert.ok(/when to use/i.test(t), 'llms.txt sem marcador "when to use"');
   assert.ok(/Accept:\s*text\/markdown/.test(t), 'llms.txt nao documenta a negociacao');
   // precisa dizer tambem para o que NAO serve, senao vira copy de marketing
   assert.ok(/Não é a fonte certa/.test(t), 'llms.txt sem limites de uso');
