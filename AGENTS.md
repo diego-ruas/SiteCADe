@@ -12,9 +12,9 @@ Página única do Centro Acadêmico de Design da UFPel, migrada de um design Fig
   - `secoes.css` — seções 04 (quem somos), 05 (histórico/galeria), lojinha, 06 (guia), 07 (oportunidades), 08 (FAQ), 09 (links), 10 (formulários) e 11 (footer).
   - `galeria.css` — layout específico de `galeria.html`.
   - `componentes.css` — faixa de fotos, popup de oportunidade, botão voltar ao topo.
-  - `icons.css` — ícones lucide-animated.
+  - `icons.css` — `@font-face` do Material Symbols + classes `.m-icon` / `.brand-icon`.
   - `responsivo.css` — todas as `@media` (1180, 900, 720, 400, reduced-motion).
-- `assets/` — SVGs de marca (logos, mascotes, favicon), fontes `.woff2` em `assets/font/` e JPGs de produto exportados do Figma. Sempre referência relativa. Os ícones de UI NÃO ficam aqui: são SVGs inline no `index.html` (ver regra de ícones).
+- `assets/` — SVGs de marca (logos, mascotes, favicon), fontes `.woff2` em `assets/font/` e JPGs de produto exportados do Figma. Sempre referência relativa. Os ícones de UI vêm da fonte `assets/font/material-symbols.woff2` (ver regra de ícones).
 
 Fonte do design: Figma `fFejL7f3oqdLNoPUqCwzD0` (arquivo "CADe - Landing Page"). Os textos oficiais vêm de lá — não invente copy.
 
@@ -24,8 +24,10 @@ Fonte do design: Figma `fFejL7f3oqdLNoPUqCwzD0` (arquivo "CADe - Landing Page").
 - **Tokens:** só as variáveis de `:root` (`--navy`, `--ciano`, `--verde`, `--amarelo`, `--rosa`, `--bg-*`, `--gut`, `--sec-y`, `--r-*`). Nunca hex solto no CSS novo.
 - **Tipografia:** LT Superior (self-hosted em `assets/font/`, formato `.woff2`) para tudo.
 - **`data-od-id`:** cada seção, heading, CTA, controle e card repetido tem um id kebab-case único. Mantenha ao editar e adicione em elementos novos.
-- **Sem dependências.** Nada de build, framework ou CDN de JS. O JS é ES5 em IIFEs separadas, uma por feature. Animações de ícone são CSS (`@keyframes`) + a IIFE de replay — não adicione lib de animação.
-- **Ícones (lucide-animated):** todo ícone de UI é SVG inline (Lucide: `viewBox="0 0 24 24"`, `stroke="currentColor"`, `stroke-width="2"`, `aria-hidden`), não arquivo. Animado no hover/focus se tiver `class="… lucide-icon la-<glifo>"` + `data-la="1"`; a `@keyframes` entra no bloco CSS `Ícones lucide-animated` e o replay é feito pela delegação do IIFE `Ícones lucide-animated` (não crie listener por ícone). `plus` gira 180° por transição (`.la-plus`); `minus` não tem variante animada (fica estático). Cor padrão é `currentColor` (herda do texto); cor de marca fixa usa token no CSS (ex.: `.faq-icone--mais{color:var(--rosa)}`), nunca hex.
+- **Sem dependências.** Nada de build, framework ou CDN de JS. O JS é ES5 em IIFEs separadas, uma por feature. Ícones não animam; não adicione lib de animação.
+- **Ícones (Material Symbols):** todo ícone de UI é `<span class="m-icon" aria-hidden="true">&#xNNNN;</span>` — Material Symbols Outlined, self-hosted em `assets/font/material-symbols.woff2` (subset, ~1KB). Use o **codepoint PUA**, não a ligadura de texto: com `font-display:block` a ligadura mostraria o nome cru ("arrow_forward") antes da fonte carregar. Tamanho por `font-size` (`.m-icon` = 20px; modificadores `.m-icon--16`, `.m-icon--18`), nunca `width`/`height`. `aria-hidden` é obrigatório — sem ele o leitor de tela anuncia o caractere PUA. Ícones são estáticos: não há animação de hover/focus. Cor padrão é `currentColor`; cor de marca fixa usa token (ex.: `.faq-icone--mais{color:var(--rosa)}`), nunca hex.
+  - **Glifo novo:** o subset só traz os codepoints em uso. Adicionar ícone exige re-subsetar a fonte incluindo o novo codepoint, senão ele renderiza como retângulo vazio.
+  - **Logos de marca** (GitHub, Instagram) não existem no Material Symbols: seguem SVG inline com `class="brand-icon"`.
 - **Não use `scrollIntoView`** — quebra o preview embutido.
 - **`body{overflow-x:clip}`** é deliberado: `hidden` mataria o `position:sticky` da nav.
 

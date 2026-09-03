@@ -25,7 +25,7 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 | HTML/JS | `index.html` e `galeria.html`, cada um com seu JS no fim do `<body>` (IIFEs separadas, uma por feature) |
 | CSS | dividido em `css/*.css`, carregado via `<link>` no `<head>`, na ordem da cascata |
 | Tipografia | LT Superior, self-hosted em `assets/font/` (`.woff2`) |
-| Ícones | SVGs Lucide inline, animados por CSS `@keyframes` + IIFE de replay |
+| Ícones | Google Material Symbols, self-hosted em `assets/font/material-symbols.woff2` (subset, ~1KB); logos de marca seguem SVG inline |
 | Analytics | Vercel Analytics (`/_vercel/insights/script.js`), sem cookies |
 | Backend | `api/enviar.js` — função serverless da Vercel (Node puro, `fetch` direto na REST API do Resend) para os formulários de contato |
 
@@ -60,7 +60,7 @@ llms.txt, robots.txt, sitemap.xml, vercel.json
 | `css/secoes.css` | 04 quem somos, 05 histórico/galeria, lojinha, 06 guia, 07 oportunidades, 08 FAQ, 09 links, 10 formulários, 11 footer |
 | `css/galeria.css` | layout de `galeria.html` |
 | `css/componentes.css` | faixa de fotos, popup de oportunidade, botão voltar ao topo |
-| `css/icons.css` | ícones lucide-animated |
+| `css/icons.css` | `@font-face` do Material Symbols + classes `.m-icon` / `.brand-icon` |
 | `css/responsivo.css` | todas as `@media` (1180, 900, 720, 400, reduced-motion) |
 
 ## Estrutura da home

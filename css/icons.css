@@ -1,74 +1,22 @@
 /* ============================================================
-   Ícones lucide-animated (SVG inline, animam no hover/focus)
+   Ícones — Google Material Symbols Outlined (self-hosted, subset)
+   Glifos por codepoint PUA numa <span aria-hidden>; estáticos.
+   O logo do GitHub não existe no Material: segue SVG inline.
    ============================================================ */
-.lucide-icon{display:block;flex:none}
-.lucide-icon *{transform-box:fill-box}
-.lucide-icon[data-la]{transform-box:fill-box}
-
-/* arrow-right: haste encurta + cabeça desliza */
-.la-ar .la-shaft{transform-origin:left center}
-.la-ar .la-head{transform-origin:center}
-@keyframes la-ar-haste{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.64)}}
-@keyframes la-ar-cabeca{0%,100%{transform:translateX(0)}50%{transform:translateX(-3px)}}
-.la-ar.la-on .la-shaft{animation:la-ar-haste .4s ease-in-out}
-.la-ar.la-on .la-head{animation:la-ar-cabeca .4s ease-in-out}
-
-/* arrow-up: haste encurta de cima + cabeça desce */
-.la-au .la-shaft{transform-origin:bottom center}
-.la-au .la-head{transform-origin:center}
-@keyframes la-au-haste{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.64)}}
-@keyframes la-au-cabeca{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
-.la-au.la-on .la-shaft{animation:la-au-haste .4s ease-in-out}
-.la-au.la-on .la-head{animation:la-au-cabeca .4s ease-in-out}
-
-/* arrow-up-right: nudge da seta (origem na ponta) */
-.la-aur{transform-origin:71% 29%}
-@keyframes la-aur{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(.85) translate(-4px,4px)}}
-.la-aur.la-on{animation:la-aur .5s ease-in-out}
-
-/* calendar-days: pontinhos piscam escalonado */
-@keyframes la-blink{0%,100%{opacity:1}50%{opacity:.3}}
-.la-cal.la-on circle{animation:la-blink .4s ease-in-out}
-.la-cal.la-on circle:nth-of-type(1){animation-delay:0s}
-.la-cal.la-on circle:nth-of-type(2){animation-delay:.1s}
-.la-cal.la-on circle:nth-of-type(3){animation-delay:.2s}
-.la-cal.la-on circle:nth-of-type(4){animation-delay:.3s}
-.la-cal.la-on circle:nth-of-type(5){animation-delay:.4s}
-.la-cal.la-on circle:nth-of-type(6){animation-delay:.5s}
-
-/* plus: gira 180° no hover (spring) */
-.la-plus{transform:rotate(0deg);transition:transform .5s cubic-bezier(.2,.9,.2,1.15);transform-origin:center}
-.btn--ghost:focus-visible .la-plus,
-.faq summary:focus-visible .la-plus{transform:rotate(180deg)}
-@media (hover:hover){
-  .btn--ghost:hover .la-plus,
-  .faq summary:hover .la-plus{transform:rotate(180deg)}
+@font-face{
+  font-family:'MaterialSymbols';font-weight:400;font-style:normal;font-display:block;
+  src:url('../assets/font/material-symbols.woff2') format('woff2');
 }
 
-/* user: desenha o traço */
-.la-user .la-ur-cabeca,
-.la-user .la-ur-corpo{stroke-dasharray:1;stroke-dashoffset:0}
-@keyframes la-user-cabeca{0%{stroke-dashoffset:1;transform:scale(.5)}100%{stroke-dashoffset:0;transform:scale(1)}}
-@keyframes la-user-corpo{0%{stroke-dashoffset:1}100%{stroke-dashoffset:0}}
-.la-user.la-on .la-ur-cabeca{animation:la-user-cabeca .4s ease-out}
-.la-user.la-on .la-ur-corpo{animation:la-user-corpo .4s ease-out .2s}
-
-/* chevron-left/right: nudge de 2px na direção do movimento */
-@keyframes la-cl{0%,100%{transform:translateX(0)}50%{transform:translateX(-2px)}}
-@keyframes la-cr{0%,100%{transform:translateX(0)}50%{transform:translateX(2px)}}
-.la-cl.la-on{animation:la-cl .5s ease-in-out}
-.la-cr.la-on{animation:la-cr .5s ease-in-out}
-
-/* github: corpo desenha o traço + cauda balança (wag) */
-.la-gh .la-gh-corpo,
-.la-gh .la-gh-cauda{stroke-dasharray:1;stroke-dashoffset:0}
-.la-gh .la-gh-cauda{transform-origin:100% 100%}
-@keyframes la-gh-corpo{0%{stroke-dashoffset:1;transform:scale(.9)}100%{stroke-dashoffset:0;transform:scale(1)}}
-@keyframes la-gh-cauda{0%{stroke-dashoffset:1;transform:rotate(0deg)}40%{stroke-dashoffset:0;transform:rotate(0deg)}55%{transform:rotate(-15deg)}70%{transform:rotate(15deg)}82%{transform:rotate(-10deg)}92%{transform:rotate(10deg)}100%{transform:rotate(0deg)}}
-.la-gh.la-on .la-gh-corpo{animation:la-gh-corpo .4s ease-out}
-.la-gh.la-on .la-gh-cauda{animation:la-gh-cauda .9s ease-in-out}
-
-@media (prefers-reduced-motion: reduce){
-  .lucide-icon[data-la], .lucide-icon[data-la] *{animation:none!important}
-  .la-plus{transition:none}
+.m-icon{
+  font-family:'MaterialSymbols';font-weight:400;font-style:normal;
+  font-size:20px;line-height:1;letter-spacing:normal;text-transform:none;
+  display:block;flex:none;white-space:nowrap;word-wrap:normal;direction:ltr;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  user-select:none;
 }
+.m-icon--16{font-size:16px}
+.m-icon--18{font-size:18px}
+
+/* GitHub: SVG inline (Material Symbols não traz logos de marca) */
+.brand-icon{display:block;flex:none}

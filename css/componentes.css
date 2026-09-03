@@ -73,6 +73,25 @@
 .modal-texto{font-size:16px;line-height:1.6;color:var(--navy-75)}
 .modal .btn{margin-top:8px}
 
+/* lista de pastas do Drive dentro do popup Materiais */
+.mat-lista{list-style:none;display:flex;flex-direction:column;gap:10px}
+.mat-item a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:16px;text-decoration:none;
+  border:1.5px solid var(--navy-35);color:var(--navy);
+  transition:border-color .18s ease,background-color .18s ease,transform .18s ease;
+}
+.mat-nome{font-weight:700;font-size:16px;flex:1;min-width:0}
+.mat-qtd{font-size:13px;color:var(--navy-55);white-space:nowrap}
+.mat-item .m-icon{flex:none}
+@media (hover:hover){
+  .mat-item a:hover{border-color:var(--navy);background:#e2e4f2;transform:translateX(2px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .mat-item a{transition:none}
+  .mat-item a:hover{transform:none}
+}
+
 /* ============================================================
    Lightbox da galeria (zoom por clique, arraste/scroll pra navegar)
    ============================================================ */

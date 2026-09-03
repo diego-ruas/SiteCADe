@@ -65,7 +65,7 @@ button.dia{cursor:pointer}
 .evt-info{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
 .evt-titulo{font-size:clamp(17px,1.8vw,20px);font-weight:700;line-height:1.4}
 .evt-desc{font-size:15px;line-height:1.4}
-.evt-seta{width:25px;height:25px;flex:none}
+.evt-seta{font-size:25px;flex:none}
 
 @media (hover:hover){
   .mes-nav:hover{background:rgba(11,11,109,.09);color:var(--navy)}
