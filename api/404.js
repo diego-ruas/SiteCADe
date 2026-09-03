@@ -112,8 +112,17 @@ const HTML = `<!DOCTYPE html>
 </html>
 `;
 
+// No 404 a regra é o inverso da home: HTML é a exceção, não o padrão.
+// Quem chega aqui sem pedir text/html (curl, agente, checker — Accept ausente ou `*/*`)
+// é cliente programático e precisa do corpo em markdown com os links de recuperação.
+// Só navegador, que manda text/html explícito, recebe a página estilizada.
+function wantsHtml(accept) {
+  if (!accept) return false;
+  return preferMarkdown(accept) ? false : /\btext\/html\b/i.test(String(accept));
+}
+
 module.exports = (req, res) => {
-  const md = preferMarkdown(req.headers && req.headers.accept);
+  const md = !wantsHtml(req.headers && req.headers.accept);
 
   // Vary: Accept — o corpo muda conforme o Accept, então o CDN não pode reusar uma variante pela outra.
   res.setHeader('Vary', 'Accept, Accept-Encoding');
@@ -127,3 +136,4 @@ module.exports = (req, res) => {
 };
 
 module.exports.preferMarkdown = preferMarkdown;
+module.exports.wantsHtml = wantsHtml;

@@ -560,25 +560,25 @@
 
       <form class="form" id="form-falar" data-od-id="form-falar">
         <h3>Fale com a gente</h3>
-        <p>Reclamação sobre o curso, sugestão pro CADe ou uma vaga/edital que você viu. Escolha o tipo abaixo.</p>
+        <p id="nota-tipo">Alguém do curso fez a diferença? Conta pra gente — a gente faz chegar em quem merece.</p>
 
         <fieldset class="campo" style="border:0;padding:0;margin:0">
           <legend style="font-size:13px;font-weight:600;padding:0 0 8px">Tipo</legend>
           <div class="pills" data-od-id="pills-tipo">
-            <label class="pill"><input type="radio" name="tipo" value="reclamacao" checked><span>Reclamação</span></label>
+            <label class="pill"><input type="radio" name="tipo" value="reclamacao"><span>Reclamação</span></label>
             <label class="pill"><input type="radio" name="tipo" value="sugestao"><span>Sugestão</span></label>
-            <label class="pill"><input type="radio" name="tipo" value="elogio"><span>Elogio</span></label>
+            <label class="pill"><input type="radio" name="tipo" value="elogio" checked><span>Elogio</span></label>
             <label class="pill"><input type="radio" name="tipo" value="oportunidade"><span>Oportunidade</span></label>
           </div>
         </fieldset>
 
         <div class="campo">
           <label for="f-assunto">Assunto</label>
-          <input id="f-assunto" name="assunto" type="text" placeholder="Ex: falta de tomadas na sala 302/2…" required>
+          <input id="f-assunto" name="assunto" type="text" placeholder="Resuma em uma linha…" required>
         </div>
         <div class="campo">
           <label for="f-msg">Sua mensagem</label>
-          <textarea id="f-msg" name="mensagem" placeholder="Ex: as tomadas da 302/2 não funcionam desde agosto e a turma inteira usa notebook…" required></textarea>
+          <textarea id="f-msg" name="mensagem" placeholder="Conte com suas palavras — o que aconteceu, onde e quando…" required></textarea>
         </div>
 
         <label class="check" data-od-id="check-anonimo">
@@ -1385,6 +1385,20 @@
     if (anonimo.checked) contato.value = '';
   });
 
+  /* Texto de apoio acompanha a pill de tipo — uma entrada por value do radio. */
+  var NOTA_TIPO = {
+    reclamacao: 'Algo não está funcionando no curso? Descreva o que aconteceu e onde. A gente leva para coordenação e professores.',
+    sugestao: 'Ideia para o curso, para o CADe ou para um evento? Manda — as melhores entram na pauta da assembleia.',
+    elogio: 'Alguém do curso fez a diferença? Conta pra gente — a gente faz chegar em quem merece.',
+    oportunidade: 'Viu uma vaga, bolsa ou edital? Passa o link e o prazo que a gente divulga para a turma.'
+  };
+  var notaTipo = document.getElementById('nota-tipo');
+  document.querySelectorAll('#form-falar input[name="tipo"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if (NOTA_TIPO[r.value]) notaTipo.textContent = NOTA_TIPO[r.value];
+    });
+  });
+
   var TIPO_FORM = { 'form-participar': 'participar', 'form-falar': 'falar' };
 
   document.querySelectorAll('form').forEach(function(f){
@@ -1420,7 +1434,13 @@
         if (!r.ok || !r.json.ok) throw new Error((r.json && r.json.erro) || 'Falha no envio');
         btn.textContent = 'Recebido — obrigado!';
         status.hidden = true;
-        setTimeout(function(){ btn.disabled = false; btn.innerHTML = original; f.reset(); }, 2200);
+        setTimeout(function(){
+          btn.disabled = false;
+          btn.innerHTML = original;
+          f.reset();
+          // reset volta o radio ao default; a nota tem que voltar junto
+          if (f.id === 'form-falar') notaTipo.textContent = NOTA_TIPO.elogio;
+        }, 2200);
       }).catch(function(){
         btn.disabled = false;
         btn.innerHTML = original;

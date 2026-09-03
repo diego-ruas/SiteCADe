@@ -273,6 +273,25 @@ teste('robots aponta para sitemap e llms.txt', () => {
   assert.ok(t.indexOf('/llms.txt') !== -1, 'robots sem llms.txt');
 });
 
+teste('no 404, cliente programatico recebe markdown', () => {
+  // O achado do audit pede corpo markdown no 404. Checker e curl nao mandam
+  // Accept: text/markdown — mandam nada ou */*, e recebiam o shell HTML.
+  const { wantsHtml } = require('../api/404.js');
+  assert.strictEqual(wantsHtml(undefined), false, 'sem Accept deveria virar markdown');
+  assert.strictEqual(wantsHtml(''), false);
+  assert.strictEqual(wantsHtml('*/*'), false, 'curl deveria virar markdown');
+  assert.strictEqual(wantsHtml('text/markdown'), false);
+  assert.strictEqual(wantsHtml('application/json'), false);
+  // navegador continua com a pagina estilizada
+  assert.strictEqual(
+    wantsHtml('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'),
+    true
+  );
+  // se pedir os dois, o q decide
+  assert.strictEqual(wantsHtml('text/markdown;q=0.3, text/html;q=0.9'), true);
+  assert.strictEqual(wantsHtml('text/markdown, text/html;q=0.5'), false);
+});
+
 teste('404 responde 404 e oferece caminho de volta', () => {
   const s = ler('api/404.js');
   assert.ok(s.indexOf('res.statusCode = 404') !== -1, '404 nao devolve status 404');
