@@ -1,0 +1,59 @@
+/* Páginas institucionais (sobre, contato, privacidade) — só prosa longa.
+   Usa os tokens de base.css; nenhum hex solto. */
+
+.inst-prosa{
+  max-width:72ch;
+  margin-top:clamp(24px,3vw,40px);
+  color:var(--navy);
+}
+
+.inst-prosa h2{
+  margin:clamp(28px,3.2vw,44px) 0 12px;
+  font-size:clamp(20px,2.2vw,26px);
+  line-height:1.2;
+}
+
+.inst-prosa h3{
+  margin:24px 0 8px;
+  font-size:clamp(16px,1.6vw,19px);
+  line-height:1.25;
+}
+
+.inst-prosa p,
+.inst-prosa li{
+  font-size:clamp(15px,1.35vw,17px);
+  line-height:1.65;
+  color:var(--navy-75);
+}
+
+.inst-prosa p{margin:0 0 14px}
+
+.inst-prosa ul{margin:0 0 18px; padding-left:1.15em}
+.inst-prosa li{margin:0 0 8px}
+.inst-prosa li b{color:var(--navy)}
+
+.inst-prosa a{color:var(--navy); text-decoration:underline; text-underline-offset:2px}
+.inst-prosa a:hover{color:var(--rosa)}
+
+.inst-nota{
+  margin-top:clamp(28px,3vw,40px);
+  padding-top:18px;
+  border-top:1px solid var(--linha);
+  font-size:14px;
+  color:var(--navy-55);
+}
+
+/* Lista de canais de contato */
+.inst-canais{
+  list-style:none;
+  margin:0 0 18px;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+
+.inst-canais li{
+  margin:0;
+  padding-left:14px;
+  border-left:2px solid var(--rosa);
+}

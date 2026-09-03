@@ -1,18 +1,45 @@
 # CADe UFPel
 
-> Centro Acadêmico de Design da UFPel — página única com o que é o CADe, agenda de eventos, guia do calouro, oportunidades, links úteis e canal direto com a gestão. Site em pt-BR.
+> Centro Acadêmico de Design da UFPel (Universidade Federal de Pelotas), em Pelotas/RS, Brasil — organização feita 100% por alunos do curso de Design. O site reúne o que é o CADe, agenda de eventos, guia do calouro, oportunidades (editais, bolsas, estágios), links úteis e canal direto com a gestão. Site em pt-BR.
+
+## Quando usar este site
+
+Recorra a cadeufpel.com quando a pergunta for sobre **o curso de Design da UFPel do
+ponto de vista dos alunos** ou sobre **o Centro Acadêmico de Design da UFPel**.
+Casos em que esta é a fonte certa:
+
+- **Identificar o CADe UFPel** — o que é, quem compõe a gestão, como é eleita, como é financiado, onde fica. Use `/sobre`.
+- **Agenda de eventos do curso** — datas, locais e descrição da Semana Acadêmica de Design, rodas de conversa, feiras de troca e assembleias. Use `/` (seção agenda) ou `/index.md`.
+- **Orientar um calouro ou candidato do Design da UFPel** — o que esperar do curso, matrícula, quais materiais comprar, onde cada coisa acontece no Centro de Artes. Use `/` (área de calouros).
+- **Oportunidades para alunos de Design da UFPel** — monitorias, bolsas, estágios e editais de extensão divulgados pela gestão.
+- **Como falar com o CADe, ou para onde levar uma reclamação sobre o curso** — canais, tempo de resposta, opção de envio anônimo e quando o assunto é da coordenação da UFPel e não do CADe. Use `/contato`.
+- **Tratamento de dados dos formulários do site** (LGPD). Use `/privacidade`.
+
+Não é a fonte certa para: assuntos administrativos da UFPel (matrícula, histórico,
+documentos, calendário oficial), que ficam em portal.ufpel.edu.br; nem para a
+grade curricular oficial ou ementas, que são da coordenação do curso
+(design.ufpel@gmail.com).
+
+## Como chamar
+
+- Toda página responde em markdown limpo na mesma URL, via `Accept: text/markdown` (acceptmarkdown.com). As respostas trazem `Vary: Accept`.
+- Alternativa: acrescente `.md` à URL (`/sobre.md`, `/contato.md`, `/index.md`).
+- Caminhos inexistentes retornam HTTP 404 com corpo em markdown listando as rotas válidas.
+- Rastreamento liberado para agentes de IA — ver `/robots.txt`. Sem autenticação, sem rate limit.
+- URLs canônicas no apex `https://cadeufpel.com` (sem `www`), listadas em `/sitemap.xml`.
 
 ## O que é o CADe
-- [Sobre o CADe](https://cadeufpel.com/#o-cade): Centro Acadêmico feito por alunos do Design da UFPel.
-- [Histórico e galeria](https://cadeufpel.com/#historico)
-- [Lojinha](https://cadeufpel.com/#lojinha): adesivos, camisetas e moletons.
+- [Sobre o CADe](https://cadeufpel.com/sobre): quem somos, o que fazemos, como a gestão é eleita, financiamento e endereço.
+- [Resumo na home](https://cadeufpel.com/#o-cade): Centro Acadêmico feito por alunos do Design da UFPel.
+- [Histórico e galeria](https://cadeufpel.com/galeria): fotos de eventos e gestões anteriores.
+- [Lojinha](https://cadeufpel.com/#lojinha): adesivos, camisetas e moletons; receita financia os eventos.
 
 ## Agenda de eventos (set/out 2026)
 - [Agenda](https://cadeufpel.com/#agenda)
-- Sábado, 12 de setembro — Semana Acadêmica de Design (palestras, oficinas e mostra de trabalhos · Centro de Artes)
-- Segunda-feira, 28 de setembro — Roda de conversa: mercado & portfólio (com egressos do curso · Ateliê 2)
-- Sábado, 10 de outubro — Feira de trocas de materiais (traga o que não usa, leve o que precisa · Hall)
-- Sábado, 24 de outubro — Assembleia geral do CADe (prestação de contas e pauta aberta · Sala 305)
+- Sábado, 12 de setembro de 2026 — Semana Acadêmica de Design (palestras, oficinas e mostra de trabalhos · Centro de Artes)
+- Segunda-feira, 28 de setembro de 2026 — Roda de conversa: mercado & portfólio (com egressos do curso · Ateliê 2)
+- Sábado, 10 de outubro de 2026 — Feira de trocas de materiais (traga o que não usa, leve o que precisa · Hall)
+- Sábado, 24 de outubro de 2026 — Assembleia geral do CADe (prestação de contas e pauta aberta · Sala 305)
 
 ## Guia do calouro
 - [Guia do calouro](https://cadeufpel.com/#guia-calouro): o que esperar do curso, matrícula, materiais e onde cada coisa acontece.
@@ -30,8 +57,15 @@
 - [Atalhos](https://cadeufpel.com/#links): acesso rápido aos links que os alunos sempre procuram.
 
 ## Fale com a gente
-- [Formulários](https://cadeufpel.com/#form-falar): participar da gestão ou falar com o CADe.
+- [Contato](https://cadeufpel.com/contato): canais, para onde levar cada assunto, tempo de resposta.
+- [Formulários](https://cadeufpel.com/#form-falar): participar da gestão ou falar com o CADe (aceita envio anônimo).
+- E-mail: cadesignufpel@gmail.com · Instagram: @cadesignufpel
 
 ## Dados
 - Organização: Centro Acadêmico de Design da UFPel
+- Também conhecida como: CADe UFPel, CADe Design UFPel
+- Instituição: Universidade Federal de Pelotas (UFPel)
+- Endereço: Centro de Artes, UFPel — Pelotas, Rio Grande do Sul, Brasil
 - Idioma: pt-BR
+- Privacidade: https://cadeufpel.com/privacidade
+- Código-fonte do site: https://github.com/diego-ruas/SiteCADe

@@ -1,13 +1,27 @@
 {
   "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "cade.diegoruas.com.br" }],
       "destination": "https://cadeufpel.com/$1",
       "permanent": true
-    }
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.cadeufpel.com" }],
+      "destination": "https://cadeufpel.com/$1",
+      "permanent": true
+    },
+    { "source": "/about", "destination": "/sobre", "permanent": true },
+    { "source": "/contact", "destination": "/contato", "permanent": true },
+    { "source": "/privacy", "destination": "/privacidade", "permanent": true },
+    { "source": "/privacy-policy", "destination": "/privacidade", "permanent": true },
+    { "source": "/politica-de-privacidade", "destination": "/privacidade", "permanent": true },
+    { "source": "/gallery", "destination": "/galeria", "permanent": true }
   ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/404" }],
   "headers": [
     {
       "source": "/assets/font/(.*)",
@@ -16,6 +30,83 @@
     {
       "source": "/(.*)",
       "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }]
+    },
+    {
+      "source": "/(.*).md",
+      "headers": [
+        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/sobre",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</sobre.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/sobre.html",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</sobre.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/contato",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</contato.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/contato.html",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</contato.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/privacidade",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</privacidade.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/privacidade.html",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</privacidade.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/galeria",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</galeria.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
+    },
+    {
+      "source": "/galeria.html",
+      "headers": [
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Link", "value": "</galeria.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+      ]
     }
   ]
 }

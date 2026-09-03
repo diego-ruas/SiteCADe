@@ -34,3 +34,6 @@ User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://cadeufpel.com/sitemap.xml
+
+# Instruções para agentes (quando usar este site, como chamar)
+# https://cadeufpel.com/llms.txt
