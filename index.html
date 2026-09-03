@@ -827,7 +827,7 @@
   }
 
   function titulo(nome){
-    return nome.replace(/[-_]+/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    return nome.replace(/[-_]+/g, ' ').replace(/(^|\s)\S/g, function(c){ return c.toUpperCase(); });
   }
 
   function listarTodas(){
