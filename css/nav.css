@@ -16,7 +16,6 @@
   font-size:16px;font-weight:600;line-height:1.4;color:var(--navy);text-decoration:none;
   padding:8px 2px;border-bottom:2px solid transparent;
 }
-.nav-link[aria-current="page"]{border-bottom-color:var(--navy)}
 /* o ponto vive no link ativo, então acompanha a seção em que você está */
 .nav-link[aria-current="page"]::before{
   content:"";width:6px;height:6px;border-radius:50%;background:var(--rosa);flex:none;
