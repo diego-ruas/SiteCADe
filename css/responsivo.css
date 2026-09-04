@@ -20,11 +20,7 @@
 }
 @media (max-width:720px){
   .nav-inner{display:flex;justify-content:space-between;flex-wrap:wrap;row-gap:12px}
-  .nav-toggle{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    min-height:44px;padding:10px 18px;border-radius:var(--r-pill);
-    border:1.5px solid var(--navy);background:var(--branco);font-size:16px;font-weight:600;cursor:pointer;
-  }
+  .nav-toggle{display:inline-flex}
   .nav-links{
     display:none;order:3;flex-basis:100%;flex-direction:column;align-items:flex-start;
     gap:4px;padding-bottom:8px;
@@ -33,7 +29,6 @@
   .nav-link{width:100%;min-height:44px;border-bottom:1px solid var(--linha)}
   .nav-link--mobile{display:flex;font-weight:700;border-bottom:0}
   .nav-cta{display:none}
-  .nav-cta.galeria-drive-cta{display:inline-flex}
   .agenda-head{align-items:flex-start}
   .agenda-head .btn{width:100%}
   .op-head .btn{width:100%}
@@ -99,9 +94,6 @@
   .produtos{grid-template-columns:minmax(0,1fr)}
   .produto-img img{height:180px}
   .galeria{grid-template-rows:repeat(2,110px)}
-}
-@media (max-width:720px) and (hover:hover){
-  .nav-toggle:hover{background:#e2e4f2}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

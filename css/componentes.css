@@ -69,7 +69,7 @@
   transition:background-color .18s ease;
 }
 .modal-fechar img{width:18px;height:18px}
-.modal-titulo{font-size:clamp(24px,2.6vw,32px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+/* tamanho vem de .h-sub (base.css) */
 .modal-texto{font-size:16px;line-height:1.6;color:var(--navy-75)}
 .modal .btn{margin-top:8px}
 
