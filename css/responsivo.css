@@ -49,6 +49,7 @@
   .mes{padding:16px;gap:10px}
   .semana{gap:3px}
   .dia{height:44px;border-radius:8px}
+  .mes>.semana:last-child{grid-auto-rows:44px;min-height:calc(44px * 6 + 3px * 5)}
   .rotulo{padding-block:2px}
 
   /* Faixa de fotos: peças menores e giro um pouco mais rápido */

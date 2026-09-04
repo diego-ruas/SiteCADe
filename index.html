@@ -1280,6 +1280,8 @@
     b.querySelector('.evt-dow').textContent = e.dow;
     b.querySelector('.evt-titulo').textContent = e.titulo;
     b.querySelector('.evt-desc').textContent = e.desc;
+    // Texto é truncado por line-clamp; o tooltip mostra o conteúdo inteiro.
+    b.title = e.titulo + ' — ' + e.desc;
     return b;
   }
 
@@ -1327,6 +1329,8 @@
     elData.textContent = ev.data;
     elTitulo.textContent = ev.titulo;
     elDesc.textContent = ev.desc;
+    elTitulo.title = ev.titulo;
+    elDesc.title = ev.desc;
     sel = idx;
     renderLista();
     if (visto.ano !== ev.ano || visto.mes !== ev.mes){
