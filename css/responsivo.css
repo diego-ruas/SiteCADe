@@ -80,6 +80,10 @@
   .evt-data{order:1}
   .evt-seta{order:2;margin-left:auto}
   .evt-info{flex-basis:100%;order:3}
+  /* Setas do "próximo evento" viram alvo de toque de 44px */
+  .evt-mes-head .mes-nav{width:44px;height:44px;font-size:20px}
+  .evt-mes-head{gap:8px}
+  .eventos{touch-action:pan-y}
   .campo-duplo{grid-template-columns:minmax(0,1fr)}
   .footer{padding-block:48px 40px}
   .footer-rule{margin-block:32px}
