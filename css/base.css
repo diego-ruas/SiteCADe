@@ -85,7 +85,13 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ---------- Tipografia ---------- */
 .eyebrow{font-size:13px;font-weight:600;line-height:1.4;letter-spacing:1.04px}
+/* Escala de títulos — três níveis, um só lugar.
+   h1 do hero é o único acima disso (hero.css). */
 .h-sec{font-size:clamp(32px,4.6vw,52px);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+.h-sub,.form h3,.modal-titulo,.galeria-cat h3,.inst-prosa h2{
+  font-size:clamp(22px,2.4vw,28px);font-weight:800;line-height:1.15;letter-spacing:-.015em;
+}
+.h-min,.inst-prosa h3{font-size:clamp(17px,1.7vw,20px);font-weight:700;line-height:1.3;letter-spacing:-.01em}
 .lead{font-size:clamp(16px,1.6vw,19px);font-weight:400;line-height:1.6}
 
 /* ---------- Estrutura ---------- */
@@ -114,6 +120,8 @@ ul{margin:0;padding:0;list-style:none}
 .btn--navy{background:var(--navy);border-color:var(--navy);color:var(--branco)}
 .btn--ghost{background:var(--branco);border-color:var(--navy);color:var(--navy)}
 .btn--bloco{width:100%}
+.btn--sm{padding:10px 20px;font-size:15px}
+.btn--sm svg,.btn--sm .m-icon{width:16px;height:16px;font-size:16px}
 
 @media (hover:hover){
   .btn--primary:hover{background:var(--verde-hover);border-color:var(--verde-hover)}
