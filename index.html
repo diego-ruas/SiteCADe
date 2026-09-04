@@ -1258,53 +1258,53 @@
   EVENTOS_ATUAIS = EVENTOS;
   renderCalendario(EVENTOS);
 
-  /* --- lista de eventos, agrupada por mês na ordem em que aparecem --- */
+  /* --- lista: so o evento selecionado e o proximo, navegavel com < > --- */
   var lista = document.getElementById('eventos');
-  lista.innerHTML = '';
-  if (!EVENTOS.length){
-    lista.innerHTML = '<p class="detalhe-desc">Nenhum evento futuro no calendário no momento.</p>';
-  }
-  var grupos = [];
-  EVENTOS.forEach(function(e, i){
-    var g = grupos[grupos.length - 1];
-    if (!g || g.ano !== e.ano || g.mes !== e.mes){
-      g = { ano: e.ano, mes: e.mes, itens: [] };
-      grupos.push(g);
-    }
-    g.itens.push(i);
-  });
-  grupos.forEach(function(g){
-    var grupo = document.createElement('div');
-    grupo.className = 'evt-mes';
+  var sel = 0;
 
+  function cartao(i){
+    var e = EVENTOS[i];
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'evt' + (i === sel ? ' evt--sel' : '');
+    b.dataset.evento = String(i);
+    b.setAttribute('data-od-id', 'evento-' + i);
+    b.innerHTML =
+      '<span class="evt-data evt-data--' + e.cor + '">' +
+        '<span class="evt-dia"></span><span class="evt-ms"></span><span class="evt-dow"></span>' +
+      '</span>' +
+      '<span class="evt-info"><span class="evt-titulo"></span><span class="evt-desc"></span></span>' +
+      '<span class="evt-seta m-icon" aria-hidden="true"></span>';
+    b.querySelector('.evt-dia').textContent = e.dia;
+    b.querySelector('.evt-ms').textContent = e.ms;
+    b.querySelector('.evt-dow').textContent = e.dow;
+    b.querySelector('.evt-titulo').textContent = e.titulo;
+    b.querySelector('.evt-desc').textContent = e.desc;
+    return b;
+  }
+
+  function renderLista(){
+    lista.innerHTML = '';
+    if (!EVENTOS.length){
+      lista.innerHTML = '<p class="detalhe-desc">Nenhum evento futuro no calendário no momento.</p>';
+      return;
+    }
     var head = document.createElement('div');
     head.className = 'evt-mes-head';
-    head.innerHTML = '<span></span><div class="regua"></div>';
-    head.firstChild.textContent = NOMES_MES[g.mes].toUpperCase() + ' ' + g.ano;
-    grupo.appendChild(head);
+    head.innerHTML = '<span></span><div class="regua"></div>' +
+      '<button type="button" class="mes-nav" aria-label="Evento anterior">‹</button>' +
+      '<button type="button" class="mes-nav" aria-label="Próximo evento">›</button>';
+    head.firstChild.textContent = EVENTOS[sel + 1] ? 'PRÓXIMO EVENTO' : 'ÚLTIMO EVENTO DA AGENDA';
+    var navs = head.querySelectorAll('.mes-nav');
+    navs[0].disabled = sel <= 0;
+    navs[1].disabled = sel >= EVENTOS.length - 1;
+    navs[0].addEventListener('click', function(){ selecionar(sel - 1); });
+    navs[1].addEventListener('click', function(){ selecionar(sel + 1); });
+    lista.appendChild(head);
 
-    g.itens.forEach(function(i){
-      var o = { e: EVENTOS[i], i: i };
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'evt';
-      b.dataset.evento = String(o.i);
-      b.setAttribute('data-od-id', 'evento-' + o.i);
-      b.innerHTML =
-        '<span class="evt-data evt-data--' + o.e.cor + '">' +
-          '<span class="evt-dia"></span><span class="evt-ms"></span><span class="evt-dow"></span>' +
-        '</span>' +
-        '<span class="evt-info"><span class="evt-titulo"></span><span class="evt-desc"></span></span>' +
-        '<span class="evt-seta m-icon" aria-hidden="true"></span>';
-      b.querySelector('.evt-dia').textContent = o.e.dia;
-      b.querySelector('.evt-ms').textContent = o.e.ms;
-      b.querySelector('.evt-dow').textContent = o.e.dow;
-      b.querySelector('.evt-titulo').textContent = o.e.titulo;
-      b.querySelector('.evt-desc').textContent = o.e.desc;
-      grupo.appendChild(b);
-    });
-    lista.appendChild(grupo);
-  });
+    // O selecionado já aparece no painel .detalhe acima — aqui só o próximo.
+    if (EVENTOS[sel + 1]) lista.appendChild(cartao(sel + 1));
+  }
 
   /* --- seleção --- */
   var elData = document.getElementById('detalhe-data');
@@ -1321,11 +1321,14 @@
         d.setAttribute('aria-pressed', 'false');
       });
       try { localStorage.removeItem('cade:evento'); } catch (e) {}
+      renderLista();
       return;
     }
     elData.textContent = ev.data;
     elTitulo.textContent = ev.titulo;
     elDesc.textContent = ev.desc;
+    sel = idx;
+    renderLista();
     if (visto.ano !== ev.ano || visto.mes !== ev.mes){
       visto.ano = ev.ano; visto.mes = ev.mes;
       renderCalendario(EVENTOS_ATUAIS);
@@ -1354,6 +1357,18 @@
     if (alvo) selecionarDia(Number(alvo.dataset.dia));
     else { var evt = e.target.closest('[data-evento]'); if (evt) selecionar(Number(evt.dataset.evento)); }
   });
+
+  /* Mobile: arrastar na lista troca o evento (mesmo efeito das setas). */
+  var x0 = null;
+  lista.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  lista.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) < 48) return;
+    var alvo = sel + (dx < 0 ? 1 : -1);
+    if (EVENTOS[alvo]) selecionar(alvo);
+  }, {passive:true});
 
   var salvo = 0;
   try { salvo = Number(localStorage.getItem('cade:evento')) || 0; } catch (e) {}
