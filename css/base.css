@@ -3,23 +3,23 @@
    ============================================================ */
 @font-face{
   font-family:'LTSuperior';font-weight:400;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-Regular.woff2') format('woff2');
+  src:url('../assets/font/LTSuperior-Regular.c014d3ebf198.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:500;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-Medium.woff2') format('woff2');
+  src:url('../assets/font/LTSuperior-Medium.4f044a6b1d50.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:600;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-SemiBold.woff2') format('woff2');
+  src:url('../assets/font/LTSuperior-SemiBold.e43397e5d18b.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:700;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-Bold.woff2') format('woff2');
+  src:url('../assets/font/LTSuperior-Bold.b6563c8baae3.woff2') format('woff2');
 }
 @font-face{
   font-family:'LTSuperior';font-weight:800;font-style:normal;font-display:swap;
-  src:url('../assets/font/LTSuperior-ExtraBold.woff2') format('woff2');
+  src:url('../assets/font/LTSuperior-ExtraBold.d9f519a435a7.woff2') format('woff2');
 }
 
 /* ============================================================
@@ -50,6 +50,7 @@
   --navy-55:rgba(11,11,109,.55);
   --navy-50:rgba(11,11,109,.5);
   --navy-35:rgba(11,11,109,.35);
+  --navy-10:#e8e8f5;
   --verde-hover:#79cf3c;
   --navy-hover:#16168f;
 

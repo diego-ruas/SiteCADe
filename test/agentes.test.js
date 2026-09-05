@@ -207,7 +207,17 @@ teste('paginas novas usam o mesmo shell (css, nav, footer)', () => {
     const s = ler(f);
     assert.ok(s.indexOf('css/base.css') !== -1, f + ' sem base.css');
     assert.ok(s.indexOf('css/institucional.css') !== -1, f + ' sem institucional.css');
-    assert.ok(s.indexOf('class="nav-toggle"') !== -1, f + ' sem nav');
+
+    // O contrato é o controle funcional identificado pelo data-od-id e pela
+    // classe nav-toggle; a classe pode estar combinada com btn/modificadores.
+    const botaoNav = /<button\b(?=[^>]*\bdata-od-id="nav-toggle")[^>]*>/i.exec(s);
+    assert.ok(botaoNav, f + ' sem controle de menu nav');
+    const classes = /\bclass="([^"]*)"/i.exec(botaoNav[0]);
+    assert.ok(classes && classes[1].split(/\s+/).indexOf('nav-toggle') !== -1,
+      f + ' controle de menu sem classe nav-toggle');
+    assert.ok(/\baria-controls="nav-links"/i.test(botaoNav[0]),
+      f + ' controle de menu sem aria-controls');
+
     assert.ok(s.indexOf('data-od-id="footer"') !== -1, f + ' sem footer');
     assert.ok(s.indexOf('lang="pt-BR"') !== -1, f + ' sem lang pt-BR');
     // o CSS mobile depende de data-aberto; classe inventada deixaria o menu morto

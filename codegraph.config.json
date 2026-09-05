@@ -1,0 +1,38 @@
+{
+  "discovery": {
+    "includeGlobs": [
+      "*.html",
+      "**/*.html",
+      "*.css",
+      "**/*.css",
+      "*.js",
+      "**/*.js",
+      "*.md",
+      "**/*.md"
+    ],
+    "ignoreGlobs": [
+      "assets/**",
+      ".vercel/**",
+      ".codegraph/**",
+      "node_modules/**",
+      "scratch/**",
+      ".env",
+      ".env.*",
+      "**/.env",
+      "**/.env.*",
+      "**/*.png",
+      "**/*.jpg",
+      "**/*.jpeg",
+      "**/*.webp",
+      "**/*.gif",
+      "**/*.svg",
+      "**/*.ico",
+      "**/*.woff",
+      "**/*.woff2",
+      "**/*.ttf",
+      "**/*.otf",
+      "**/*.eot"
+    ],
+    "useGitignore": true
+  }
+}

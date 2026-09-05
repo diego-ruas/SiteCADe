@@ -39,7 +39,7 @@ function escapeHtml(str) {
 }
 
 function campo(rotulo, valor) {
-  if (!valor) return '';
+  if (valor == null || valor === '') return '';
   return `<p><b>${escapeHtml(rotulo)}:</b> ${escapeHtml(valor).replace(/\n/g, '<br>')}</p>`;
 }
 
@@ -56,7 +56,19 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const body = req.body || {};
+  let body = req.body;
+  if (typeof body === 'string') {
+    try {
+      body = JSON.parse(body);
+    } catch (_) {
+      try {
+        body = Object.fromEntries(new URLSearchParams(body));
+      } catch (_) {
+        body = {};
+      }
+    }
+  }
+  body = body || {};
   const formulario = body.formulario;
 
   // honeypot: campo invisível pro usuário real, se vier preenchido é bot — finge sucesso e não envia
@@ -89,17 +101,19 @@ module.exports = async (req, res) => {
     }
     const tipoRotulo = { reclamacao: 'Reclamação', sugestao: 'Sugestão', elogio: 'Elogio', oportunidade: 'Oportunidade' }[tipo] || tipo || 'Não informado';
     assunto = `[CADe] ${tipoRotulo} — ${assuntoMsg}`;
+    const eAnonimo = anonimo === true || anonimo === 'true' || anonimo === 'on' || anonimo === '1';
     html = [
       '<h2>Nova mensagem pelo site do CADe</h2>',
       campo('Tipo', tipoRotulo),
       campo('Assunto', assuntoMsg),
       campo('Mensagem', mensagem),
-      anonimo ? '<p><b>Envio anônimo</b> — sem nome nem contato.</p>' : campo('Contato', contato || 'não informado')
+      eAnonimo ? '<p><b>Envio anônimo</b> — sem nome nem contato.</p>' : campo('Contato', contato || 'não informado')
     ].join('');
   } else {
     res.status(400).json({ ok: false, erro: 'Formulário desconhecido' });
     return;
   }
+  assunto = String(assunto).replace(/[\r\n]+/g, ' ').trim();
 
   try {
     const resp = await fetch('https://api.resend.com/emails', {

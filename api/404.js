@@ -100,6 +100,7 @@ const HTML = `<!DOCTYPE html>
         <li><span><b><a href="/">Início</a></b> — agenda de eventos, quem somos, guia do calouro, oportunidades, FAQ e formulários.</span></li>
         <li><span><b><a href="/sobre">Sobre o CADe</a></b> — o que é a organização, como a gestão é eleita e onde ficamos.</span></li>
         <li><span><b><a href="/contato">Contato</a></b> — e-mail, Instagram, formulários e para onde levar cada assunto.</span></li>
+        <li><span><b><a href="/privacidade">Privacidade</a></b> — o que fazemos com os dados dos formulários.</span></li>
         <li><span><b><a href="/galeria">Galeria</a></b> — fotos de eventos, festas e gestões anteriores.</span></li>
       </ul>
       <p class="inst-nota">Se você chegou aqui por um link do próprio site, avise a gente pelo <a href="/contato">contato</a> que corrigimos.</p>

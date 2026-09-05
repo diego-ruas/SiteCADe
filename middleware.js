@@ -67,7 +67,7 @@ export default async function middleware(request) {
       Vary: 'Accept, Accept-Encoding',
       'Cache-Control': 'public, max-age=0, must-revalidate',
       'X-Content-Type-Options': 'nosniff',
-      Link: '<' + url.href + '>; rel="canonical"'
+      Link: '<' + url.origin + url.pathname + '>; rel="canonical"'
     }
   });
 }

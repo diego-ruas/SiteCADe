@@ -108,3 +108,51 @@ Hospedado na **Vercel**, deploy automático a cada push em `main`. `vercel.json`
 ## Contribuindo
 
 Antes de alterar, leia o [`AGENTS.md`](AGENTS.md) — convenções do projeto: tokens em `:root`, ids `data-od-id`, breakpoints (1180px, 900px, 720px, 400px), regras de ícones e de hover/focus-visible. A copy oficial vem do Figma e não deve ser inventada.
+
+## CodeGraph para agentes
+
+O escopo versionado do grafo está em [`codegraph.config.json`](codegraph.config.json).
+Ele inclui HTML, CSS, JavaScript (inclusive `api/` e `test/`) e Markdown, mas exclui
+`assets/`, fontes, imagens, binários, `.env*`, caches e saídas locais. Arquivos de
+rota (`vercel.json`, `robots.txt` e `sitemap.xml`) são lidos ao vivo quando
+necessário; não fazem parte das extensões descobertas. O `.gitignore` continua valendo.
+
+O comando disponível no ambiente deve ser verificado antes de qualquer consulta:
+
+```sh
+codegraph version
+codegraph --help
+```
+
+Na CLI legada (1.6.0), a consulta usa `--path`:
+
+```sh
+codegraph status .
+codegraph files --path . --format tree --max-depth 3
+codegraph query "preferMarkdown" --path . --json
+codegraph explore "formulários index api enviar Resend" --path . --max-files 4
+```
+
+As consultas estruturais da CLI legada pressupõem índice já criado; sem uma
+indexação autorizada, limite-se a `version`/`help` e à leitura direta dos arquivos.
+
+Não execute `init`/`index` em uma tarefa somente de leitura: eles criam ou
+atualizam `.codegraph/`. A configuração `codegraph.config.json` só é aplicada
+por versões que a anunciam na ajuda; a CLI legada acima ignora esse arquivo.
+Após atualização para uma versão compatível, use `--root .` e consultas como
+`codegraph orient --root . --budget small --json`, `codegraph links --root . --json`,
+`codegraph unresolved --root . --json` e `codegraph deps api/enviar.js --root . --json`.
+
+Para Codex e Claude Code, a configuração MCP pertence ao ambiente do agente,
+não ao deploy deste site. Sem gravar configurações externas, pré-visualize:
+
+```sh
+codegraph install --print-config codex
+codegraph install --print-config claude
+codegraph install --target codex,claude --dry-run
+```
+
+Use MCP por stdio somente após confirmar a versão compatível e reinicie o
+cliente depois de instalar/atualizar o CodeGraph. Não exponha um servidor do
+grafo em uma porta pública. Ao interpretar respostas, confira `analysis`/
+`freshness` e trate `reduced`, `mixed` ou `stale` como evidência limitada.

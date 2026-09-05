@@ -42,9 +42,9 @@ CADe e ingressantes para dúvidas mais específicas.
 Editais, bolsas e estágios divulgados pela gestão, pela coordenação e por alunos
 que indicam vagas:
 
-- **Monitoria de Desenho I** (bolsa) — inscrições até 20/09, 12h semanais.
-- **Design gráfico em agência local** (estágio) — a partir do 5º semestre.
-- **Extensão: identidade visual para ONGs** (edital) — com bolsa, equipe de 4 alunos.
+- Concurso Identidade Visual — Curso de Turismo (CONCURSO) — inscrições até 21 de setembro.
+- Processo seletivo Hut8 — Dev e Design (PROCESSO SELETIVO) — vagas abertas na empresa júnior de Computação.
+- Monitoria voluntária — Fotografia (MONITORIA) — inscrições por e-mail até 06/09.
 
 ## Perguntas frequentes
 

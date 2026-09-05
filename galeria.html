@@ -22,38 +22,69 @@
 <meta name="twitter:image" content="https://cadeufpel.com/assets/og-image.png">
 <link rel="preconnect" href="https://www.googleapis.com">
 <link rel="preconnect" href="https://drive.google.com">
-<link rel="preload" href="assets/font/material-symbols.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/font/LTSuperior-Regular.c014d3ebf198.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/font/LTSuperior-ExtraBold.d9f519a435a7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/font/material-symbols.62f4953c355c.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/nav.css">
-<link rel="stylesheet" href="css/agenda.css">
 <link rel="stylesheet" href="css/secoes.css">
 <link rel="stylesheet" href="css/componentes.css">
 <link rel="stylesheet" href="css/icons.css">
 <link rel="stylesheet" href="css/responsivo.css">
 <link rel="stylesheet" href="css/galeria.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "url": "https://cadeufpel.com/galeria",
+  "inLanguage": "pt-BR",
+  "name": "Galeria — CADe UFPel",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Centro Acadêmico de Design da UFPel",
+    "alternateName": ["CADe UFPel", "CADe Design UFPel"],
+    "url": "https://cadeufpel.com/",
+    "logo": "https://cadeufpel.com/assets/logo-cade.svg",
+    "email": "cadesignufpel@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Centro de Artes — Universidade Federal de Pelotas",
+      "addressLocality": "Pelotas",
+      "addressRegion": "RS",
+      "addressCountry": "BR"
+    },
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "geral",
+      "email": "cadesignufpel@gmail.com",
+      "availableLanguage": ["pt-BR"]
+    }]
+  }
+}
+</script>
 </head>
 <body>
 
 <!-- ===================== 01 Nav ===================== -->
 <header class="nav" data-od-id="nav">
   <div class="wrap nav-inner">
-    <a class="nav-marca" href="index.html" aria-label="CADe UFPel — início" data-od-id="nav-marca">
+    <a class="nav-marca" href="/" aria-label="CADe UFPel — início" data-od-id="nav-marca">
       <img src="assets/logo-cade.svg" alt="CADe UFPel" width="75" height="36">
     </a>
 
     <button class="btn btn--ghost btn--sm nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-od-id="nav-toggle">Menu</button>
 
     <nav class="nav-links" id="nav-links" aria-label="Seções do site" data-od-id="nav-links">
-      <a class="nav-link" href="index.html#area-cade">O CADe</a>
-      <a class="nav-link" href="index.html#area-calouros">Calouros</a>
-      <a class="nav-link" href="index.html#area-dicas">Recursos</a>
-      <a class="nav-link" href="index.html#area-formularios">Formulários</a>
-      <a class="nav-link nav-link--mobile" href="index.html#form-participar">Quero participar</a>
+      <a class="nav-link" href="/#area-cade">O CADe</a>
+      <a class="nav-link" href="/#area-calouros">Calouros</a>
+      <a class="nav-link" href="/#area-dicas">Recursos</a>
+      <a class="nav-link" href="/#area-formularios">Formulários</a>
+      <a class="nav-link nav-link--mobile" href="/#form-participar">Quero participar</a>
     </nav>
 
-    <a class="btn btn--primary btn--sm nav-cta" href="index.html#form-participar" data-od-id="nav-cta">
+    <a class="btn btn--primary btn--sm nav-cta" href="/#form-participar" data-od-id="nav-cta">
       Quero participar
       <span class="m-icon m-icon--16" aria-hidden="true">&#xe5c8;</span>
     </a>
@@ -68,17 +99,18 @@
       <h1 class="h-sec">Quem já fomos e o que já fizemos.</h1>
       <p class="lead">Fotos de eventos, festas, gestões anteriores e as pessoas que passaram por aqui. Participe da comunidade para encontrar uma foto sua aqui. :)</p>
       <p class="form-nota">As fotos vêm direto do nosso Google Drive — de vez em quando alguma miniatura falha em carregar e o card some sozinho.</p>
-      <a class="btn btn--ghost btn--sm galeria-drive-cta" href="https://drive.google.com/drive/folders/1WkPaKrRCu0atXk0Wd5_D8AVe2cyHEBFm?usp=sharing" target="_blank" rel="noopener">Acessar Drive completo</a>
+      <a class="btn btn--ghost btn--sm galeria-drive-cta" href="https://drive.google.com/drive/folders/1WkPaKrRCu0atXk0Wd5_D8AVe2cyHEBFm?usp=sharing" target="_blank" rel="noopener" data-od-id="galeria-drive">Acessar Drive completo</a>
     </div>
 
-    <div id="galeria-categorias"><p class="lead" id="galeria-carregando">Carregando categorias…</p></div>
+    <div id="galeria-categorias" data-od-id="galeria-categorias"><p class="lead" id="galeria-carregando" role="status">Carregando categorias…</p></div>
+    <noscript><p class="form-nota">Para ver as fotos sem JavaScript, use “Acessar Drive completo”.</p></noscript>
   </section>
 </div>
 </main>
 
 <!-- ===================== Popup — Lightbox da galeria ===================== -->
 <div class="modal modal--lightbox" id="modal-galeria" data-od-id="modal-galeria" role="dialog" aria-modal="true" aria-labelledby="lightbox-legenda" hidden>
-  <button class="modal-fechar" id="modal-galeria-fechar" type="button" aria-label="Fechar">
+  <button class="modal-fechar" id="modal-galeria-fechar" type="button" aria-label="Fechar" data-od-id="galeria-fechar">
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
@@ -106,27 +138,27 @@
 
       <nav class="footer-col" aria-label="O CADe">
         <b>O CADE</b>
-        <a href="index.html#o-cade">Quem somos</a>
-        <a href="sobre.html">Sobre o CADe</a>
-        <a href="index.html#agenda">Agenda de eventos</a>
-        <a href="galeria.html">Histórico &amp; galeria</a>
-        <a href="index.html#lojinha">Lojinha</a>
+        <a href="/#o-cade">Quem somos</a>
+        <a href="/sobre">Sobre o CADe</a>
+        <a href="/#agenda">Agenda de eventos</a>
+        <a href="/galeria">Histórico &amp; galeria</a>
+        <a href="/#lojinha">Lojinha</a>
       </nav>
 
       <nav class="footer-col" aria-label="Recursos">
         <b>RECURSOS</b>
-        <a href="index.html#area-calouros">Guia do calouro</a>
-        <a href="index.html#oportunidades">Oportunidades</a>
-        <a href="index.html#links">Atalhos</a>
-        <a href="index.html#faq">FAQ</a>
+        <a href="/#area-calouros">Guia do calouro</a>
+        <a href="/#oportunidades">Oportunidades</a>
+        <a href="/#links">Atalhos</a>
+        <a href="/#faq">FAQ</a>
       </nav>
 
       <nav class="footer-col" aria-label="Participar">
         <b>PARTICIPAR</b>
-        <a href="index.html#form-participar">Entrar na gestão</a>
-        <a href="index.html#form-falar">Reclamações e sugestões</a>
-        <a href="contato.html">Contato</a>
-        <a href="privacidade.html">Privacidade</a>
+        <a href="/#form-participar">Entrar na gestão</a>
+        <a href="/#form-falar">Reclamações e sugestões</a>
+        <a href="/contato">Contato</a>
+        <a href="/privacidade">Privacidade</a>
       </nav>
     </div>
 
@@ -134,7 +166,7 @@
 
     <div class="footer-bottom">
       <p>© 2026 CADe UFPel</p>
-      <p>Dados de formulário só para contato · Analytics sem cookies · <a href="privacidade.html">privacidade</a></p>
+      <p>Dados de formulário só para contato · Analytics sem cookies · <a href="/privacidade">privacidade</a></p>
       <a class="footer-github" href="https://github.com/diego-ruas/SiteCADe" target="_blank" rel="noopener">
         <svg class="brand-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
         Código no GitHub
@@ -194,9 +226,20 @@
   var carregando = document.getElementById('galeria-carregando');
 
   function listar(q, fields){
-    var url = API + '?q=' + encodeURIComponent(q) + '&fields=' + encodeURIComponent('files(' + fields + ')')
-      + '&key=' + GALERIA_DRIVE.apiKey;
-    return fetch(url).then(function(r){ return r.json(); }).then(function(j){ return j.files || []; });
+    var arquivos = [];
+    function pagina(token){
+      var url = API + '?q=' + encodeURIComponent(q) + '&pageSize=1000&fields=' + encodeURIComponent('nextPageToken,files(' + fields + ')') + '&key=' + GALERIA_DRIVE.apiKey;
+      if (token) url += '&pageToken=' + encodeURIComponent(token);
+      return fetch(url).then(function(r){
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      }).then(function(j){
+        if (!Array.isArray(j.files)) throw new Error('Resposta inválida');
+        arquivos = arquivos.concat(j.files);
+        return j.nextPageToken ? pagina(j.nextPageToken) : arquivos;
+      });
+    }
+    return pagina('');
   }
 
   function titulo(slug){
@@ -205,56 +248,76 @@
 
   listar("'" + GALERIA_DRIVE.pastaMae + "' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false", 'id,name')
     .then(function(subpastas){
-      carregando.remove();
-      if (!subpastas.length) return;
+      if (!subpastas.length){ carregando.textContent = 'Nenhuma categoria encontrada.'; return; }
+      carregando.textContent = '';
       subpastas.sort(function(a, b){ return a.name.localeCompare(b.name); });
 
       subpastas.forEach(function(pasta){
         var sec = document.createElement('div');
         sec.className = 'galeria-cat';
+        sec.setAttribute('data-od-id', 'galeria-categoria-' + pasta.id);
         var h3 = document.createElement('h3');
         h3.textContent = titulo(pasta.name);
+        h3.setAttribute('data-od-id', 'galeria-titulo-' + pasta.id);
         var grid = document.createElement('div');
         grid.className = 'galeria-grid';
-        sec.append(h3, grid);
+        sec.appendChild(h3);
+        sec.appendChild(grid);
         container.appendChild(sec);
 
-        listar("'" + pasta.id + "' in parents and mimeType contains 'image/' and trashed=false", 'id')
+        var estado = document.createElement('p');
+        estado.className = 'form-nota';
+        estado.setAttribute('role', 'status');
+        estado.textContent = 'Carregando fotos…';
+        sec.appendChild(estado);
+        listar("'" + pasta.id + "' in parents and mimeType contains 'image/' and trashed=false", 'id,imageMediaMetadata(width,height)')
           .then(function(fotos){
+            estado.textContent = '';
             if (!fotos.length){
-              var vazio = document.createElement('p');
-              vazio.className = 'gal-vazio';
-              vazio.textContent = 'Em breve.';
-              grid.appendChild(vazio);
+              estado.textContent = 'Em breve.';
               return;
             }
             var LIMITE = 10;
+            var exibidas = 0;
             function addFoto(f){
               var img = document.createElement('img');
-              img.src = 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1600';
               img.alt = titulo(pasta.name); img.loading = 'lazy';
               var btn = document.createElement('button');
               btn.className = 'gal-foto';
               btn.type = 'button';
-              img.onerror = function(){ btn.remove(); }; // miniatura do Drive falhou às vezes: some o card em vez de mostrar ícone quebrado
+              btn.setAttribute('data-od-id', 'galeria-foto-' + pasta.id + '-' + f.id);
+              btn.setAttribute('data-drive-id', f.id);
+              img.onerror = function(){ btn.remove(); };
               btn.appendChild(img);
               grid.appendChild(btn);
+              var caixa = btn.getBoundingClientRect();
+              var dimensoes = f.imageMediaMetadata;
+              var proporcao = dimensoes && dimensoes.width > 0 && dimensoes.height > 0 ? dimensoes.width / dimensoes.height : 1;
+              var largura = Math.max(caixa.width, caixa.height * proporcao);
+              var tamanho = Math.min(1600, Math.max(160, Math.ceil(largura * Math.min(window.devicePixelRatio || 1, 2) / 80) * 80));
+              img.src = 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(f.id) + '&sz=w' + tamanho;
             }
-            fotos.slice(0, LIMITE).forEach(addFoto);
-            if (fotos.length > LIMITE){
-              var resto = fotos.slice(LIMITE); // só cria/carrega essas fotos quando "Ver mais" for clicado (evita lag: dezenas de miniaturas de todas as categorias de uma vez)
-              var verMais = document.createElement('button');
-              verMais.type = 'button';
-              verMais.className = 'btn btn--ghost gal-ver-mais';
-              verMais.textContent = 'Ver mais';
-              verMais.addEventListener('click', function(){
-                resto.forEach(addFoto);
-                verMais.remove();
-              });
-              sec.appendChild(verMais);
+            var verMais = document.createElement('button');
+            verMais.type = 'button';
+            verMais.className = 'btn btn--ghost gal-ver-mais';
+            verMais.textContent = 'Ver mais';
+            verMais.setAttribute('data-od-id', 'galeria-mais-' + pasta.id);
+            function lote(){
+              var fim = Math.min(exibidas + LIMITE, fotos.length);
+              var primeiro = exibidas;
+              while (exibidas < fim) addFoto(fotos[exibidas++]);
+              verMais.hidden = exibidas >= fotos.length;
+              estado.textContent = exibidas + ' de ' + fotos.length + ' fotos.';
+              if (primeiro && verMais.hidden){
+                var novos = grid.querySelectorAll('.gal-foto');
+                if (novos[primeiro]) novos[primeiro].focus();
+              }
             }
+            verMais.addEventListener('click', lote);
+            sec.appendChild(verMais);
+            lote();
           })
-          .catch(function(){ /* erro de rede nessa categoria: fica sem fotos */ });
+          .catch(function(){ estado.textContent = 'Não foi possível carregar as fotos agora. Acesse o Drive completo.'; });
       });
     })
     .catch(function(){ carregando.textContent = 'Não deu pra carregar a galeria agora, tenta de novo mais tarde.'; });
@@ -281,14 +344,14 @@
     var img = foto.querySelector('img');
     if (img){
       var clone = document.createElement('img');
-      clone.src = img.currentSrc || img.src;
+      clone.src = 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(foto.getAttribute('data-drive-id')) + '&sz=w2400';
       clone.alt = img.alt || '';
       imgBox.appendChild(clone);
       imgBox.style.background = 'none';
     } else {
       imgBox.style.background = foto.style.background || getComputedStyle(foto).backgroundColor;
     }
-    legenda.textContent = foto.textContent.trim();
+    legenda.textContent = img ? img.alt : foto.textContent.trim();
     viewport.classList.remove('zoom');
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -299,6 +362,7 @@
     modal.hidden = true;
     document.body.style.overflow = '';
     viewport.classList.remove('zoom');
+    imgBox.innerHTML = '';
     if (gatilho) gatilho.focus();
   }
 
