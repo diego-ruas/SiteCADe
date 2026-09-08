@@ -119,18 +119,95 @@
 <div class="area" id="area-cade" style="background:var(--bg-cade)" data-od-id="area-cade">
   <div class="faixa" style="background:var(--navy)"></div>
 
-  <!-- 02 Hero -->
+  <!-- 02 Hero — passador de banners -->
   <section class="hero sobre-navy" data-od-id="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-txt">
-        <h1 data-od-id="hero-titulo">A casa de quem faz Design na UFPel.</h1>
-        <p data-od-id="hero-subtitulo">Informação em um só lugar: o que é o CADe, guia pra calouros, agenda e histórico de eventos, links que você sempre perde e um canal aberto pra falar com a gente.</p>
-        <a class="btn btn--primary" href="#area-calouros" data-od-id="hero-cta">
-          É calouro? Comece por aqui
-          <span class="m-icon" aria-hidden="true">&#xe5c8;</span>
-        </a>
+    <div class="wrap hero-palco" data-od-id="hero-palco">
+      <button class="hero-seta hero-seta--prev" type="button" aria-label="Banner anterior" data-od-id="hero-anterior">
+        <span class="m-icon" aria-hidden="true">&#xe5cb;</span>
+      </button>
+
+      <div class="hero-slides" id="hero-slides" role="group" aria-label="Banners do CADe" data-od-id="hero-slides">
+
+        <article class="hero-slide hero-slide--cade" data-od-id="hero-slide-cade">
+          <div class="hero-grid">
+            <div class="hero-txt">
+              <div class="hero-topo">
+                <p class="eyebrow">O CADE</p>
+                <h1 data-od-id="hero-titulo">A casa de quem faz Design na UFPel.</h1>
+              </div>
+              <p class="hero-desc" data-od-id="hero-subtitulo">Informação em um só lugar: o que é o CADe, guia pra calouros, agenda e histórico de eventos, links que você sempre perde e um canal aberto pra falar com a gente.</p>
+              <a class="btn btn--primary" href="#area-calouros" data-od-id="hero-cta">
+                É calouro? Comece por aqui
+                <span class="m-icon" aria-hidden="true">&#xe5c8;</span>
+              </a>
+            </div>
+            <img class="hero-mascote" src="assets/mascote-hero.svg" alt="Mascote do CADe: um balão de fala sorridente" width="370" height="283">
+          </div>
+        </article>
+
+        <article class="hero-slide hero-slide--calouros" data-od-id="hero-slide-calouros">
+          <div class="hero-grid">
+            <div class="hero-txt">
+              <div class="hero-topo">
+                <p class="eyebrow">CALOUROS</p>
+                <p class="hero-titulo" data-od-id="hero-titulo-calouros">Calouro? Respira. Tá tudo aqui.</p>
+              </div>
+              <p class="hero-desc" data-od-id="hero-subtitulo-calouros">As dúvidas que todo mundo tem na primeira semana, não sanou todas? Entre em contato com a gente!</p>
+              <a class="btn btn--primary" href="#guia-calouro" data-od-id="hero-cta-calouros">
+                Guia do calouro
+                <span class="m-icon" aria-hidden="true">&#xe5c8;</span>
+              </a>
+            </div>
+            <img class="hero-mascote" src="assets/mascote-calouros.svg" alt="" width="176" height="126">
+          </div>
+        </article>
+
+        <article class="hero-slide hero-slide--recursos" data-od-id="hero-slide-recursos">
+          <div class="hero-grid">
+            <div class="hero-txt">
+              <div class="hero-topo">
+                <p class="eyebrow">RECURSOS</p>
+                <p class="hero-titulo" data-od-id="hero-titulo-recursos">Editais, bolsas e estágios.</p>
+              </div>
+              <p class="hero-desc" data-od-id="hero-subtitulo-recursos">Quem vê primeiro, avisa. Esta área é alimentada pela gestão, coordenação e por qualquer aluno que indicar algo. O objetivo é não perder de vista nenhuma oportunidade!</p>
+              <a class="btn btn--primary" href="#oportunidades" data-od-id="hero-cta-recursos">
+                Oportunidades
+                <span class="m-icon" aria-hidden="true">&#xe5c8;</span>
+              </a>
+            </div>
+            <img class="hero-mascote" src="assets/mascote-dicas.svg" alt="" width="176" height="131">
+          </div>
+        </article>
+
+        <article class="hero-slide hero-slide--formularios" data-od-id="hero-slide-formularios">
+          <div class="hero-grid">
+            <div class="hero-txt">
+              <div class="hero-topo">
+                <p class="eyebrow">FORMULÁRIOS</p>
+                <p class="hero-titulo" data-od-id="hero-titulo-formularios">Sua voz, nossas ações.</p>
+              </div>
+              <p class="hero-desc" data-od-id="hero-subtitulo-formularios">Entrar na gestão, ajudar num evento pontual ou só receber os avisos. Não precisa de experiência.</p>
+              <a class="btn btn--primary" href="#form-participar" data-od-id="hero-cta-formularios">
+                Quero participar
+                <span class="m-icon" aria-hidden="true">&#xe5c8;</span>
+              </a>
+            </div>
+            <img class="hero-mascote" src="assets/mascote-forms.svg" alt="" width="176" height="131">
+          </div>
+        </article>
+
       </div>
-      <img class="hero-mascote" src="assets/mascote-hero.svg" alt="Mascote do CADe: um balão de fala sorridente" width="370" height="283">
+
+      <button class="hero-seta hero-seta--next" type="button" aria-label="Próximo banner" data-od-id="hero-proxima">
+        <span class="m-icon" aria-hidden="true">&#xe5cc;</span>
+      </button>
+
+      <div class="hero-pontos" data-od-id="hero-pontos">
+        <button class="hero-ponto" type="button" aria-label="Ir para o banner 1" aria-current="true" data-od-id="hero-ponto-1"></button>
+        <button class="hero-ponto" type="button" aria-label="Ir para o banner 2" data-od-id="hero-ponto-2"></button>
+        <button class="hero-ponto" type="button" aria-label="Ir para o banner 3" data-od-id="hero-ponto-3"></button>
+        <button class="hero-ponto" type="button" aria-label="Ir para o banner 4" data-od-id="hero-ponto-4"></button>
+      </div>
     </div>
   </section>
 
@@ -670,14 +747,38 @@
 (function(){
   var btn = document.querySelector('.nav-toggle');
   var links = document.getElementById('nav-links');
+  var nav = document.querySelector('.nav');
+
+  function fecha(devolveFoco){
+    if (links.dataset.aberto !== 'true') return;
+    links.dataset.aberto = 'false';
+    btn.setAttribute('aria-expanded', 'false');
+    if (devolveFoco) btn.focus();   /* o link clicado some junto com o menu: o foco volta pro botão */
+  }
+
   btn.addEventListener('click', function(){
     var aberto = links.dataset.aberto === 'true';
     links.dataset.aberto = String(!aberto);
     btn.setAttribute('aria-expanded', String(!aberto));
   });
+
+  /* na captura: o menu fecha antes do listener de âncora medir a posição do alvo */
   links.addEventListener('click', function(e){
-    if (e.target.closest('a')) { links.dataset.aberto = 'false'; btn.setAttribute('aria-expanded','false'); }
+    if (e.target.closest('a')) fecha(true);
+  }, true);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' || e.key === 'Esc') fecha(true);
   });
+  document.addEventListener('click', function(e){
+    if (!nav.contains(e.target)) fecha(false);
+  });
+
+  /* voltou pro desktop: o botão some, o estado aberto não pode sobreviver */
+  var desktop = window.matchMedia('(min-width:721px)');
+  function saiDoMobile(e){ if (e.matches) fecha(false); }
+  if (desktop.addEventListener) desktop.addEventListener('change', saiDoMobile);
+  else desktop.addListener(saiDoMobile);
 })();
 
 /* ---------- Nav: o link ativo acompanha a área visível ---------- */
@@ -695,12 +796,12 @@
     });
   }
 
-  // linha de leitura logo abaixo da nav; a folga é a margem de erro pra áreas
-  // curtas (Calouros tem ~550px) ainda darem tempo de virar a ativa
-  var FOLGA = 140;
+  // linha de leitura abaixo da nav; a folga é proporcional à tela pra a área
+  // nova virar ativa quando já ocupa a maior parte da viewport
+  var FOLGA = 0.35;
 
   function ativa(){
-    var linha = document.querySelector('.nav').offsetHeight + FOLGA;
+    var linha = document.querySelector('.nav').offsetHeight + window.innerHeight * FOLGA;
     var i = 0;
     areas.forEach(function(el, n){ if (el.getBoundingClientRect().top <= linha) i = n; });
     marcar(i);
@@ -777,6 +878,85 @@
   window.addEventListener('scroll', noScroll, { passive: true });
   window.addEventListener('resize', atualiza);
   atualiza();
+})();
+
+/* ---------- Hero: passador de banners (scroll-snap nativo + setas, bolinhas e autoplay) ---------- */
+(function(){
+  var palco = document.querySelector('.hero-palco');
+  var slides = document.getElementById('hero-slides');
+  if (!palco || !slides) return;
+  var itens = Array.prototype.slice.call(slides.querySelectorAll('.hero-slide'));
+  var pontos = Array.prototype.slice.call(palco.querySelectorAll('.hero-ponto'));
+  var prev = palco.querySelector('.hero-seta--prev');
+  var next = palco.querySelector('.hero-seta--next');
+  if (itens.length < 2 || !prev || !next) return;
+
+  var TROCA = 5000;
+  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var atual = 0;
+  var desligado = reduz.matches;                       /* fim do autoplay, sem volta */
+  var pausas = { ponteiro:false, foco:false, aba:false, fora:false };
+
+  function pausado(){ return pausas.ponteiro || pausas.foco || pausas.aba || pausas.fora; }
+
+  function marcar(){
+    pontos.forEach(function(b, i){
+      if (i === atual) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+  }
+
+  function ir(i, suave){
+    var n = itens.length;
+    var alvo = (i % n + n) % n;
+    var salta = Math.abs(alvo - atual) > 1;            /* volta 4 -> 1 sem varrer o trilho inteiro */
+    atual = alvo;
+    slides.scrollTo({
+      left: slides.clientWidth * atual,
+      behavior: (suave && !salta && !reduz.matches) ? 'smooth' : 'auto'
+    });
+    marcar();
+  }
+
+  function manual(i){ desligado = true; ir(i, true); } /* interação humana encerra o autoplay */
+
+  prev.addEventListener('click', function(){ manual(atual - 1); });
+  next.addEventListener('click', function(){ manual(atual + 1); });
+  pontos.forEach(function(b, i){ b.addEventListener('click', function(){ manual(i); }); });
+  slides.addEventListener('pointerdown', function(){ desligado = true; });
+
+  /* arraste, roda ou Tab pra dentro de outro banner: as bolinhas seguem quem parou na tela */
+  var agendado = false;
+  slides.addEventListener('scroll', function(){
+    if (agendado) return;
+    agendado = true;
+    window.requestAnimationFrame(function(){
+      agendado = false;
+      var i = Math.round(slides.scrollLeft / slides.clientWidth);
+      if (i !== atual && itens[i]){ atual = i; marcar(); }
+    });
+  }, { passive: true });
+
+  window.addEventListener('resize', function(){ ir(atual, false); });
+
+  palco.addEventListener('mouseenter', function(){ pausas.ponteiro = true; });
+  palco.addEventListener('mouseleave', function(){ pausas.ponteiro = false; });
+  palco.addEventListener('focusin', function(){ pausas.foco = true; });
+  palco.addEventListener('focusout', function(){ pausas.foco = false; });
+  document.addEventListener('visibilitychange', function(){ pausas.aba = document.hidden; });
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ pausas.fora = !e.isIntersecting; });
+    }, { threshold: 0 }).observe(palco);
+  }
+  reduz.addListener(function(e){ if (e.matches) desligado = true; });
+
+  window.setInterval(function(){
+    if (desligado || pausado()) return;
+    ir(atual + 1, true);
+  }, TROCA);
+
+  ir(0, false);   /* reload restaura scrollLeft: reancora no banner 1 */
 })();
 
 /* ---------- Galeria: carrossel horizontal com setas ---------- */

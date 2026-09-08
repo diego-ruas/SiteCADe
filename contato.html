@@ -197,14 +197,38 @@
 (function(){
   var btn = document.querySelector('.nav-toggle');
   var links = document.getElementById('nav-links');
+  var nav = document.querySelector('.nav');
+
+  function fecha(devolveFoco){
+    if (links.dataset.aberto !== 'true') return;
+    links.dataset.aberto = 'false';
+    btn.setAttribute('aria-expanded', 'false');
+    if (devolveFoco) btn.focus();   /* o link clicado some junto com o menu: o foco volta pro botão */
+  }
+
   btn.addEventListener('click', function(){
     var aberto = links.dataset.aberto === 'true';
     links.dataset.aberto = String(!aberto);
     btn.setAttribute('aria-expanded', String(!aberto));
   });
+
+  /* na captura: o menu fecha antes do listener de âncora medir a posição do alvo */
   links.addEventListener('click', function(e){
-    if (e.target.closest('a')) { links.dataset.aberto = 'false'; btn.setAttribute('aria-expanded','false'); }
+    if (e.target.closest('a')) fecha(true);
+  }, true);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' || e.key === 'Esc') fecha(true);
   });
+  document.addEventListener('click', function(e){
+    if (!nav.contains(e.target)) fecha(false);
+  });
+
+  /* voltou pro desktop: o botão some, o estado aberto não pode sobreviver */
+  var desktop = window.matchMedia('(min-width:721px)');
+  function saiDoMobile(e){ if (e.matches) fecha(false); }
+  if (desktop.addEventListener) desktop.addEventListener('change', saiDoMobile);
+  else desktop.addListener(saiDoMobile);
 })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>

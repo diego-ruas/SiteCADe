@@ -1,16 +1,61 @@
 /* ============================================================
-   02 Hero
+   02 Hero — passador de banners
    ============================================================ */
 .hero{background:var(--navy);color:var(--branco);overflow:hidden}
+.hero-palco{position:relative}
+
+/* trilho: um banner por tela, arraste nativo + snap (mesmo padrão do carrossel da galeria) */
+.hero-slides{
+  display:grid;grid-auto-flow:column;grid-auto-columns:100%;min-width:0;
+  overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.hero-slides::-webkit-scrollbar{display:none}
+.hero-slide{scroll-snap-align:start;min-width:0}
+
 .hero-grid{
   display:flex;align-items:center;gap:clamp(24px,4vw,56px);
   padding-block:var(--sec-y);
 }
 .hero-txt{display:flex;flex-direction:column;gap:24px;align-items:flex-start;min-width:0;flex:1 1 auto}
-.hero h1{
+.hero-topo{display:flex;flex-direction:column;gap:12px}
+.hero h1,.hero-titulo{
   font-size:clamp(38px,5.7vw,82px);font-weight:800;line-height:1.02;letter-spacing:-.03em;
   max-width:15ch;
 }
-.hero p{font-size:clamp(16px,1.7vw,20px);line-height:1.55;max-width:64ch}
+.hero-desc{font-size:clamp(16px,1.7vw,20px);line-height:1.55;max-width:64ch}
 .hero-mascote{width:clamp(180px,26vw,370px);height:auto;flex:none}
+
+/* acento de cada banner = cor da faixa da área que ele leva (o da área CADe é navy: fica branco) */
+.hero-slide--calouros .eyebrow{color:var(--ciano)}
+.hero-slide--recursos .eyebrow{color:var(--amarelo)}
+.hero-slide--formularios .eyebrow{color:var(--verde)}
+
+/* setas dentro da calha do .wrap: nunca por cima do texto (--gut >= 59px acima de 900px) */
+.hero-seta{
+  position:absolute;top:50%;translate:0 -50%;z-index:2;
+  width:44px;height:44px;border-radius:50%;flex:none;
+  background:transparent;border:1.5px solid rgba(246,246,246,.45);color:var(--branco);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background-color .18s ease,border-color .18s ease;
+}
+.hero-seta--prev{left:8px}
+.hero-seta--next{right:8px}
+
+.hero-pontos{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:4px}
+.hero-ponto{
+  width:24px;height:24px;padding:0;border:0;background:transparent;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.hero-ponto::before{
+  content:"";width:10px;height:10px;border-radius:var(--r-pill);
+  background:rgba(246,246,246,.4);transition:width .18s ease,background-color .18s ease;
+}
+.hero-ponto[aria-current="true"]::before{width:22px;background:var(--ciano)}
+
+@media (hover:hover){
+  .hero-seta:hover{background:rgba(246,246,246,.14);border-color:var(--branco)}
+  .hero-ponto:hover::before{background:rgba(246,246,246,.7)}
+}
+
 .divisor{height:1px;background:rgba(11,11,109,.25)}

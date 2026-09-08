@@ -63,7 +63,8 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* scroll-padding: foco por Tab e âncoras nunca param embaixo da nav sticky (74px + folga) */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:88px}
 body{
   margin:0;
   font-family:'LTSuperior',system-ui,sans-serif;
@@ -127,5 +128,5 @@ ul{margin:0;padding:0;list-style:none}
 @media (hover:hover){
   .btn--primary:hover{background:var(--verde-hover);border-color:var(--verde-hover)}
   .btn--navy:hover{background:var(--navy-hover);border-color:var(--navy-hover)}
-  .btn--ghost:hover{background:#e2e4f2}
+  .btn--ghost:hover{background:var(--navy-10)}
 }

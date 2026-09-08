@@ -7,7 +7,7 @@
 }
 .nav-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;column-gap:24px;padding-block:14px}
 .nav-marca{justify-self:start}
-.nav-marca img{height:36px;width:auto}
+.nav-marca img{height:36px;width:auto;min-width:75px}   /* min-width: a coluna estreita não esmaga o logo */
 .nav-toggle{justify-self:end}
 .nav-links{display:flex;align-items:center;justify-self:center;gap:28px}
 .nav-cta{justify-self:end}

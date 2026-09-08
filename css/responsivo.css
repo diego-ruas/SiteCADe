@@ -11,19 +11,47 @@
   .produtos{grid-template-columns:repeat(2,minmax(0,1fr))}
   .mascote-canto{position:static;margin:0 0 24px auto}
 }
+/* 721–940: sem as calhas de sobra o CTA cabe numa linha só e a nav mantém os 74px
+   (a quebra medida acontece de 911 a 918px; a folga cobre variação de fonte) */
+@media (max-width:940px){
+  .nav-inner{grid-template-columns:auto 1fr auto;column-gap:12px}
+  .nav-links{gap:12px}
+  .nav-cta{white-space:nowrap;padding-inline:12px}
+}
 @media (max-width:900px){
-  .hero-grid{flex-direction:column;align-items:flex-start}
+  /* passador: banner em cima, [‹] bolinhas [›] embaixo — não sobra calha pra seta flutuante */
+  .hero-palco{
+    display:grid;grid-template-columns:auto 1fr auto;
+    grid-template-areas:"slides slides slides" "prev pontos next";
+    align-items:center;gap:16px;padding-bottom:var(--sec-y);
+  }
+  .hero-slides{grid-area:slides}
+  .hero-seta{position:static;translate:none;grid-area:prev}
+  .hero-seta--next{grid-area:next}
+  .hero-pontos{position:static;grid-area:pontos}
+  .hero-grid{flex-direction:column;align-items:flex-start;padding-block:var(--sec-y) 24px}
   .hero-mascote{width:clamp(88px,20vw,120px);order:-1;margin:0 auto 4px}
   .oportunidades{grid-template-columns:minmax(0,1fr)}
   .links{grid-template-columns:repeat(2,minmax(0,1fr))}
   .forms{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:720px){
-  .nav-inner{display:flex;justify-content:space-between;flex-wrap:wrap;row-gap:12px}
+  .nav-inner{display:flex;justify-content:space-between}
   .nav-toggle{display:inline-flex}
+  /* painel sobreposto: fora do fluxo, o header fica nos 86px e a página não desce.
+     O bloco contedor é a .nav (sticky = posicionada), então top:100% cola logo abaixo dela. */
   .nav-links{
-    display:none;order:3;flex-basis:100%;flex-direction:column;align-items:flex-start;
-    gap:4px;padding-bottom:8px;
+    display:none;position:absolute;top:100%;left:0;right:0;z-index:1;
+    /* nav.css centraliza o item com justify-self; em abspos isso encolheria o painel pro fit-content */
+    justify-self:stretch;
+    flex-direction:column;align-items:flex-start;
+    gap:4px;padding:4px var(--gut) 12px;
+    /* o painel cobre a borda da nav (top:100% = caixa de padding): redesenha a linha */
+    background:var(--branco);border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+    box-shadow:0 16px 24px -16px var(--navy-50);
+    /* paisagem curta: o painel rola sozinho em vez de sair da tela */
+    max-height:calc(100vh - 100%);max-height:calc(100dvh - 100%);
+    overflow:hidden auto;overscroll-behavior:contain;
   }
   .nav-links[data-aberto="true"]{display:flex}
   .nav-link{width:100%;min-height:44px;border-bottom:1px solid var(--linha)}
@@ -34,10 +62,13 @@
   .op-head .btn{width:100%}
   /* ritmo vertical: telas pequenas pedem seções mais curtas */
   :root{--gut:24px;--sec-y:40px}
-  .area,section[id],[id^="form-"]{scroll-margin-top:72px}
+  /* nav de 86px aqui: âncora e foco por Tab param 14px abaixo dela, igual ao desktop */
+  html{scroll-padding-top:100px}
+  .area,section[id],[id^="form-"]{scroll-margin-top:100px}
 
   .btn{padding:16px 24px}
   .hero-grid{gap:32px}
+  .hero-ponto{width:32px;height:44px}
   .mascote-canto{width:96px;margin-bottom:8px}
 
   /* Calendário: célula vira alvo de toque de 44px */
