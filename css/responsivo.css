@@ -31,7 +31,7 @@
   .hero-pontos{position:static;grid-area:pontos}
   .hero-grid{flex-direction:column;align-items:flex-start;padding-block:var(--sec-y) 24px}
   .hero-mascote{width:clamp(88px,20vw,120px);order:-1;margin:0 auto 4px}
-  .oportunidades{grid-template-columns:minmax(0,1fr)}
+  .op{flex-basis:100%}
   .links{grid-template-columns:repeat(2,minmax(0,1fr))}
   .forms{grid-template-columns:minmax(0,1fr)}
 }

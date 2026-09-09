@@ -403,8 +403,16 @@
     </div>
 
     <!-- Os cards vêm de /api/oportunidades, alimentado pela planilha. Instruções em README.md. -->
-    <div class="oportunidades oportunidades--vazio" data-od-id="oportunidades-lista">
-      <p class="op-vazio" id="oportunidades-status" role="status" data-od-id="oportunidades-status">Carregando oportunidades…</p>
+    <div class="op-carrossel" data-od-id="oportunidades-carrossel">
+      <button class="op-seta op-seta--prev" type="button" aria-label="Oportunidades anteriores" aria-controls="oportunidades-lista" data-od-id="oportunidades-anteriores" disabled>
+        <span class="m-icon" aria-hidden="true">&#xe5cb;</span>
+      </button>
+      <div class="oportunidades oportunidades--vazio" id="oportunidades-lista" data-od-id="oportunidades-lista">
+        <p class="op-vazio" id="oportunidades-status" role="status" data-od-id="oportunidades-status">Carregando oportunidades…</p>
+      </div>
+      <button class="op-seta op-seta--next" type="button" aria-label="Próximas oportunidades" aria-controls="oportunidades-lista" data-od-id="oportunidades-proximas" disabled>
+        <span class="m-icon" aria-hidden="true">&#xe5cc;</span>
+      </button>
     </div>
     <noscript><p class="op-vazio">As oportunidades abertas ficam no nosso <a href="https://www.instagram.com/cadesignufpel" target="_blank" rel="noopener">Instagram</a>.</p></noscript>
   </section>
@@ -1675,12 +1683,15 @@
   var textoEl = document.getElementById('modal-op-texto');
   var ctaEl = document.getElementById('modal-op-cta');
   var fechar = document.getElementById('modal-op-fechar');
+  var anterior = document.querySelector('.op-seta--prev');
+  var proxima = document.querySelector('.op-seta--next');
   var gatilho = null;
 
   function prepararStatus(){
     lista.textContent = '';
     lista.classList.add('oportunidades--vazio');
     lista.appendChild(status);
+    atualizarSetas();
   }
 
   function mostrarVazio(){
@@ -1708,6 +1719,7 @@
     }
 
     lista.textContent = '';
+    lista.scrollLeft = 0;
     lista.classList.remove('oportunidades--vazio');
     itens.forEach(function(d){
       DADOS[d.id] = d;
@@ -1744,8 +1756,23 @@
       botao.appendChild(cta);
       lista.appendChild(botao);
     });
+    atualizarSetas();
   }
 
+  function atualizarSetas(){
+    var maximo = lista.scrollWidth - lista.clientWidth;
+    anterior.disabled = lista.scrollLeft <= 1;
+    proxima.disabled = lista.scrollLeft >= maximo - 1;
+  }
+
+  function navegar(direcao){
+    var card = lista.querySelector('.op');
+    if (!card) return;
+    var estilos = window.getComputedStyle(lista);
+    var passo = card.getBoundingClientRect().width + (parseFloat(estilos.columnGap) || 0);
+    lista.scrollLeft += direcao * passo;
+    atualizarSetas();
+  }
   function abrir(id){
     var d = DADOS[id];
     if (!d) return;
@@ -1772,6 +1799,10 @@
     gatilho = btn;
     abrir(btn.dataset.op);
   });
+  lista.addEventListener('scroll', atualizarSetas);
+  anterior.addEventListener('click', function(){ navegar(-1); });
+  proxima.addEventListener('click', function(){ navegar(1); });
+  window.addEventListener('resize', atualizarSetas);
 
   function carregar(){
     var concluido = false;
