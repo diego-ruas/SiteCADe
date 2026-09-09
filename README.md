@@ -26,7 +26,6 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 | CSS | dividido em `css/*.css`, carregado via `<link>` no `<head>`, na ordem da cascata |
 | Tipografia | LT Superior, self-hosted em `assets/font/` (`.woff2`) |
 | Ícones | Google Material Symbols, self-hosted em `assets/font/material-symbols.woff2` (subset, ~1KB); logos de marca seguem SVG inline |
-| Analytics | Vercel Analytics (`/_vercel/insights/script.js`), sem cookies |
 | Backend | `api/enviar.js` — função serverless da Vercel para os formulários; `api/oportunidades.js` — lê a planilha CSV de oportunidades |
 
 ## Estrutura de pastas

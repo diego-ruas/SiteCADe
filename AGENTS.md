@@ -22,6 +22,8 @@ Página única do Centro Acadêmico de Design da UFPel, migrada de um design Fig
   - `icons.css` — `@font-face` do Material Symbols + classes `.m-icon` / `.brand-icon`.
   - `responsivo.css` — todas as `@media` (1180, 900, 720, 400, reduced-motion).
 - `assets/` — SVGs de marca (logos, mascotes, favicon), fontes `.woff2` em `assets/font/` e imagens WebP de produtos e membros da gestão em `assets/FotosMembros/`. Sempre referência relativa e nomes de arquivo em ASCII/kebab-case sem espaços ou acentos. Os ícones de UI vêm da fonte `assets/font/material-symbols.woff2` (ver regra de ícones).
+- `test/` — testes de contrato para agentes:
+  - `test/agentes.test.js` — suíte de verificação de contratos públicos e negociação de Accept (sem framework, executa com `node test/agentes.test.js`).
 
 Fonte do design: Figma `fFejL7f3oqdLNoPUqCwzD0` (arquivo "CADe - Landing Page"). Os textos oficiais vêm de lá — não invente copy.
 
@@ -37,6 +39,7 @@ Fonte do design: Figma `fFejL7f3oqdLNoPUqCwzD0` (arquivo "CADe - Landing Page").
   - **Logos de marca** (GitHub, Instagram) não existem no Material Symbols: seguem SVG inline com `class="brand-icon"`.
 - **Não use `scrollIntoView`** — quebra o preview embutido.
 - **`body{overflow-x:clip}`** é deliberado: `hidden` mataria o `position:sticky` da nav.
+- **Sem telemetria nem analytics:** o site não usa ferramentas de analytics (nem Vercel Web Analytics nem Speed Insights), nem pixels, nem cookies de terceiros ou de rastreamento. Não adicione scripts externos, coletores de eventos (`cadeMedir`), inicializadores de telemetria (`window.va`, `window.si`) ou beacons.
 
 ## Estrutura
 
@@ -57,6 +60,8 @@ A nav marca a área ativa via `aria-current="page"` (bolinha rosa em `::before`)
 2. Mude só o que foi pedido — o resto da copy e dos tokens é contrato.
 3. Cheque os breakpoints existentes: 1180px, 900px, 720px e 400px. Sem scroll horizontal no mobile.
 4. Estados `hover`/`focus-visible` sempre com par fundo+texto definido; contraste nunca cai.
+5. **Sem telemetria:** não reintroduza bibliotecas, coletores de eventos ou scripts analíticos.
+6. **Verificação:** execute `node test/agentes.test.js` após alterações para garantir que contratos de rotas e representações continuam íntegros.
 
 ## CodeGraph para agentes
 

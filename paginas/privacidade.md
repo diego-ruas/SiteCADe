@@ -6,7 +6,7 @@
 
 - **Responsável:** Centro Acadêmico de Design da UFPel (CADe UFPel)
 - **Contato para assuntos de dados:** cadesignufpel@gmail.com
-- **Última atualização:** 2026-09-03
+- **Última atualização:** 2026-09-09
 
 ## Quem é o responsável
 
@@ -46,10 +46,7 @@ operadores e processam os dados apenas para entregar a mensagem.
 
 ## Cookies e medição de audiência
 
-Este site não usa cookies de publicidade nem de rastreamento entre sites, e não
-incorpora pixels de redes sociais. A medição de audiência é feita sem cookies e
-sem identificar visitantes individualmente — olhamos números agregados, como
-quantas visitas uma seção recebeu.
+Este site não usa ferramentas de analytics, não registra eventos de interação para análise de comportamento e não coleta métricas de desempenho dos visitantes. Não usamos cookies de publicidade nem de rastreamento entre sites e não incorporamos pixels de redes sociais.
 
 Algumas partes do site carregam conteúdo hospedado fora daqui: as fotos da galeria
 vêm do Google Drive público do CADe. Ao carregar essas imagens, o seu navegador se
