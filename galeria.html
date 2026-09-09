@@ -195,6 +195,7 @@
 
   btn.addEventListener('click', function(){
     var aberto = links.dataset.aberto === 'true';
+    window.cadeMedir && window.cadeMedir('controle', { elemento:'menu', acao:aberto ? 'fechar' : 'abrir' });
     links.dataset.aberto = String(!aberto);
     btn.setAttribute('aria-expanded', String(!aberto));
   });
@@ -205,7 +206,11 @@
   }, true);
 
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' || e.key === 'Esc') fecha(true);
+    var aberto = links.dataset.aberto === 'true';
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      fecha(true);
+      if (aberto) window.cadeMedir && window.cadeMedir('controle', { elemento:'menu', acao:'fechar' });
+    }
   });
   document.addEventListener('click', function(e){
     if (!nav.contains(e.target)) fecha(false);
@@ -229,6 +234,7 @@
   }
 
   btn.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('controle', { elemento:'voltar-ao-topo', acao:'acionar' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   window.addEventListener('scroll', atualiza, { passive: true });
@@ -337,7 +343,10 @@
                 if (novos[primeiro]) novos[primeiro].focus();
               }
             }
-            verMais.addEventListener('click', lote);
+            verMais.addEventListener('click', function(){
+              window.cadeMedir && window.cadeMedir('galeria', { acao:'ver-mais' });
+              lote();
+            });
             sec.appendChild(verMais);
             lote();
           })
@@ -362,7 +371,8 @@
     return grid ? Array.prototype.slice.call(grid.querySelectorAll('.gal-foto')) : [foto];
   }
 
-  function abrir(foto){
+  function abrir(foto, medirAbertura){
+    if (medirAbertura !== false) window.cadeMedir && window.cadeMedir('galeria', { acao:'abrir-foto' });
     gatilho = foto;
     imgBox.innerHTML = '';
     var img = foto.querySelector('img');
@@ -383,6 +393,7 @@
   }
 
   function fecharModal(){
+    window.cadeMedir && window.cadeMedir('galeria', { acao:'fechar' });
     modal.hidden = true;
     document.body.style.overflow = '';
     viewport.classList.remove('zoom');
@@ -397,6 +408,7 @@
   });
 
   imgBox.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('galeria', { acao:'zoom' });
     viewport.classList.toggle('zoom');
     viewport.scrollTop = 0;
     viewport.scrollLeft = 0;
@@ -414,11 +426,71 @@
       var i = grupo.indexOf(gatilho);
       if (i === -1) return;
       var prox = grupo[e.key === 'ArrowRight' ? i + 1 : i - 1];
-      if (prox) abrir(prox);
+      if (prox) {
+        window.cadeMedir && window.cadeMedir('galeria', { acao:'navegar-teclado' });
+        abrir(prox, false);
+      }
     }
   });
 })();
 </script>
+<script>
+window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };
+window.si = window.si || function(){ (window.siq = window.siq || []).push(arguments); };
+</script>
+<script>
+/* ---------- Vercel Analytics: eventos fixos, sem dados pessoais ---------- */
+(function(){
+  var pagina = 'galeria';
+  var campos = {
+    navegacao:['pagina', 'elemento', 'destino'],
+    controle:['pagina', 'elemento', 'acao'],
+    galeria:['pagina', 'acao']
+  };
+
+  function medir(nome, dados){
+    var permitidos = campos[nome];
+    if (!permitidos || typeof window.va !== 'function') return;
+    var seguro = { pagina:pagina };
+    permitidos.forEach(function(campo){
+      if (campo !== 'pagina' && dados && typeof dados[campo] !== 'undefined') seguro[campo] = dados[campo];
+    });
+    window.va('event', { name:nome, data:seguro });
+  }
+  window.cadeMedir = medir;
+
+  function destinoDe(link){
+    var bruto = link.getAttribute('href') || '';
+    if (bruto.charAt(0) === '#') return 'ancora';
+    if (bruto.indexOf('mailto:') === 0) return 'email';
+    try {
+      var destino = new URL(bruto, window.location.href);
+      if (destino.origin === window.location.origin) return destino.hash ? 'ancora' : 'interna';
+      if (destino.hostname === 'www.instagram.com' || destino.hostname === 'instagram.com') return 'instagram';
+      if (destino.hostname === 'drive.google.com') return 'drive';
+      if (destino.hostname === 'github.com') return 'github';
+    } catch (erro) {}
+    return 'outro-externo';
+  }
+
+  function elementoDe(link){
+    if (link.closest('.nav')) return 'nav';
+    if (link.closest('.footer')) return 'rodape';
+    return 'conteudo';
+  }
+
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a');
+    if (!link) return;
+    if (link.getAttribute('data-od-id') === 'galeria-drive') {
+      medir('galeria', { acao:'drive' });
+      return;
+    }
+    medir('navegacao', { elemento:elementoDe(link), destino:destinoDe(link) });
+  });
+})();
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

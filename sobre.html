@@ -207,6 +207,7 @@
 
   btn.addEventListener('click', function(){
     var aberto = links.dataset.aberto === 'true';
+    window.cadeMedir && window.cadeMedir('controle', { elemento:'menu', acao:aberto ? 'fechar' : 'abrir' });
     links.dataset.aberto = String(!aberto);
     btn.setAttribute('aria-expanded', String(!aberto));
   });
@@ -217,7 +218,11 @@
   }, true);
 
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' || e.key === 'Esc') fecha(true);
+    var aberto = links.dataset.aberto === 'true';
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      fecha(true);
+      if (aberto) window.cadeMedir && window.cadeMedir('controle', { elemento:'menu', acao:'fechar' });
+    }
   });
   document.addEventListener('click', function(e){
     if (!nav.contains(e.target)) fecha(false);
@@ -230,6 +235,51 @@
   else desktop.addListener(saiDoMobile);
 })();
 </script>
+<script>
+window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };
+window.si = window.si || function(){ (window.siq = window.siq || []).push(arguments); };
+</script>
+<script>
+/* ---------- Vercel Analytics: eventos fixos, sem dados pessoais ---------- */
+(function(){
+  var pagina = 'sobre';
+  var campos = { navegacao:['pagina', 'elemento', 'destino'], controle:['pagina', 'elemento', 'acao'] };
+
+  function medir(nome, dados){
+    var permitidos = campos[nome];
+    if (!permitidos || typeof window.va !== 'function') return;
+    var seguro = { pagina:pagina };
+    permitidos.forEach(function(campo){
+      if (campo !== 'pagina' && dados && typeof dados[campo] !== 'undefined') seguro[campo] = dados[campo];
+    });
+    window.va('event', { name:nome, data:seguro });
+  }
+  window.cadeMedir = medir;
+
+  function destinoDe(link){
+    var bruto = link.getAttribute('href') || '';
+    if (bruto.charAt(0) === '#') return 'ancora';
+    if (bruto.indexOf('mailto:') === 0) return 'email';
+    try {
+      var destino = new URL(bruto, window.location.href);
+      if (destino.origin === window.location.origin) return destino.hash ? 'ancora' : 'interna';
+      if (destino.hostname === 'www.instagram.com' || destino.hostname === 'instagram.com') return 'instagram';
+      if (destino.hostname === 'github.com') return 'github';
+    } catch (erro) {}
+    return 'outro-externo';
+  }
+
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a');
+    if (!link) return;
+    medir('navegacao', {
+      elemento:link.closest('.nav') ? 'nav' : (link.closest('.footer') ? 'rodape' : 'conteudo'),
+      destino:destinoDe(link)
+    });
+  });
+})();
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

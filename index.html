@@ -736,6 +736,7 @@
 
   btn.addEventListener('click', function(){
     var aberto = links.dataset.aberto === 'true';
+    window.cadeMedir && window.cadeMedir('controle', { elemento:'menu', acao:aberto ? 'fechar' : 'abrir' });
     links.dataset.aberto = String(!aberto);
     btn.setAttribute('aria-expanded', String(!aberto));
   });
@@ -746,7 +747,11 @@
   }, true);
 
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' || e.key === 'Esc') fecha(true);
+    var aberto = links.dataset.aberto === 'true';
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      fecha(true);
+      if (aberto) window.cadeMedir && window.cadeMedir('controle', { elemento:'menu', acao:'fechar' });
+    }
   });
   document.addEventListener('click', function(e){
     if (!nav.contains(e.target)) fecha(false);
@@ -845,6 +850,7 @@
   }
 
   btn.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('controle', { elemento:'voltar-ao-topo', acao:'acionar' });
     window.scrollTo(0, 0);   /* suave via html{scroll-behavior:smooth} */
   });
   var agendado = false;
@@ -896,12 +902,19 @@
     marcar();
   }
 
-  function manual(i){ desligado = true; ir(i, true); } /* interação humana encerra o autoplay */
+  function manual(i, acao){
+    desligado = true;
+    ir(i, true);
+    window.cadeMedir && window.cadeMedir('hero', { acao:acao, banner:String(atual + 1) });
+  }
 
-  prev.addEventListener('click', function(){ manual(atual - 1); });
-  next.addEventListener('click', function(){ manual(atual + 1); });
-  pontos.forEach(function(b, i){ b.addEventListener('click', function(){ manual(i); }); });
-  slides.addEventListener('pointerdown', function(){ desligado = true; });
+  prev.addEventListener('click', function(){ manual(atual - 1, 'anterior'); });
+  next.addEventListener('click', function(){ manual(atual + 1, 'proximo'); });
+  pontos.forEach(function(b, i){ b.addEventListener('click', function(){ manual(i, 'paginacao'); }); });
+  slides.addEventListener('pointerdown', function(){
+    desligado = true;
+    window.cadeMedir && window.cadeMedir('hero', { acao:'arrastar', banner:String(atual + 1) });
+  });
 
   /* arraste, roda ou Tab pra dentro de outro banner: as bolinhas seguem quem parou na tela */
   var agendado = false;
@@ -958,9 +971,11 @@
   }
 
   anterior.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('galeria_home', { acao:'anterior' });
     track.scrollBy({ left: -passo(), behavior: reduz ? 'auto' : 'smooth' });
   });
   proxima.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('galeria_home', { acao:'proximo' });
     track.scrollBy({ left: passo(), behavior: reduz ? 'auto' : 'smooth' });
   });
 
@@ -1085,6 +1100,7 @@
   var carregado = false;
 
   function abrir(){
+    window.cadeMedir && window.cadeMedir('materiais', { acao:'abrir' });
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     fechar.focus();
@@ -1146,12 +1162,16 @@
   }
 
   function fecharModal(){
+    window.cadeMedir && window.cadeMedir('materiais', { acao:'fechar' });
     modal.hidden = true;
     document.body.style.overflow = '';
     btn.focus();
   }
 
   btn.addEventListener('click', abrir);
+  lista.addEventListener('click', function(e){
+    if (e.target.closest('.mat-item a')) window.cadeMedir && window.cadeMedir('materiais', { acao:'recurso' });
+  });
   fechar.addEventListener('click', fecharModal);
   modal.addEventListener('click', function(e){ if (e.target === modal) fecharModal(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) fecharModal(); });
@@ -1198,6 +1218,7 @@
   var gatilho = null;
 
   function abrir(foto){
+    window.cadeMedir && window.cadeMedir('galeria_home', { acao:'abrir-foto' });
     gatilho = foto;
     imgBox.innerHTML = '';
     var img = foto.querySelector('img');
@@ -1218,6 +1239,7 @@
   }
 
   function fecharModal(){
+    window.cadeMedir && window.cadeMedir('galeria_home', { acao:'fechar' });
     modal.hidden = true;
     document.body.style.overflow = '';
     viewport.classList.remove('zoom');
@@ -1232,6 +1254,7 @@
   });
 
   imgBox.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('galeria_home', { acao:'zoom' });
     viewport.classList.toggle('zoom');
     viewport.scrollTop = 0;
     viewport.scrollLeft = 0;
@@ -1243,6 +1266,7 @@
   });
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && !modal.hidden) fecharModal();
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !modal.hidden) window.cadeMedir && window.cadeMedir('galeria_home', { acao:'navegar-teclado' });
   });
 })();
 
@@ -1391,7 +1415,10 @@
     btnAnt.type = 'button'; btnAnt.className = 'mes-nav'; btnAnt.textContent = '‹';
     btnAnt.setAttribute('aria-label', 'Mês anterior');
     btnAnt.setAttribute('data-od-id', 'agenda-mes-anterior');
-    btnAnt.addEventListener('click', function(){ mudarMes(-1); });
+    btnAnt.addEventListener('click', function(){
+      window.cadeMedir && window.cadeMedir('agenda', { acao:'mes-anterior' });
+      mudarMes(-1);
+    });
     var titulo = document.createElement('p');
     titulo.className = 'mes-nome';
     titulo.textContent = NOMES_MES[visto.mes].toUpperCase() + ' ' + visto.ano;
@@ -1399,7 +1426,10 @@
     btnProx.type = 'button'; btnProx.className = 'mes-nav'; btnProx.textContent = '›';
     btnProx.setAttribute('aria-label', 'Próximo mês');
     btnProx.setAttribute('data-od-id', 'agenda-mes-proximo');
-    btnProx.addEventListener('click', function(){ mudarMes(1); });
+    btnProx.addEventListener('click', function(){
+      window.cadeMedir && window.cadeMedir('agenda', { acao:'mes-proximo' });
+      mudarMes(1);
+    });
     cab.appendChild(btnAnt); cab.appendChild(titulo); cab.appendChild(btnProx);
     box.appendChild(cab);
 
@@ -1502,8 +1532,14 @@
     var navs = head.querySelectorAll('.mes-nav');
     navs[0].disabled = sel <= 0;
     navs[1].disabled = sel >= EVENTOS.length - 1;
-    navs[0].addEventListener('click', function(){ selecionar(sel - 1); });
-    navs[1].addEventListener('click', function(){ selecionar(sel + 1); });
+    navs[0].addEventListener('click', function(){
+      window.cadeMedir && window.cadeMedir('agenda', { acao:'evento-anterior' });
+      selecionar(sel - 1);
+    });
+    navs[1].addEventListener('click', function(){
+      window.cadeMedir && window.cadeMedir('agenda', { acao:'evento-proximo' });
+      selecionar(sel + 1);
+    });
     lista.appendChild(head);
 
     // O selecionado já aparece no painel .detalhe acima — aqui só o próximo.
@@ -1560,8 +1596,16 @@
 
   document.addEventListener('click', function(e){
     var alvo = e.target.closest('.dia[data-dia]');
-    if (alvo) selecionarDia(Number(alvo.dataset.dia));
-    else { var evt = e.target.closest('[data-evento]'); if (evt) selecionar(Number(evt.dataset.evento)); }
+    if (alvo) {
+      window.cadeMedir && window.cadeMedir('agenda', { acao:'selecionar-dia' });
+      selecionarDia(Number(alvo.dataset.dia));
+    } else {
+      var evt = e.target.closest('[data-evento]');
+      if (evt) {
+        window.cadeMedir && window.cadeMedir('agenda', { acao:'selecionar-evento' });
+        selecionar(Number(evt.dataset.evento));
+      }
+    }
   });
 
   /* Mobile: arrastar na lista troca o evento (mesmo efeito das setas). */
@@ -1573,7 +1617,10 @@
     x0 = null;
     if (Math.abs(dx) < 48) return;
     var alvo = sel + (dx < 0 ? 1 : -1);
-    if (EVENTOS[alvo]) selecionar(alvo);
+    if (EVENTOS[alvo]) {
+      window.cadeMedir && window.cadeMedir('agenda', { acao:'navegar-evento' });
+      selecionar(alvo);
+    }
   }, {passive:true});
 
   var salvo = 0;
@@ -1622,14 +1669,21 @@
 
   document.querySelectorAll('form').forEach(function(f){
     var status = document.createElement('p');
+    var iniciou = false;
     status.className = 'form-nota';
     status.setAttribute('aria-live', 'polite');
     status.hidden = true;
     f.appendChild(status);
 
+    f.addEventListener('focusin', function(){
+      if (iniciou) return;
+      iniciou = true;
+      window.cadeMedir && window.cadeMedir('formulario', { formulario:TIPO_FORM[f.id], acao:'iniciado' });
+    });
     f.addEventListener('submit', function(e){
       e.preventDefault();
       if (!f.reportValidity()) return;
+      window.cadeMedir && window.cadeMedir('formulario', { formulario:TIPO_FORM[f.id], acao:'enviado' });
 
       var btn = f.querySelector('button[type="submit"]');
       var original = btn.innerHTML;
@@ -1651,6 +1705,7 @@
         return res.json().then(function(json){ return { ok: res.ok, json: json }; });
       }).then(function(r){
         if (!r.ok || !r.json.ok) throw new Error((r.json && r.json.erro) || 'Falha no envio');
+        window.cadeMedir && window.cadeMedir('formulario', { formulario:TIPO_FORM[f.id], acao:'sucesso' });
         btn.textContent = 'Recebido — obrigado!';
         status.hidden = true;
         setTimeout(function(){
@@ -1661,6 +1716,7 @@
           if (f.id === 'form-falar') notaTipo.textContent = NOTA_TIPO.elogio;
         }, 2200);
       }).catch(function(){
+        window.cadeMedir && window.cadeMedir('formulario', { formulario:TIPO_FORM[f.id], acao:'erro' });
         btn.disabled = false;
         btn.innerHTML = original;
         status.textContent = 'Não deu pra enviar agora. Tenta de novo em instantes ou chama a gente pelo Instagram.';
@@ -1776,6 +1832,7 @@
   function abrir(id){
     var d = DADOS[id];
     if (!d) return;
+    window.cadeMedir && window.cadeMedir('oportunidades', { acao:'abrir' });
     tagEl.textContent = d.tag;
     tagEl.className = 'tag tag--' + d.cor;
     tituloEl.textContent = d.titulo;
@@ -1788,6 +1845,7 @@
   }
 
   function fecharModal(){
+    window.cadeMedir && window.cadeMedir('oportunidades', { acao:'fechar' });
     modal.hidden = true;
     document.body.style.overflow = '';
     if (gatilho) gatilho.focus();
@@ -1800,8 +1858,14 @@
     abrir(btn.dataset.op);
   });
   lista.addEventListener('scroll', atualizarSetas);
-  anterior.addEventListener('click', function(){ navegar(-1); });
-  proxima.addEventListener('click', function(){ navegar(1); });
+  anterior.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('oportunidades', { acao:'anterior' });
+    navegar(-1);
+  });
+  proxima.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('oportunidades', { acao:'proximo' });
+    navegar(1);
+  });
   window.addEventListener('resize', atualizarSetas);
 
   function carregar(){
@@ -1828,6 +1892,9 @@
     }).catch(function(err){ concluir(null, err); });
   }
 
+  ctaEl.addEventListener('click', function(){
+    window.cadeMedir && window.cadeMedir('oportunidades', { acao:'cta' });
+  });
   fechar.addEventListener('click', fecharModal);
   modal.addEventListener('click', function(e){
     if (e.target === modal) fecharModal();
@@ -1841,6 +1908,101 @@
 })();
 
 </script>
+<script>
+window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };
+window.si = window.si || function(){ (window.siq = window.siq || []).push(arguments); };
+</script>
+<script>
+/* ---------- Vercel Analytics: eventos fixos, sem dados pessoais ---------- */
+(function(){
+  var pagina = 'home';
+  var campos = {
+    navegacao:['pagina', 'elemento', 'destino'],
+    controle:['pagina', 'elemento', 'acao'],
+    formulario:['pagina', 'formulario', 'acao'],
+    faq:['pagina', 'pergunta', 'aberto'],
+    hero:['pagina', 'acao', 'banner'],
+    agenda:['pagina', 'acao'],
+    galeria_home:['pagina', 'acao'],
+    materiais:['pagina', 'acao'],
+    loja:['pagina', 'acao'],
+    guia:['pagina', 'acao'],
+    oportunidades:['pagina', 'acao']
+  };
+  var perguntas = {
+    'faq-o-que-e':'faq-o-que-e',
+    'faq-na-pratica':'faq-na-pratica',
+    'faq-como-entro':'faq-como-entro',
+    'faq-calouro':'faq-calouro',
+    'faq-reclamacao':'faq-reclamacao',
+    'faq-notas':'faq-notas'
+  };
+
+  function medir(nome, dados){
+    var permitidos = campos[nome];
+    if (!permitidos || typeof window.va !== 'function') return;
+    var seguro = { pagina:pagina };
+    permitidos.forEach(function(campo){
+      if (campo !== 'pagina' && dados && typeof dados[campo] !== 'undefined') seguro[campo] = dados[campo];
+    });
+    window.va('event', { name:nome, data:seguro });
+  }
+  window.cadeMedir = medir;
+
+  function destinoDe(link){
+    var bruto = link.getAttribute('href') || '';
+    if (bruto.charAt(0) === '#') return 'ancora';
+    if (bruto.indexOf('mailto:') === 0) return 'email';
+    try {
+      var destino = new URL(bruto, window.location.href);
+      if (destino.origin === window.location.origin) return destino.hash ? 'ancora' : 'interna';
+      if (destino.hostname === 'www.instagram.com' || destino.hostname === 'instagram.com') return 'instagram';
+      if (destino.hostname === 'calendar.google.com') return 'calendario';
+      if (destino.hostname === 'drive.google.com') return 'drive';
+      if (destino.hostname === 'cobalto.ufpel.edu.br') return 'cobalto';
+      if (destino.hostname === 'wp.ufpel.edu.br') return 'centro-artes';
+      if (destino.hostname === 'pergamum.ufpel.edu.br') return 'biblioteca';
+      if (destino.hostname === 'docs.google.com') return 'documento';
+      if (destino.hostname === 'github.com') return 'github';
+    } catch (erro) {}
+    return 'outro-externo';
+  }
+
+  function elementoDe(link){
+    if (link.closest('.nav')) return 'nav';
+    if (link.closest('.footer')) return 'rodape';
+    if (link.closest('.hero')) return 'hero';
+    if (link.closest('#links')) return 'atalho';
+    return 'conteudo';
+  }
+
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a');
+    if (!link) return;
+    if (link.closest('.mat-item') || link.closest('#oportunidades-lista')) return;
+    var id = link.getAttribute('data-od-id');
+    if (id === 'produto-camiseta') { medir('loja', { acao:'ecobag' }); return; }
+    if (id === 'produto-moletom') { medir('loja', { acao:'produtos-graficos' }); return; }
+    if (id === 'produto-adesivos') { medir('loja', { acao:'adesivos' }); return; }
+    if (id === 'produto-ver-mais') { medir('loja', { acao:'catalogo' }); return; }
+    if (id === 'card-cobalto') { medir('guia', { acao:'cobalto' }); return; }
+    if (id === 'card-onde') { medir('guia', { acao:'centro-artes' }); return; }
+    if (id === 'card-com-quem-falar') { medir('guia', { acao:'instagram' }); return; }
+    if (id === 'agenda-cta') { medir('agenda', { acao:'assinar' }); return; }
+    if (id === 'oportunidades-cta') { medir('oportunidades', { acao:'indicar' }); return; }
+    if (link.id === 'modal-op-cta') return;
+    medir('navegacao', { elemento:elementoDe(link), destino:destinoDe(link) });
+  });
+
+  document.querySelectorAll('details.faq[data-od-id]').forEach(function(item){
+    var pergunta = perguntas[item.getAttribute('data-od-id')];
+    item.addEventListener('toggle', function(){
+      if (pergunta && item.open) medir('faq', { pergunta:pergunta, aberto:true });
+    });
+  });
+})();
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
