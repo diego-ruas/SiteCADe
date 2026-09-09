@@ -14,6 +14,10 @@
       "destination": "https://cadeufpel.com/$1",
       "permanent": true
     },
+    { "source": "/sobre.html", "destination": "/sobre", "permanent": true },
+    { "source": "/contato.html", "destination": "/contato", "permanent": true },
+    { "source": "/privacidade.html", "destination": "/privacidade", "permanent": true },
+    { "source": "/galeria.html", "destination": "/galeria", "permanent": true },
     { "source": "/about", "destination": "/sobre", "permanent": true },
     { "source": "/contact", "destination": "/contato", "permanent": true },
     { "source": "/privacy", "destination": "/privacidade", "permanent": true },
@@ -21,7 +25,18 @@
     { "source": "/politica-de-privacidade", "destination": "/privacidade", "permanent": true },
     { "source": "/gallery", "destination": "/galeria", "permanent": true }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/404" }],
+  "rewrites": [
+    { "source": "/sobre", "destination": "/paginas/sobre" },
+    { "source": "/contato", "destination": "/paginas/contato" },
+    { "source": "/privacidade", "destination": "/paginas/privacidade" },
+    { "source": "/galeria", "destination": "/paginas/galeria" },
+    { "source": "/index.md", "destination": "/paginas/index.md" },
+    { "source": "/sobre.md", "destination": "/paginas/sobre.md" },
+    { "source": "/contato.md", "destination": "/paginas/contato.md" },
+    { "source": "/privacidade.md", "destination": "/paginas/privacidade.md" },
+    { "source": "/galeria.md", "destination": "/paginas/galeria.md" },
+    { "source": "/(.*)", "destination": "/api/404" }
+  ],
   "headers": [
     {
       "source": "/assets/font/:font([A-Za-z-]+\\.[0-9a-f]{12}\\.woff2)",

@@ -22,7 +22,7 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 
 | Camada | Escolha |
 |---|---|
-| HTML/JS | `index.html` e `galeria.html`, cada um com seu JS no fim do `<body>` (IIFEs separadas, uma por feature) |
+| HTML/JS | `index.html` (raiz) e páginas secundárias em `paginas/*.html` (`/sobre`, `/contato`, `/privacidade`, `/galeria`), cada um com seu JS no fim do `<body>` (IIFEs separadas, uma por feature). Variantes Markdown públicas em `paginas/*.md` |
 | CSS | dividido em `css/*.css`, carregado via `<link>` no `<head>`, na ordem da cascata |
 | Tipografia | LT Superior, self-hosted em `assets/font/` (`.woff2`) |
 | Ícones | Google Material Symbols, self-hosted em `assets/font/material-symbols.woff2` (subset, ~1KB); logos de marca seguem SVG inline |
@@ -32,24 +32,35 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 ## Estrutura de pastas
 
 ```
-api/enviar.js        função serverless (formulários)
+api/                  funções serverless (enviar.js, oportunidades.js, 404.js)
 assets/
   font/               LT Superior self-hosted (.woff2)
-  FotosMembros/        fotos da gestão atual (usadas em #o-cade)
+  FotosMembros/       fotos da gestão atual em ASCII/kebab-case (usadas em #o-cade)
   logo-*.svg, mascote-*.svg, favicon.svg, apple-touch-icon.png, og-image.png
   produto-*.webp      fotos da lojinha
   guia-foto.webp      foto do guia do calouro
 css/*.css             ver "Arquivos de estilo"
-index.html            página principal
-galeria.html          /galeria
+paginas/              páginas secundárias HTML e variantes públicas Markdown
+  contato.html, contato.md
+  galeria.html, galeria.md
+  privacidade.html, privacidade.md
+  sobre.html, sobre.md
+  index.md
+index.html            página principal (raiz)
+middleware.js         negociação de conteúdo (Accept: text/markdown)
+test/agentes.test.js  testes de rotas e contratos
 llms.txt, robots.txt, sitemap.xml, vercel.json
 ```
 
 ## Páginas
 
 - `index.html` — página principal (hero, agenda, quem somos, histórico, lojinha, guia do calouro, oportunidades, FAQ, formulários).
-- `galeria.html` — `/galeria`, fotos de eventos e gestões anteriores.
-- `llms.txt`, `robots.txt`, `sitemap.xml` — SEO/indexação.
+- `paginas/sobre.html` — `/sobre`, quem somos, governança, financiamento e localização.
+- `paginas/contato.html` — `/contato`, canais de atendimento, e-mail e Instagram.
+- `paginas/privacidade.html` — `/privacidade`, política de privacidade e tratamento de dados dos formulários.
+- `paginas/galeria.html` — `/galeria`, histórico e fotos de eventos e gestões anteriores.
+- `paginas/*.md` — representações públicas em Markdown servidas via negociação `Accept: text/markdown` ou acessadas diretamente via `/<nome>.md`.
+- `llms.txt`, `robots.txt`, `sitemap.xml` — SEO, indexação e instruções para agentes.
 
 ## Arquivos de estilo
 
@@ -115,19 +126,20 @@ para aparecer no site por causa do cache do CDN.
 ## Rodando local
 
 ```sh
-npx serve
+npx vercel dev
 ```
 
-Abra o endereço indicado. `index.html` também abre direto no navegador, mas servir via HTTP evita comportamento estranho de `file://` (e é preciso para testar `api/enviar.js` via `vercel dev`).
+Para testar o roteamento completo da Vercel (rewrites para `paginas/`, negociação Markdown via `middleware.js` e funções da `api/`). Para visualização puramente estática, também é possível usar `npx serve`.
 
 ## Deploy
 
 Hospedado na **Vercel**, deploy automático a cada push em `main`. `vercel.json` define:
 
-- `cleanUrls` — URLs sem `.html`.
-- Redirect 301 de `cade.diegoruas.com.br` para `cadeufpel.com`.
+- `cleanUrls` — URLs públicas limpas sem `.html`.
+- `rewrites` — roteamento transparente das URLs públicas para os arquivos correspondentes em `paginas/` e catch-all para `/api/404`.
+- `redirects` — redirecionamentos permanentes (308) de URLs legadas `.html` para URLs limpas, aliases em inglês e redirecionamento de hosts/domínios para o apex `cadeufpel.com`.
 - `Cache-Control` imutável (`max-age=31536000, immutable`) para as fontes em `assets/font/`.
-- `X-Content-Type-Options: nosniff` em todas as respostas.
+- `X-Content-Type-Options: nosniff`, `Vary: Accept` e links `rel="alternate"` para Markdown.
 
 ## Contribuindo
 

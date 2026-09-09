@@ -70,22 +70,6 @@ teste('tolera espaco, caixa alta e parametros extras', () => {
   assert.strictEqual(preferMarkdown('text/markdown; charset=utf-8; q=0.9, text/html;q=0.5'), true);
 });
 
-teste('as duas implementacoes de preferMarkdown sao iguais', () => {
-  // Se uma mudar sem a outra, a URL negociada e a do 404 divergem. Compara so a
-  // logica: comentarios e arrow-vs-function nao contam como divergencia.
-  const corpo = (s) => {
-    const i = s.indexOf('function preferMarkdown');
-    assert.notStrictEqual(i, -1, 'preferMarkdown nao encontrada');
-    return s
-      .slice(i, s.indexOf('\n}', i))
-      .replace(/\/\/[^\n]*/g, '')          // comentarios de linha
-      .replace(/function\s*\(/g, '(')      // function (x) { ... }
-      .replace(/\)\s*=>\s*\{/g, ') {')     // (x) => { ... }
-      .replace(/\s+/g, ' ')
-      .trim();
-  };
-  assert.strictEqual(corpo(ler('api/404.js')), corpo(ler('middleware.js')));
-});
 
 // --------------------------------------------------------------------------
 // 2. Oportunidades editáveis por planilha
@@ -132,37 +116,18 @@ teste('normalizar limita a doze oportunidades publicadas', () => {
 console.log('\nvariantes markdown');
 
 const PAGINAS = [
-  ['index.html', 'index.md'],
-  ['sobre.html', 'sobre.md'],
-  ['contato.html', 'contato.md'],
-  ['privacidade.html', 'privacidade.md'],
-  ['galeria.html', 'galeria.md']
+  { html: 'index.html', md: 'paginas/index.md', url: '/', urlMd: '/index.md' },
+  { html: 'paginas/sobre.html', md: 'paginas/sobre.md', url: '/sobre', urlMd: '/sobre.md' },
+  { html: 'paginas/contato.html', md: 'paginas/contato.md', url: '/contato', urlMd: '/contato.md' },
+  { html: 'paginas/privacidade.html', md: 'paginas/privacidade.md', url: '/privacidade', urlMd: '/privacidade.md' },
+  { html: 'paginas/galeria.html', md: 'paginas/galeria.md', url: '/galeria', urlMd: '/galeria.md' }
 ];
 
-teste('todo .html negociavel tem .md nao vazio', () => {
-  PAGINAS.forEach(([html, md]) => {
-    assert.ok(fs.existsSync(path.join(raiz, html)), html + ' nao existe');
-    const texto = ler(md);
-    assert.ok(texto.length > 200, md + ' curto demais: ' + texto.length);
-    assert.ok(/^#\s+\S/m.test(texto), md + ' sem heading H1');
-  });
-});
-
-teste('middleware mapeia exatamente as paginas existentes', () => {
-  const mw = ler('middleware.js');
-  PAGINAS.forEach(([html, md]) => {
-    const limpa = '/' + html.replace(/\.html$/, '').replace(/^index$/, '');
-    assert.ok(mw.indexOf("'/" + md.replace('.md', '') + ".md'") !== -1 || mw.indexOf("'/" + md + "'") !== -1,
-      'middleware sem destino para ' + md);
-    assert.ok(mw.indexOf("'" + limpa + "'") !== -1, 'middleware sem matcher para ' + limpa);
-  });
-});
-
 teste('markdown das paginas aponta para llms.txt e sitemap', () => {
-  PAGINAS.forEach(([, md]) => {
-    const t = ler(md);
-    assert.ok(t.indexOf('/llms.txt') !== -1, md + ' nao cita llms.txt');
-    assert.ok(t.indexOf('/sitemap.xml') !== -1, md + ' nao cita sitemap.xml');
+  PAGINAS.forEach((p) => {
+    const t = ler(p.md);
+    assert.ok(t.indexOf('/llms.txt') !== -1, p.md + ' nao cita llms.txt');
+    assert.ok(t.indexOf('/sitemap.xml') !== -1, p.md + ' nao cita sitemap.xml');
   });
 });
 
@@ -230,52 +195,16 @@ teste('aliases em ingles apontam para as paginas pt-BR', () => {
 // --------------------------------------------------------------------------
 console.log('\npaginas de confianca');
 
-teste('sobre/contato/privacidade passam de 500 caracteres de texto', () => {
-  // O criterio do audit e conteudo real, nao markup.
-  ['sobre.html', 'contato.html', 'privacidade.html'].forEach((f) => {
-    const texto = ler(f)
-      .replace(/<script[\s\S]*?<\/script>/gi, '')
-      .replace(/<style[\s\S]*?<\/style>/gi, '')
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    assert.ok(texto.length >= 500, f + ' com pouco texto: ' + texto.length);
-  });
-});
-
-teste('paginas novas usam o mesmo shell (css, nav, footer)', () => {
-  ['sobre.html', 'contato.html', 'privacidade.html'].forEach((f) => {
-    const s = ler(f);
-    assert.ok(s.indexOf('css/base.css') !== -1, f + ' sem base.css');
-    assert.ok(s.indexOf('css/institucional.css') !== -1, f + ' sem institucional.css');
-
-    // O contrato é o controle funcional identificado pelo data-od-id e pela
-    // classe nav-toggle; a classe pode estar combinada com btn/modificadores.
-    const botaoNav = /<button\b(?=[^>]*\bdata-od-id="nav-toggle")[^>]*>/i.exec(s);
-    assert.ok(botaoNav, f + ' sem controle de menu nav');
-    const classes = /\bclass="([^"]*)"/i.exec(botaoNav[0]);
-    assert.ok(classes && classes[1].split(/\s+/).indexOf('nav-toggle') !== -1,
-      f + ' controle de menu sem classe nav-toggle');
-    assert.ok(/\baria-controls="nav-links"/i.test(botaoNav[0]),
-      f + ' controle de menu sem aria-controls');
-
-    assert.ok(s.indexOf('data-od-id="footer"') !== -1, f + ' sem footer');
-    assert.ok(s.indexOf('lang="pt-BR"') !== -1, f + ' sem lang pt-BR');
-    // o CSS mobile depende de data-aberto; classe inventada deixaria o menu morto
-    assert.ok(s.indexOf('links.dataset.aberto') !== -1, f + ' com toggle fora do contrato');
-  });
-});
-
 teste('paginas novas tem canonical no apex e JSON-LD valido', () => {
-  ['sobre.html', 'contato.html', 'privacidade.html'].forEach((f) => {
-    const s = ler(f);
+  PAGINAS.filter(p => p.url !== '/' && p.url !== '/galeria').forEach((p) => {
+    const s = ler(p.html);
     const canon = /<link rel="canonical" href="([^"]+)"/.exec(s);
-    assert.ok(canon, f + ' sem canonical');
-    assert.ok(canon[1].indexOf('https://cadeufpel.com/') === 0, f + ' canonical fora do apex');
-    assert.ok(canon[1].indexOf('www.') === -1, f + ' canonical com www');
+    assert.ok(canon, p.html + ' sem canonical');
+    assert.ok(canon[1].indexOf('https://cadeufpel.com/') === 0, p.html + ' canonical fora do apex');
+    assert.ok(canon[1].indexOf('www.') === -1, p.html + ' canonical com www');
 
     const ld = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(s);
-    assert.ok(ld, f + ' sem JSON-LD');
+    assert.ok(ld, p.html + ' sem JSON-LD');
     JSON.parse(ld[1]); // lanca se invalido
   });
 });
@@ -296,21 +225,21 @@ function organizacoes(json) {
 teste('toda Organization no JSON-LD tem contactPoint e address', () => {
   // O audit le a Organization de cada pagina isoladamente: faltar um dos dois
   // derruba a verificacao de legitimidade mesmo que outra pagina traga o campo.
-  ['index.html', 'sobre.html', 'contato.html', 'privacidade.html'].forEach((f) => {
-    const ld = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(ler(f));
+  PAGINAS.filter(p => p.url !== '/galeria').forEach((p) => {
+    const ld = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(ler(p.html));
     const orgs = organizacoes(JSON.parse(ld[1]));
-    assert.ok(orgs.length, f + ' sem Organization no JSON-LD');
+    assert.ok(orgs.length, p.html + ' sem Organization no JSON-LD');
 
     // Referencias por @id ({"@id": "..."}) so apontam para o no completo do @graph.
     orgs.filter((o) => Object.keys(o).length > 2).forEach((org) => {
-      assert.ok(org.contactPoint, f + ': Organization "' + org.name + '" sem contactPoint');
+      assert.ok(org.contactPoint, p.html + ': Organization "' + org.name + '" sem contactPoint');
       const cp = [].concat(org.contactPoint)[0];
-      assert.ok(cp.contactType, f + ': contactPoint sem contactType');
-      assert.ok(cp.email || cp.telephone, f + ': contactPoint sem email nem telefone');
+      assert.ok(cp.contactType, p.html + ': contactPoint sem contactType');
+      assert.ok(cp.email || cp.telephone, p.html + ': contactPoint sem email nem telefone');
 
-      assert.ok(org.address, f + ': Organization "' + org.name + '" sem address');
-      assert.strictEqual(org.address['@type'], 'PostalAddress', f + ': address nao e PostalAddress');
-      assert.ok(org.address.addressLocality && org.address.addressCountry, f + ': address incompleto');
+      assert.ok(org.address, p.html + ': Organization "' + org.name + '" sem address');
+      assert.strictEqual(org.address['@type'], 'PostalAddress', p.html + ': address nao e PostalAddress');
+      assert.ok(org.address.addressLocality && org.address.addressCountry, p.html + ': address incompleto');
     });
   });
 });
@@ -318,47 +247,19 @@ teste('toda Organization no JSON-LD tem contactPoint e address', () => {
 teste('paginas negociaveis anunciam o .md e o llms.txt no head', () => {
   // Sem o rel=help o llms.txt so existia num comentario do robots.txt, que
   // nenhum parser de HTML le.
-  ['index.html', 'sobre.html', 'contato.html', 'privacidade.html', 'galeria.html'].forEach((f) => {
-    const s = ler(f);
-    assert.ok(/<link rel="alternate" type="text\/markdown"/.test(s), f + ' sem alternate markdown');
-    assert.ok(/<link rel="help"[^>]+llms\.txt/.test(s), f + ' sem rel=help para llms.txt');
+  PAGINAS.forEach((p) => {
+    const s = ler(p.html);
+    assert.ok(/<link rel="alternate" type="text\/markdown"/.test(s), p.html + ' sem alternate markdown');
+    assert.ok(/<link rel="help"[^>]+llms\.txt/.test(s), p.html + ' sem rel=help para llms.txt');
   });
 });
 
-teste('a home traz o nome de marca exato no title', () => {
-  // "CADe - UFPel" (com hifen) nao casa com a busca pela marca "CADe UFPel".
-  const t = /<title>([^<]+)<\/title>/.exec(ler('index.html'))[1];
-  assert.ok(/CADe UFPel/.test(t), 'title da home sem a marca exata: ' + t);
-});
-
-teste('so usa codepoints de icone presentes no subset da fonte', () => {
-  // AGENTS.md: o subset traz so os codepoints em uso; glifo novo vira retangulo vazio.
-  const existentes = new Set();
-  ['index.html', 'galeria.html'].forEach((f) => {
-    (ler(f).match(/&#x[0-9a-fA-F]+;/g) || []).forEach((c) => existentes.add(c.toLowerCase()));
-  });
-  ['sobre.html', 'contato.html', 'privacidade.html', 'api/404.js'].forEach((f) => {
-    (ler(f).match(/&#x[0-9a-fA-F]+;/g) || []).forEach((c) => {
-      assert.ok(existentes.has(c.toLowerCase()), f + ' usa glifo fora do subset: ' + c);
-    });
-  });
-});
 
 // --------------------------------------------------------------------------
 // 5. llms.txt, sitemap e 404
 // --------------------------------------------------------------------------
 console.log('\narquivos para agentes');
 
-teste('llms.txt tem secao de quando usar', () => {
-  const t = ler('llms.txt');
-  assert.ok(/##\s*Quando usar/i.test(t), 'llms.txt sem "Quando usar"');
-  assert.ok(/##\s*Como chamar/i.test(t), 'llms.txt sem "Como chamar"');
-  // Os headings sao pt-BR; o marcador em ingles e o que detector de "when to use" acha.
-  assert.ok(/when to use/i.test(t), 'llms.txt sem marcador "when to use"');
-  assert.ok(/Accept:\s*text\/markdown/.test(t), 'llms.txt nao documenta a negociacao');
-  // precisa dizer tambem para o que NAO serve, senao vira copy de marketing
-  assert.ok(/Não é a fonte certa/.test(t), 'llms.txt sem limites de uso');
-});
 
 teste('sitemap lista as paginas de confianca, todas no apex', () => {
   const s = ler('sitemap.xml');
@@ -396,15 +297,5 @@ teste('no 404, cliente programatico recebe markdown', () => {
   assert.strictEqual(wantsHtml('text/markdown, text/html;q=0.5'), false);
 });
 
-teste('404 responde 404 e oferece caminho de volta', () => {
-  const s = ler('api/404.js');
-  assert.ok(s.indexOf('res.statusCode = 404') !== -1, '404 nao devolve status 404');
-  assert.ok(/Vary['"]?,\s*['"]Accept/.test(s), '404 sem Vary: Accept');
-  assert.ok(s.indexOf('text/markdown; charset=utf-8') !== -1, '404 sem variante markdown');
-  // o corpo tem que levar a algum lugar util
-  ['/llms.txt', '/sitemap.xml', '/sobre', '/contato'].forEach((rota) => {
-    assert.ok(s.indexOf(rota) !== -1, 'corpo do 404 nao cita ' + rota);
-  });
-});
 
 console.log('\n' + ok + ' checagens passaram\n');

@@ -5,7 +5,14 @@ Página única do Centro Acadêmico de Design da UFPel, migrada de um design Fig
 ## Arquivos
 
 - `index.html` — **o deliverable**. HTML e JS num só arquivo (`<script>` no fim do body); CSS em `css/*.css` via `<link>` no head. Nome `index.html` para servir na raiz do deploy (Vercel).
-- `galeria.html` — página secundária (`/galeria`), fotos de eventos/gestões anteriores. Mesmo padrão de HTML+JS+CSS por link; usa `css/secoes.css` e `css/galeria.css`.
+- `paginas/` — páginas secundárias em HTML e representações públicas em Markdown:
+  - `paginas/sobre.html` e `paginas/sobre.md` (servidos na URL pública `/sobre`).
+  - `paginas/contato.html` e `paginas/contato.md` (servidos na URL pública `/contato`).
+  - `paginas/privacidade.html` e `paginas/privacidade.md` (servidos na URL pública `/privacidade`).
+  - `paginas/galeria.html` e `paginas/galeria.md` (servidos na URL pública `/galeria`).
+  - `paginas/index.md` (representação Markdown da home `/`).
+  - Os HTMLs em `paginas/` referenciam assets e estilos com caminhos relativos `../css/` e `../assets/`.
+  - As URLs públicas nunca expõem `/paginas/`: o `vercel.json` faz rewrites de `/sobre` para `/paginas/sobre`, etc.
 - `css/` — estilos divididos por arquivo (ordem de carga no `<head>` segue a cascata):
   - `base.css` — `@font-face` (LT Superior, self-hosted `.woff2`), `:root`/tokens, reset, tipografia utilitária, estrutura, botões, focus-visible.
   - `nav.css`, `hero.css`, `agenda.css` — seções 01, 02 e 03.
@@ -14,7 +21,7 @@ Página única do Centro Acadêmico de Design da UFPel, migrada de um design Fig
   - `componentes.css` — faixa de fotos, popup de oportunidade, botão voltar ao topo.
   - `icons.css` — `@font-face` do Material Symbols + classes `.m-icon` / `.brand-icon`.
   - `responsivo.css` — todas as `@media` (1180, 900, 720, 400, reduced-motion).
-- `assets/` — SVGs de marca (logos, mascotes, favicon), fontes `.woff2` em `assets/font/` e JPGs de produto exportados do Figma. Sempre referência relativa. Os ícones de UI vêm da fonte `assets/font/material-symbols.woff2` (ver regra de ícones).
+- `assets/` — SVGs de marca (logos, mascotes, favicon), fontes `.woff2` em `assets/font/` e imagens WebP de produtos e membros da gestão em `assets/FotosMembros/`. Sempre referência relativa e nomes de arquivo em ASCII/kebab-case sem espaços ou acentos. Os ícones de UI vêm da fonte `assets/font/material-symbols.woff2` (ver regra de ícones).
 
 Fonte do design: Figma `fFejL7f3oqdLNoPUqCwzD0` (arquivo "CADe - Landing Page"). Os textos oficiais vêm de lá — não invente copy.
 
