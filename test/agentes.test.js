@@ -26,6 +26,8 @@ function teste(nome, fn) {
 // garantimos abaixo que as duas implementações são idênticas.
 const { preferMarkdown } = require('../api/404.js');
 
+const { parseCsv, normalizar } = require('../api/oportunidades.js');
+
 console.log('\nnegociação de Accept (RFC 9110 §12.5.1)');
 
 teste('pede markdown explicitamente -> markdown', () => {
@@ -83,6 +85,45 @@ teste('as duas implementacoes de preferMarkdown sao iguais', () => {
       .trim();
   };
   assert.strictEqual(corpo(ler('api/404.js')), corpo(ler('middleware.js')));
+});
+
+// --------------------------------------------------------------------------
+// 2. Oportunidades editáveis por planilha
+// --------------------------------------------------------------------------
+console.log('\noportunidades (planilha)');
+
+teste('parseCsv aceita aspas, vírgulas, quebras, CRLF e BOM', () => {
+  const linhas = parseCsv('\uFEFFpublicado,titulo\r\nsim,"Vaga, ""Design""\ncom quebra"\r\n');
+  assert.deepStrictEqual(linhas, [
+    ['publicado', 'titulo'],
+    ['sim', 'Vaga, "Design"\ncom quebra']
+  ]);
+});
+
+teste('normalizar filtra, valida e deduplica oportunidades', () => {
+  const linhas = [
+    ['publicado', 'tag', 'cor', 'titulo', 'resumo', 'texto', 'cta', 'link', 'expira'],
+    ['', 'bolsa', 'verde', 'Rascunho', '', '', '', '', ''],
+    ['nao', 'bolsa', 'verde', 'Não publicado', '', '', '', '', ''],
+    ['SIM', 'bolsa', 'invalida', 'Título igual', 'Resumo A', '', '', 'sem-esquema', '11/09/2026'],
+    ['x', '', 'ciano', 'Título igual', '', 'Texto B', 'Abrir', 'https://exemplo.test', '2026-09-11'],
+    ['sim', 'edital', 'amarelo', '', '', '', '', '', ''],
+    ['sim', 'edital', 'verde', 'Expirada', '', '', '', '', '2026-09-09']
+  ];
+  const itens = normalizar(linhas, '2026-09-10');
+
+  assert.strictEqual(itens.length, 2);
+  assert.deepStrictEqual(itens.map((item) => item.id), ['titulo-igual', 'titulo-igual-2']);
+  assert.strictEqual(itens[0].cor, 'verde');
+  assert.strictEqual(itens[0].link, 'https://www.instagram.com/cadesignufpel');
+  assert.strictEqual(itens[1].cor, 'ciano');
+  assert.strictEqual(itens[1].texto, 'Texto B');
+});
+
+teste('normalizar limita a doze oportunidades publicadas', () => {
+  const linhas = [['publicado', 'titulo']];
+  for (let i = 1; i <= 13; i++) linhas.push(['1', 'Oportunidade ' + i]);
+  assert.strictEqual(normalizar(linhas, '2026-09-10').length, 12);
 });
 
 // --------------------------------------------------------------------------

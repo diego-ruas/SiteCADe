@@ -27,7 +27,7 @@ Site do Centro Acadêmico de Design da UFPel, migrado de um design Figma. HTML, 
 | Tipografia | LT Superior, self-hosted em `assets/font/` (`.woff2`) |
 | Ícones | Google Material Symbols, self-hosted em `assets/font/material-symbols.woff2` (subset, ~1KB); logos de marca seguem SVG inline |
 | Analytics | Vercel Analytics (`/_vercel/insights/script.js`), sem cookies |
-| Backend | `api/enviar.js` — função serverless da Vercel (Node puro, `fetch` direto na REST API do Resend) para os formulários de contato |
+| Backend | `api/enviar.js` — função serverless da Vercel para os formulários; `api/oportunidades.js` — lê a planilha CSV de oportunidades |
 
 ## Estrutura de pastas
 
@@ -87,6 +87,30 @@ A nav marca a área ativa via `aria-current="page"`, calculada por listener de s
 | `RESEND_API_KEY` | sim | — (nunca commitar) |
 | `RESEND_TO` | não | `cadesignufpel@gmail.com` |
 | `RESEND_FROM` | não | `CADe UFPel <onboarding@resend.dev>` (sandbox — trocar para domínio verificado) |
+
+## Publicar uma oportunidade
+
+Os cards de `#oportunidades` vêm da planilha Google publicada em CSV; não edite
+cards no `index.html`. O link da planilha é a URL configurada em
+`SHEET_OPORTUNIDADES_CSV` no painel da Vercel. Para abrir a planilha, copie essa
+URL ou use o link compartilhado pela gestão.
+
+| Coluna | Regra |
+|---|---|
+| `publicado` | Só `sim`, `s`, `x`, `true` ou `1` publica a linha. |
+| `tag` | Pílula do card; vazio vira `OPORTUNIDADE`. |
+| `cor` | `verde`, `amarelo` ou `ciano`; inválida vira `verde`. |
+| `titulo` | Obrigatório; vazio ignora a linha. |
+| `resumo` | Linha opcional do card. |
+| `texto` | Texto do popup; vazio usa o resumo. |
+| `cta` | Rótulo do botão do popup; vazio usa `Quero essa oportunidade`. |
+| `link` | URL `http://`, `https://` ou `mailto:`; inválida abre o Instagram. |
+| `expira` | `AAAA-MM-DD` ou `DD/MM/AAAA`; some depois desse dia. |
+
+Na Vercel, configure `SHEET_OPORTUNIDADES_CSV` em **Project → Settings →
+Environment Variables**, com a URL CSV de **Arquivo → Compartilhar → Publicar na
+web** da aba. Marque Production e Preview. A atualização pode levar até 5 minutos
+para aparecer no site por causa do cache do CDN.
 
 ## Rodando local
 

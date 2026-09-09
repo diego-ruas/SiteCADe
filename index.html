@@ -402,41 +402,11 @@
       </a>
     </div>
 
-    <!--
-      Template de uma oportunidade — copie o <button> abaixo pra dentro de
-      .oportunidades quando tiver algo pra publicar, e cadastre o mesmo id
-      em OPORTUNIDADES no bloco JS (seção "Popup de oportunidade") com
-      tag/título/texto completos pro popup.
-
-      <button class="op" type="button" data-op="ID_UNICO" aria-haspopup="dialog" data-od-id="op-ID_UNICO">
-        <span class="tag tag--verde">BOLSA</span>
-        <b>Título da oportunidade</b>
-        <span>Prazo ou carga horária resumida</span>
-        <span class="op-cta">Ver detalhes <span class="m-icon" aria-hidden="true">&#xe5c8;</span></span>
-      </button>
-
-      Tags disponíveis: tag--verde (BOLSA), tag--amarelo (ESTÁGIO), tag--ciano (EDITAL).
-    -->
-    <div class="oportunidades" data-od-id="oportunidades-lista">
-      <button class="op" type="button" data-op="concurso-turismo" aria-haspopup="dialog" data-od-id="op-concurso-turismo">
-        <span class="tag tag--ciano">CONCURSO</span>
-        <b>Concurso Identidade Visual — Curso de Turismo</b>
-        <span>Inscrições até 21 de setembro</span>
-        <span class="op-cta">Ver detalhes <span class="m-icon" aria-hidden="true">&#xe5c8;</span></span>
-      </button>
-      <button class="op" type="button" data-op="hut8-uxui" aria-haspopup="dialog" data-od-id="op-hut8-uxui">
-        <span class="tag tag--amarelo">PROCESSO SELETIVO</span>
-        <b>Processo seletivo Hut8 — Dev e Design</b>
-        <span>Vagas abertas, empresa júnior de Computação</span>
-        <span class="op-cta">Ver detalhes <span class="m-icon" aria-hidden="true">&#xe5c8;</span></span>
-      </button>
-      <button class="op" type="button" data-op="monitoria-fotografia" aria-haspopup="dialog" data-od-id="op-monitoria-fotografia">
-        <span class="tag tag--verde">MONITORIA</span>
-        <b>Monitoria voluntária — Fotografia</b>
-        <span>Inscrições por e-mail até 06/09</span>
-        <span class="op-cta">Ver detalhes <span class="m-icon" aria-hidden="true">&#xe5c8;</span></span>
-      </button>
+    <!-- Os cards vêm de /api/oportunidades, alimentado pela planilha. Instruções em README.md. -->
+    <div class="oportunidades oportunidades--vazio" data-od-id="oportunidades-lista">
+      <p class="op-vazio" id="oportunidades-status" role="status" data-od-id="oportunidades-status">Carregando oportunidades…</p>
     </div>
+    <noscript><p class="op-vazio">As oportunidades abertas ficam no nosso <a href="https://www.instagram.com/cadesignufpel" target="_blank" rel="noopener">Instagram</a>.</p></noscript>
   </section>
 
   <!-- 08 FAQ -->
@@ -1695,31 +1665,10 @@
 
 /* ---------- Popup de oportunidade ---------- */
 (function(){
-  // Uma entrada por oportunidade publicada em .oportunidades (mesmo "id" do data-op do botão).
-  var OPORTUNIDADES = {
-    'concurso-turismo': {
-      tag: 'CONCURSO', cor: 'ciano',
-      titulo: 'Concurso Identidade Visual — Curso de Turismo',
-      texto: 'O CCSO da UFPel prorrogou as inscrições para o concurso que vai escolher a nova identidade visual do curso de Bacharelado em Turismo, até 21 de setembro. Inscrição gratuita e individual, com peças inéditas avaliadas por conceito, aplicabilidade, criatividade, contemporaneidade e comunicabilidade. Quem vencer recebe certificado e um tablet de premiação. Orientações completas no edital.',
-      cta: 'Ver edital completo',
-      link: 'https://ccs2.ufpel.edu.br/wp/2026/09/02/curso-de-turismo-amplia-prazo-de-inscricoes-para-concurso-de-identidade-visual/'
-    },
-    'hut8-uxui': {
-      tag: 'PROCESSO SELETIVO', cor: 'amarelo',
-      titulo: 'Processo seletivo Hut8 — Dev e Design',
-      texto: 'A Hut8 é a Empresa Júnior de Computação da UFPel e está com processo seletivo aberto pra quem tem interesse em desenvolvimento ou design. Boa forma de ganhar experiência real de mercado e turbinar o portfólio antes de se formar. Vagas para Design: forms.gle/PthHYY8ERmRW3Tpq5 · Vagas para Dev: forms.gle/1WVyhfWKLDDd16Yo6. Dúvidas: hut8@inf.ufpel.edu.br.',
-      cta: 'Inscrever-se (Design)',
-      link: 'https://forms.gle/PthHYY8ERmRW3Tpq5'
-    },
-    'monitoria-fotografia': {
-      tag: 'MONITORIA', cor: 'verde',
-      titulo: 'Monitoria voluntária — Fotografia (profa. Paula Garcia Lima)',
-      texto: 'Vaga de monitoria voluntária (Programa de Monitoria da UFPel, edital 20/2026), 15h semanais, com certificado emitido pela PRE. Para as turmas de Fotografia e Fotografia e Design — é preciso já ter cursado a disciplina de Fotografia. Atuação principalmente nas manhãs de quarta e quinta, junto com a profa. Paula, mais um horário extraclasse. Interessados: enviar e-mail até 06/09 pra paulaglima@gmail.com informando se já cursou a disciplina e o motivo do interesse (colocar "monitoria voluntária" no assunto).',
-      cta: 'Enviar e-mail de interesse',
-      link: 'mailto:paulaglima@gmail.com?subject=Monitoria%20volunt%C3%A1ria'
-    }
-  };
-
+  // Os dados da planilha chegam de /api/oportunidades; os cards são renderizados abaixo.
+  var DADOS = {};
+  var lista = document.querySelector('.oportunidades');
+  var status = document.getElementById('oportunidades-status');
   var modal = document.getElementById('modal-op');
   var tagEl = document.getElementById('modal-op-tag');
   var tituloEl = document.getElementById('modal-op-titulo');
@@ -1728,8 +1677,77 @@
   var fechar = document.getElementById('modal-op-fechar');
   var gatilho = null;
 
+  function prepararStatus(){
+    lista.textContent = '';
+    lista.classList.add('oportunidades--vazio');
+    lista.appendChild(status);
+  }
+
+  function mostrarVazio(){
+    prepararStatus();
+    status.textContent = 'Nenhuma oportunidade aberta agora. Assim que aparecer algo, publicamos aqui e no Instagram.';
+  }
+
+  function mostrarErro(){
+    prepararStatus();
+    status.textContent = 'Não foi possível carregar as oportunidades agora. Veja no nosso ';
+    var instagram = document.createElement('a');
+    instagram.href = 'https://www.instagram.com/cadesignufpel';
+    instagram.target = '_blank';
+    instagram.rel = 'noopener';
+    instagram.textContent = 'Instagram';
+    status.appendChild(instagram);
+    status.appendChild(document.createTextNode('.'));
+  }
+
+  function render(itens){
+    DADOS = {};
+    if (!itens.length) {
+      mostrarVazio();
+      return;
+    }
+
+    lista.textContent = '';
+    lista.classList.remove('oportunidades--vazio');
+    itens.forEach(function(d){
+      DADOS[d.id] = d;
+      var botao = document.createElement('button');
+      botao.className = 'op';
+      botao.type = 'button';
+      botao.dataset.op = d.id;
+      botao.setAttribute('aria-haspopup', 'dialog');
+      botao.setAttribute('data-od-id', 'op-' + d.id);
+
+      var tag = document.createElement('span');
+      tag.className = 'tag tag--' + d.cor;
+      tag.textContent = d.tag;
+      botao.appendChild(tag);
+
+      var titulo = document.createElement('b');
+      titulo.textContent = d.titulo;
+      botao.appendChild(titulo);
+
+      if (d.resumo) {
+        var resumo = document.createElement('span');
+        resumo.textContent = d.resumo;
+        botao.appendChild(resumo);
+      }
+
+      var cta = document.createElement('span');
+      cta.className = 'op-cta';
+      cta.appendChild(document.createTextNode('Ver detalhes '));
+      var icone = document.createElement('span');
+      icone.className = 'm-icon';
+      icone.setAttribute('aria-hidden', 'true');
+      icone.innerHTML = '&#xe5c8;';
+      cta.appendChild(icone);
+      botao.appendChild(cta);
+      lista.appendChild(botao);
+    });
+  }
+
   function abrir(id){
-    var d = OPORTUNIDADES[id];
+    var d = DADOS[id];
     if (!d) return;
     tagEl.textContent = d.tag;
     tagEl.className = 'tag tag--' + d.cor;
@@ -1748,12 +1766,36 @@
     if (gatilho) gatilho.focus();
   }
 
-  document.querySelectorAll('.op[data-op]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      gatilho = btn;
-      abrir(btn.dataset.op);
-    });
+  lista.addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('.op[data-op]');
+    if (!btn || !lista.contains(btn)) return;
+    gatilho = btn;
+    abrir(btn.dataset.op);
   });
+
+  function carregar(){
+    var concluido = false;
+    var controle = 'AbortController' in window ? new AbortController() : null;
+    function concluir(itens, erro){
+      if (concluido) return;
+      concluido = true;
+      clearTimeout(limite);
+      if (erro) mostrarErro();
+      else render(itens);
+    }
+    var limite = setTimeout(function(){
+      concluir(null, new Error('Tempo de espera esgotado'));
+      if (controle) controle.abort();
+    }, 8000);
+
+    fetch('/api/oportunidades', controle ? { signal: controle.signal } : {}).then(function(res){
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function(json){
+      if (!json || !Array.isArray(json.oportunidades)) throw new Error('Resposta inválida');
+      concluir(json.oportunidades, null);
+    }).catch(function(err){ concluir(null, err); });
+  }
 
   fechar.addEventListener('click', fecharModal);
   modal.addEventListener('click', function(e){
@@ -1762,6 +1804,9 @@
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && !modal.hidden) fecharModal();
   });
+
+  carregar();
+
 })();
 
 </script>

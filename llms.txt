@@ -46,9 +46,7 @@ grade curricular oficial ou ementas, que são da coordenação do curso
 
 ## Oportunidades
 - [Editais, bolsas e estágios](https://cadeufpel.com/#oportunidades)
-- Concurso Identidade Visual — Curso de Turismo (CONCURSO) — inscrições até 21 de setembro.
-- Processo seletivo Hut8 — Dev e Design (PROCESSO SELETIVO) — vagas abertas na empresa júnior de Computação.
-- Monitoria voluntária — Fotografia (MONITORIA) — inscrições por e-mail até 06/09.
+- Lista sempre atualizada em JSON: https://cadeufpel.com/api/oportunidades
 
 ## Perguntas frequentes
 - [FAQ](https://cadeufpel.com/#faq): o que é o CADe, como participar, dúvidas de calouro, notas e reclamações.

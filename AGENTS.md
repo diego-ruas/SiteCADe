@@ -39,7 +39,7 @@ Quatro `div.area` com fundo próprio, cada uma com uma `.faixa` colorida no topo
 |---|---|---|
 | CADe | `#area-cade` | hero, 01 agenda, 02 quem somos, 03 histórico, lojinha |
 | Calouros | `#area-calouros` | 04 guia do calouro (foto à esquerda + 4 cards) |
-| Dicas | `#area-dicas` | 05 oportunidades, 06 FAQ, 07 atalhos |
+| Dicas | `#area-dicas` | 05 oportunidades dinâmicas (`/api/oportunidades` ← planilha; não edite cards no HTML), 06 FAQ, 07 atalhos |
 | Formulários | `#area-formularios` | 08 fale com a gente (dois forms) |
 
 A nav marca a área ativa via `aria-current="page"` (bolinha rosa em `::before`), calculada por listener de scroll com a constante `FOLGA` como margem de erro para áreas curtas.

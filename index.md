@@ -42,9 +42,7 @@ CADe e ingressantes para dúvidas mais específicas.
 Editais, bolsas e estágios divulgados pela gestão, pela coordenação e por alunos
 que indicam vagas:
 
-- Concurso Identidade Visual — Curso de Turismo (CONCURSO) — inscrições até 21 de setembro.
-- Processo seletivo Hut8 — Dev e Design (PROCESSO SELETIVO) — vagas abertas na empresa júnior de Computação.
-- Monitoria voluntária — Fotografia (MONITORIA) — inscrições por e-mail até 06/09.
+A lista sempre atualizada está em [JSON](https://cadeufpel.com/api/oportunidades).
 
 ## Perguntas frequentes
 
