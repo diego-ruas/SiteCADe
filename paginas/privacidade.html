@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://cadeufpel.com/assets/og-image.png">
 <link rel="preload" href="../assets/font/LTSuperior-Regular.c014d3ebf198.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/font/LTSuperior-ExtraBold.d9f519a435a7.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/font/material-symbols.62f4953c355c.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/font/material-symbols.b23762b70bc5.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="stylesheet" href="../css/base.css">
@@ -71,14 +71,19 @@
       <img src="../assets/logo-cade.svg" alt="CADe UFPel" width="75" height="36">
     </a>
 
-    <button class="btn btn--ghost btn--sm nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-od-id="nav-toggle">Menu</button>
+    <button class="btn btn--ghost nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu" data-od-id="nav-toggle">
+      <span class="m-icon nav-toggle-icone" aria-hidden="true">&#xe5d2;</span>
+    </button>
 
     <nav class="nav-links" id="nav-links" aria-label="Seções do site" data-od-id="nav-links">
       <a class="nav-link" href="/#area-cade">O CADe</a>
       <a class="nav-link" href="/#area-calouros">Calouros</a>
       <a class="nav-link" href="/#area-dicas">Recursos</a>
       <a class="nav-link" href="/#area-formularios">Formulários</a>
-      <a class="nav-link nav-link--mobile" href="/#form-participar">Quero participar</a>
+      <a class="btn btn--primary nav-cta-painel" href="/#form-participar" data-od-id="nav-cta-painel">
+        Quero participar
+        <span class="m-icon m-icon--16" aria-hidden="true">&#xe5c8;</span>
+      </a>
     </nav>
 
     <a class="btn btn--primary btn--sm nav-cta" href="/#form-participar" data-od-id="nav-cta">
@@ -201,17 +206,24 @@
   var links = document.getElementById('nav-links');
   var nav = document.querySelector('.nav');
 
+  var icone = btn.querySelector('.nav-toggle-icone');
+  var MENU = '\ue5d2', FECHAR = '\ue5cd';   /* codepoints do subset: menu e close */
+
+  function pinta(aberto){
+    links.dataset.aberto = String(aberto);
+    btn.setAttribute('aria-expanded', String(aberto));
+    btn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+    icone.textContent = aberto ? FECHAR : MENU;
+  }
+
   function fecha(devolveFoco){
     if (links.dataset.aberto !== 'true') return;
-    links.dataset.aberto = 'false';
-    btn.setAttribute('aria-expanded', 'false');
+    pinta(false);
     if (devolveFoco) btn.focus();   /* o link clicado some junto com o menu: o foco volta pro botão */
   }
 
   btn.addEventListener('click', function(){
-    var aberto = links.dataset.aberto === 'true';
-    links.dataset.aberto = String(!aberto);
-    btn.setAttribute('aria-expanded', String(!aberto));
+    pinta(links.dataset.aberto !== 'true');
   });
 
   /* na captura: o menu fecha antes do listener de âncora medir a posição do alvo */
